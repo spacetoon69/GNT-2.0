@@ -1,0 +1,29 @@
+Key Features:
+Multi-Engine Support
+
+| Engine        | Key Required | Vision | Context | Honorifics | Best For              |
+| ------------- | ------------ | ------ | ------- | ---------- | --------------------- |
+| Google        | No           | No     | No      | No         | Fallback, speed       |
+| DeepL         | Yes          | No     | Yes     | Yes        | Quality, natural flow |
+| OpenAI GPT-4V | Yes          | Yes    | Yes     | Yes        | Complex manga, SFX    |
+| Local LLM     | No           | No     | Yes     | Yes        | Privacy, offline      |
+
+Resilience Patterns
+Circuit Breaker: Auto-disable failing engines after 5 errors
+Rate Limiting: Per-engine request throttling
+Intelligent Fallback: Automatic engine switching on failure
+Timeout Management: Configurable per-engine timeouts
+Performance Optimizations
+Smart Caching: Different TTL per engine (DeepL stable = 7 days, Local = 1 hour)
+Batch Processing: Concurrent translation with concurrency limits
+Vision Optimization: GPT-4 Vision only when image data provided
+Security
+Encrypted Key Storage: API keys in SecureStorage (AES-256-GCM)
+No Key Exposure: Keys never logged or sent to content scripts
+Request Signing: Proper authorization headers per service
+Manga-Specific Features
+Honorifics Preservation: Configurable Japanese honorific handling
+Context Awareness: Maintains narrative flow across bubbles
+SFX Translation: Specialized handling for sound effects (via GPT-4)
+Dictionary Integration: Jisho lookup for word definitions
+The manager handles the complex orchestration of paid APIs (cost control), free alternatives (rate limits), and local models (privacy) while providing a unified interface to the rest of the extension.

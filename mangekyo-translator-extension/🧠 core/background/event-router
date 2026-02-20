@@ -1,0 +1,33 @@
+Key Features:
+Advanced Routing Architecture
+Priority-based handlers: Critical (security) → High (user actions) → Normal → Low → Background
+Middleware pipeline: Auth, rate limiting, logging, error handling
+Pub/sub pattern: Subscribe/unsubscribe with automatic cleanup
+Multi-Channel Communication
+Long-lived ports: For streaming data (OCR progress, real-time translation)
+Buffered channels: For offline-capable message queuing
+Request-response: Promise-based with timeout handling
+Broadcast: Efficient multi-tab messaging
+
+Component Integration
+
+| Component       | Communication Method              | Use Case                          |
+| --------------- | --------------------------------- | --------------------------------- |
+| Content Scripts | `chrome.tabs.sendMessage` + Ports | Page interaction, scanning        |
+| Offscreen       | Direct messaging + Dedicated port | OCR processing, heavy computation |
+| Popup           | Message passing                   | User controls, quick settings     |
+| Options         | Tab messaging                     | Configuration, onboarding         |
+| Overlays        | Broadcast to frames               | UI updates, state changes         |
+| Native Host     | `chrome.runtime.connectNative`    | Desktop integration               |
+
+
+Enterprise Features
+Rate limiting: Per-source throttling (100 req/min default)
+Message history: Debug/audit trail (last 100 messages)
+Batch processing: Sequential or parallel message handling
+Circuit breaker pattern: Automatic failover for failing handlers
+Security Integration
+License validation middleware
+Component origin verification
+Secure channel establishment
+The router acts as the central nervous system, ensuring reliable, performant communication between all 50+ modules in your extension architecture while maintaining clean separation of concerns.

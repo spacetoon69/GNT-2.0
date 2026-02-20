@@ -1,0 +1,34 @@
+Key Features:
+Multi-Layer Storage Strategy
+
+| State Type | Storage                  | Use Case                  |
+| ---------- | ------------------------ | ------------------------- |
+| Settings   | `chrome.storage.sync`    | Cross-device preferences  |
+| Session    | `chrome.storage.session` | Temporary UI state (MV3)  |
+| Cache      | `chrome.storage.local`   | Translation cache, images |
+| Secure     | Encrypted (AES-256-GCM)  | License keys, credentials |
+| Stats      | `chrome.storage.local`   | Usage analytics           |
+
+
+Reactive Architecture
+Pub/Sub Pattern: Subscribe to specific keys or nested paths
+Computed State: Derived values with automatic dependency tracking
+Immediate Callbacks: Get current value on subscription
+Batch Updates: Atomic multi-key transactions
+Advanced Capabilities
+Path-based Access: state.set('settings', 'translation.engine', 'deepl')
+Schema Validation: Type checking and constraints on all updates
+Serialization: Automatic handling of Set, Map, Date objects
+Cross-Context Sync: Real-time synchronization across popup/content/background
+Import/Export: JSON backup/restore with migration support
+Performance Optimizations
+Cloning Strategy: Deep clones on read to prevent external mutations
+Change Detection: Deep equality checks prevent unnecessary updates
+Lazy Loading: Schemas loaded on-demand
+Memory Management: Automatic cleanup of subscribers
+Integration Points
+SecureStorage: Encrypted storage for sensitive data
+EventRouter: Broadcasts changes to all extension contexts
+APIManager: Shares translation cache state
+UI Components: Reactive binding for real-time updates
+The manager provides Redux-like predictability with Vue-like reactivity, optimized for Chrome extension architecture with multiple isolated contexts.

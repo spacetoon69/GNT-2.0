@@ -1,0 +1,37 @@
+Key Features Implemented:
+
+MV3 Compliance
+
+Service worker architecture (no persistent background page)
+Offscreen document management for OCR (DOM APIs unavailable in SW)
+Keep-alive mechanism to prevent suspension during long OCR operations
+Alarm API for periodic tasks
+
+Security Integration
+
+Integrity verification on startup
+License validation with session tokens
+Secure storage initialization
+Tamper detection hooks
+
+Performance Optimization
+
+Request queuing system for OCR operations
+Translation caching
+Performance monitoring integration
+Memory management and cleanup
+
+State Management
+
+Active manga tab tracking
+Translation queue with timeout handling
+Icon state management (Idle → Active EMS states)
+Settings synchronization across tabs
+
+Communication Architecture
+
+Message routing system (content ↔ background ↔ offscreen)
+External message handling (native messaging)
+Broadcast capabilities for multi-tab coordination
+
+The service worker acts as the central nervous system, coordinating between the content scripts (page interaction), offscreen documents (heavy processing), and UI components while maintaining security and performance standards.
