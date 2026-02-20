@@ -1,0 +1,43 @@
+Key Features of bubble-detector.js:
+Dual Detection Strategy
+ML Detection: TensorFlow.js object detection model (YOLO/SSD-based) trained on manga panels
+Heuristic Fallback: Computer vision algorithms using connected component analysis
+Computer Vision Pipeline
+Adaptive Thresholding: Handles varying lighting/scan quality
+Connected Components: Flood-fill algorithm to find blob regions
+Feature Extraction:
+Shape analysis (compactness, convexity)
+Tail detection (speech bubble indicator)
+Aspect ratio and fill ratio
+Edge pattern analysis
+Bubble Classification
+Speech Bubbles: Round with tail
+Thought Bubbles: Round/cloud-like without tail
+Narration Boxes: Rectangular
+SFX Bubbles: Small, irregular
+Panels: Large rectangular regions
+Layout Analysis
+Grid Detection: Automatically identifies panel rows/columns
+Reading Order: Supports both Japanese (RTL) and Korean/Chinese (LTR)
+Bubble-to-Panel Association: Links speech bubbles to their containing panels
+Performance Optimizations
+WebGL Acceleration: Uses GPU for ML inference when available
+Detection Caching: 5-minute cache with image hashing
+Subsampling: Skips pixels in heuristic mode for speed
+NMS: Non-maximum suppression to eliminate duplicate detections
+Robustness Features
+Graceful Degradation: Falls back to heuristics if ML model fails
+Dynamic TF.js Loading: Loads library only when needed
+Memory Management: Proper tensor disposal to prevent leaks
+Size Filtering: Eliminates noise and artifacts
+The detector outputs structured detections containing:
+JavaScript
+Copy
+{
+  id, x, y, width, height, centerX, centerY,
+  confidence, class, classId, source,
+  panelId, panelOverlap, // If associated with panel
+  features: { isRound, hasTail, aspectRatio, ... }, // Heuristic features
+  imageWidth, imageHeight
+}
+This feeds into the text extractor for OCR processing and the overlay system for positioning.

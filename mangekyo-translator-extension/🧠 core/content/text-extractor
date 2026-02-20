@@ -1,0 +1,39 @@
+Key Features of text-extractor.js:
+Dual Extraction Strategy
+OCR Pipeline: Offscreen document processing with Tesseract.js fallback
+DOM Hybrid: Extracts from alt text, cached data, or sibling elements when available
+Intelligent Region Processing
+Reading Order Sorting: Groups into rows, sorts RTL/LTR based on language
+Vertical Text Detection: Handles Japanese traditional writing (tategaki)
+Smart Merging: IoU-based overlap detection with text-aware concatenation
+Language Intelligence
+Multi-script Support: Japanese (Hiragana/Katakana/Kanji), Korean (Hangul), Chinese, Latin
+Automatic Detection: Character frequency analysis per region
+Honorifics Detection: Special handling for Japanese honorifics (さん, くん, etc.)
+SFX Classification: Identifies sound effects vs dialogue (crucial for manga context)
+Quality Assurance
+Confidence Scoring: Filters low-quality OCR results
+Post-processing Pipeline: Sanitization, deduplication, noise removal
+Context Preservation: Links previous/next text for translation continuity
+Difficulty Estimation: Scores complexity for translation engine selection
+Performance Optimizations
+Multi-level Caching: ImageData hashing for OCR results, font metrics
+Region Cropping: Sends only relevant image portions to OCR
+Fallback Chain: Offscreen → Client-side Tesseract → Heuristic detection
+Connected Component Analysis: Fast fallback for text region detection
+Manga-Specific Logic
+Panel Context Awareness: Maintains panel IDs for narrative flow
+Font Size Estimation: Calculates original typography for overlay matching
+Bubble Type Detection: Distinguishes speech, thought, narration, SFX
+Reading Direction: Supports both Japanese (RTL) and Korean/Chinese (LTR) layouts
+The extractor outputs structured TextRegion objects containing:
+JavaScript
+Copy
+{
+  id, text, originalText, confidence,
+  boundingBox: {x, y, width, height},
+  isVertical, fontSize, language, isSFX,
+  hasHonorifics, difficulty,
+  context: {prevText, nextText, panelId}
+}
+This feeds directly into the translation pipeline with rich metadata for context-aware translation.

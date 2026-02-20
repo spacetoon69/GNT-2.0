@@ -1,0 +1,40 @@
+Key Features of image-processor.js:
+Multi-Stage Processing Pipeline
+Normalization: Handles ImageData, Canvas, Blob, Image inputs
+Resizing: Optimal DPI scaling (400-2048px range)
+Grayscale Conversion: Luminance-preserving RGB weights
+Denoising: Median filter with OpenCV.js acceleration
+Contrast Enhancement: CLAHE (adaptive histogram equalization)
+Deskewing: Projection profile-based rotation correction
+Binarization: Otsu, Adaptive, or Sauvola methods
+Manga Optimization: Screen tone removal, panel detection
+Advanced Algorithms
+Deskewing:
+Projection variance maximization
+Tests angles -15° to +15° in 0.5° increments
+Bilinear rotation with automatic bounds calculation
+Binarization:
+Otsu: Global threshold for uniform lighting
+Adaptive: Local mean thresholding for uneven lighting
+Sauvola: Handles varying illumination with std deviation
+Denoising:
+OpenCV: Fast NL-means denoising (if available)
+JS Fallback: 3x3 median filter for salt-and-pepper noise
+Manga-Specific Features
+Screen Tone Removal: Detects and smooths halftone dot patterns
+Panel Detection: Horizontal/vertical line detection for layout analysis
+Sauvola Thresholding: Handles white paper with varying gray tones
+Performance Optimizations
+OpenCV.js Integration: WASM-accelerated operations when available
+LRU Cache: Prevents reprocessing identical images
+Sampling: Skips pixels in expensive operations (deskew detection)
+Web Worker Ready: Architecture supports parallel processing
+Output Formats
+ImageData: Direct for OCR engines
+Blob: For file upload/storage
+Data URL: For debugging/display
+Quality Assurance
+Content Validation: Rejects blank/invalid outputs
+Configurable Pipeline: Toggle stages based on source quality
+Statistics: Performance monitoring and cache metrics
+The processor transforms raw manga scans into OCR-optimized binary images while preserving text edges and removing noise/artifacts that confuse recognition engines.

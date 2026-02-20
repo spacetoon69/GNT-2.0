@@ -1,0 +1,25 @@
+Key Features of manga-scanner.js:
+Detection Pipeline
+Multi-factor Detection: URL patterns, meta tags, site adapters, and image analysis
+Confidence Scoring: Weighted algorithm to avoid false positives
+Smart Image Filtering: Aspect ratio, size, and content validation
+Processing Architecture
+Batch Processing: Configurable batch sizes to prevent UI blocking
+Rate Limiting: Cooldown periods between scans
+WeakSet Tracking: Memory-efficient processed image tracking
+Lazy Loading Support: Handles dynamic content and infinite scroll
+Integration Points
+Site Adapters: Pluggable adapters for specific manga sites
+Background Communication: Message passing for OCR/translation offload
+Canvas Interceptor: Handles WebGL/Canvas-based readers
+Mutation Observer: Reactive scanning for SPAs
+Performance Optimizations
+Debounced DOM Watching: Prevents excessive scans during rapid changes
+Image Load Guarantees: Waits for natural dimensions before processing
+Parallel Processing: Promise.allSettled for batch operations
+Performance Monitoring: Built-in timing marks
+Error Handling
+Graceful Degradation: Individual image failures don't stop batch
+Error Reporting: Structured error telemetry to background
+Timeout Protection: 10s image load, 30s translation timeouts
+The scanner acts as the orchestration layer, delegating heavy work (OCR, translation) to offscreen documents/background service worker while managing DOM state and user interactions.

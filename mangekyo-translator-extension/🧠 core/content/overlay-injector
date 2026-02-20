@@ -1,0 +1,47 @@
+Key Features of overlay-injector.js:
+Smart Positioning System
+Overlap Avoidance: Automatically shifts overlapping bubbles using iterative adjustment
+Reading Order Awareness: Respects RTL (Japanese) vs LTR (Korean/Chinese) layouts
+Boundary Constraints: Keeps overlays within image bounds with margin padding
+Row-based Grouping: Groups bubbles by vertical position for logical flow
+Visual Design System
+Theme Presets: Default, Dark, Minimal, and Manga-style (comic book aesthetic)
+Dynamic Font Sizing: Calculates optimal font size based on bubble area and text length
+CJK Optimization: Adjusts character spacing for Chinese, Japanese, Korean text
+Vertical Text Support: writing-mode: vertical-rl for traditional Japanese
+Bubble Tails: CSS-generated directional tails for speech bubbles
+Interactive Features
+Click to Toggle: Switch between translated and original text
+Hover Preview: Show original text on hover with opacity change
+Context Menu: Copy text, report issues, hide/reset overlays
+Draggable: Manual position adjustment (optional)
+Resizable: Manual size adjustment (optional)
+Content Adaptation
+Text Fitting: Automatically adjusts to content with overflow detection
+SFX Badges: Special indicators for sound effects
+Typography Matching: Preserves bold/italic from original
+Honorifics Handling: Visual indicators for Japanese honorifics context
+Animation & Polish
+Staggered Entrance: Sequential fade-in for multiple bubbles
+Scale Transitions: Smooth hover effects
+Shadow Effects: Depth perception with configurable shadows
+Pulse Animations: Highlight states for user attention
+Technical Robustness
+Container Strategy: Absolute positioning within relative image parents
+Z-index Management: Maximum z-index to stay above page content
+Event Isolation: Stops propagation to prevent page interference
+Memory Management: Cleanup methods for navigation/unload
+The injector creates DOM structures like:
+HTML
+Preview
+Copy
+<div class="manga-overlay-container">
+  <div class="manga-translation-overlay" style="...">
+    <div class="overlay-content">
+      <span class="translated-text">Translated dialogue here</span>
+      <span class="original-text" style="display:none">Original text</span>
+    </div>
+    <div class="bubble-tail" style="..."></div>
+  </div>
+</div>
+This provides a polished, interactive reading experience that respects the original manga aesthetic while providing clear translations.

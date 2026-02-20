@@ -1,0 +1,16 @@
+Key Design Decisions:
+
+| Feature                     | Implementation                    | Purpose                                         |
+| --------------------------- | --------------------------------- | ----------------------------------------------- |
+| **Debounced Processing**    | 150ms debounce on text changes    | Prevents OCR thrashing on rapid DOM updates     |
+| **Throttled Scanning**      | 500ms throttle on image detection | Limits resource usage during scroll             |
+| **Mutation Categorization** | Separates images/text/layout      | Allows targeted processing by specific handlers |
+| **WeakSet Tracking**        | `observedElements`                | Memory-efficient element tracking without leaks |
+| **Custom Events**           | `manga-translator:*` namespace    | Decoupled communication with scanner modules    |
+| **Site-Agnostic Detection** | Multiple heuristic checks         | Works across MangaDex, Webtoon, Cubari, etc.    |
+
+Integration Points:
+Emits: textDetected, layoutChanged, scanRequested events
+Consumed by: manga-scanner.js, text-extractor.js, bubble-detector.js
+Controlled by: state-manager.js (pause/resume during translation)
+Would you like me to elaborate on any specific aspect, such as the performance optimization strategies or the site-specific detection heuristics?

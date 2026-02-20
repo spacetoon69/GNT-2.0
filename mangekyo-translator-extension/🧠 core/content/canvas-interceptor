@@ -1,0 +1,39 @@
+Key Features of canvas-interceptor.js:
+Multi-Context Support
+WebGL/WebGL2: Handles modern GPU-accelerated manga readers
+2D Context: Traditional canvas-based readers
+OffscreenCanvas: Web Worker canvas operations
+Intelligent Capture Strategies
+Prototype Patching: Intercepts getContext(), drawArrays(), drawImage() etc.
+Multiple Fallbacks: toDataURL() → readPixels() → getImageData()
+Content Validation: Rejects blank/transparent canvases using pixel analysis
+Throttling: FPS-limited capture to prevent performance degradation
+Manga Detection Heuristics
+Size Filtering: Ignores icons/thumbnails (100px min, 4096px max)
+Aspect Ratio: Identifies portrait manga layouts (0.3-3.0 ratio)
+Visibility Check: Only captures viewport-visible canvases
+Content Analysis: Detects actual drawing vs blank/placeholder canvases
+WebGL Specific Handling
+Buffer Preservation: Warns about preserveDrawingBuffer: false
+Pixel Reading: Direct readPixels() for unbuffered contexts
+Y-Flip Correction: WebGL coordinate system adjustment
+Framebuffer Handling: Preserves current render state
+Performance Optimizations
+WeakMap Registry: Memory-efficient canvas tracking
+Capture Queue: Batched async processing
+RequestAnimationFrame: Synchronized with display refresh
+Priority System: High priority for user-initiated captures
+Integration Points
+Custom Events: Dispatches manga-canvas-captured with ImageData
+Runtime Messaging: Chrome extension communication
+Debug Overlays: Visual debugging mode for development
+Robustness Features
+Tainted Canvas Handling: Graceful degradation for CORS content
+Context Loss Recovery: Handles WebGL context loss events
+Dynamic Registration: Auto-captures new canvases via MutationObserver
+Method Preservation: Stores original methods for clean deactivation
+The interceptor outputs ImageData objects compatible with the OCR pipeline, enabling translation of canvas-based readers like:
+Webtoon official apps
+MangaPlus reader
+Self-hosted WebGL readers
+Custom HTML5 manga viewers
