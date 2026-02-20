@@ -1,0 +1,17 @@
+This comprehensive English localization file includes:
+Extension metadata - Name, description, branding
+Popup UI strings - Status messages, buttons, toggles, statistics
+Overlay system - Sharingan/Madara EMS themed tooltips and menus
+Settings pages - All 6 settings categories with detailed options
+Error handling - Specific error messages for OCR, translation, network, license, and security issues
+Notifications - System notification templates
+Context menu - Right-click menu options
+Cultural elements - Honorifics explanations and SFX (sound effects) translations
+Time/duration formatting - Relative time strings
+Units - Measurement abbreviations
+The file follows i18n best practices with:
+Interpolation placeholders ({count}, {version}, {date}, {percent}, {user})
+Hierarchical organization matching the UI structure
+Consistent terminology (Sharingan/EMS theme maintained throughout)
+Accessibility considerations (high contrast, reduce motion options)
+Cultural sensitivity (proper handling of Japanese honorifics and manga terminology)

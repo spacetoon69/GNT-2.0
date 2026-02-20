@@ -1,0 +1,455 @@
+{
+  "meta": {
+    "language": "简体中文",
+    "locale": "zh-CN",
+    "translator": "System",
+    "version": "1.0.0"
+  },
+
+  "extension": {
+    "name": "万花筒翻译器",
+    "shortName": "万花筒",
+    "description": "基于AI的OCR与对话框检测实时漫画、韩漫翻译工具",
+    "author": "万花筒团队"
+  },
+
+  "popup": {
+    "title": "万花筒翻译器",
+    "status": {
+      "idle": "待机中 - 点击激活",
+      "scanning": "正在扫描页面...",
+      "translating": "正在翻译...",
+      "error": "发生错误",
+      "offline": "离线模式",
+      "premium": "高级版已激活"
+    },
+    "buttons": {
+      "activate": "激活写轮眼",
+      "deactivate": "停用",
+      "quickTranslate": "快速翻译",
+      "settings": "打开设置",
+      "history": "查看历史"
+    },
+    "toggles": {
+      "autoDetect": "自动检测漫画页面",
+      "realTime": "实时翻译",
+      "overlayMode": "覆盖层模式",
+      "soundEffects": "音效",
+      "saveHistory": "保存翻译历史"
+    },
+    "stats": {
+      "today": "今日：{count} 次翻译",
+      "total": "总计：{count} 次翻译",
+      "accuracy": "OCR 准确率：{percent}%"
+    },
+    "notifications": {
+      "pageDetected": "检测到漫画页面！",
+      "translationComplete": "翻译完成",
+      "ocrFailed": "文字识别失败",
+      "apiError": "翻译服务暂不可用"
+    }
+  },
+
+  "overlay": {
+    "sharingan": {
+      "idleTooltip": "点击扫描页面",
+      "activeTooltip": "扫描进行中 - 点击暂停",
+      "dragHint": "拖动移动",
+      "menu": {
+        "scanNow": "立即扫描",
+        "translateAll": "翻译所有对话框",
+        "clearOverlays": "清除覆盖层",
+        "settings": "设置",
+        "hide": "隐藏写轮眼"
+      }
+    },
+    "madara": {
+      "activeState": "永恒万花筒写轮眼已激活",
+      "processing": "正在处理 {count} 个对话框...",
+      "completed": "翻译完成",
+      "hud": {
+        "detected": "检测到 {count} 个对话框",
+        "translated": "已翻译 {count} 个",
+        "pending": "{count} 个待处理"
+      }
+    },
+    "translationBubble": {
+      "originalText": "原文",
+      "translatedText": "译文",
+      "copy": "复制",
+      "speak": "朗读",
+      "edit": "编辑翻译",
+      "report": "报告错误",
+      "close": "关闭",
+      "expand": "展开",
+      "loading": "翻译中..."
+    }
+  },
+
+  "options": {
+    "pages": {
+      "general": {
+        "title": "常规设置",
+        "language": {
+          "title": "界面语言",
+          "uiLanguage": "界面语言",
+          "defaultTarget": "默认翻译语言"
+        },
+        "behavior": {
+          "title": "扩展行为",
+          "autoActivate": "在漫画网站自动激活",
+          "showSharingan": "显示悬浮写轮眼图标",
+          "minimizeToTray": "最小化到系统托盘（桌面版）",
+          "startMinimized": "启动时最小化"
+        },
+        "performance": {
+          "title": "性能",
+          "quality": "图像处理质量",
+          "qualityLow": "低（快速）",
+          "qualityMedium": "中（平衡）",
+          "qualityHigh": "高（精准）",
+          "maxConcurrent": "最大并发翻译数",
+          "cacheSize": "缓存大小限制（MB）"
+        }
+      },
+
+      "translation": {
+        "title": "翻译设置",
+        "engines": {
+          "title": "翻译引擎",
+          "primary": "主引擎",
+          "fallback": "备用引擎",
+          "google": "谷歌翻译",
+          "deepL": "DeepL",
+          "openai": "OpenAI GPT-4 Vision",
+          "local": "本地大模型（离线）"
+        },
+        "languages": {
+          "title": "语言对",
+          "source": "源语言检测",
+          "target": "目标语言",
+          "auto": "自动检测",
+          "ja": "日语",
+          "ko": "韩语",
+          "zh": "中文",
+          "en": "英语",
+          "es": "西班牙语",
+          "fr": "法语",
+          "de": "德语",
+          "ru": "俄语"
+        },
+        "context": {
+          "title": "上下文处理",
+          "preserveContext": "跨页面保持叙事上下文",
+          "honorifics": "保留日语敬语",
+          "sfx": "翻译拟声拟态词",
+          "notes": "显示译者注释"
+        },
+        "advanced": {
+          "title": "高级设置",
+          "temperature": "GPT 温度（创造性）",
+          "customPrompt": "自定义翻译提示词",
+          "retryFailed": "自动重试失败的翻译"
+        }
+      },
+
+      "ocr": {
+        "title": "OCR 设置",
+        "engine": {
+          "title": "OCR 引擎",
+          "tesseract": "Tesseract.js（本地）",
+          "googleVision": "Google Vision API",
+          "azure": "Azure 计算机视觉",
+          "auto": "自动选择最佳引擎"
+        },
+        "preprocessing": {
+          "title": "图像预处理",
+          "denoise": "降噪",
+          "binarize": "二值化（黑白转换）",
+          "deskew": "自动旋转校正",
+          "contrast": "对比度增强",
+          "upscale": "放大细小文字"
+        },
+        "languages": {
+          "title": "OCR 语言",
+          "japanese": "日语（横排）",
+          "japaneseVertical": "日语（竖排）",
+          "korean": "韩语",
+          "chineseSimplified": "中文（简体）",
+          "chineseTraditional": "中文（繁体）",
+          "english": "英语",
+          "multi": "多语言模式"
+        },
+        "detection": {
+          "title": "文字检测",
+          "bubbleDetection": "对话框检测",
+          "panelSegmentation": "漫画分镜分割",
+          "confidenceThreshold": "置信度阈值",
+          "minTextSize": "最小文字尺寸（像素）"
+        }
+      },
+
+      "appearance": {
+        "title": "外观",
+        "theme": {
+          "title": "主题",
+          "sharingan": "写轮眼（红/黑）",
+          "madara": "斑永恒万花筒（紫/黑）",
+          "itachi": "鼬（黑/红）",
+          "custom": "自定义"
+        },
+        "overlay": {
+          "title": "翻译覆盖层样式",
+          "background": "背景样式",
+          "bgSolid": "纯色",
+          "bgSemi": "半透明",
+          "bgManga": "漫画风格对话框",
+          "bgNone": "无背景",
+          "font": "字体",
+          "fontSize": "基础字号",
+          "textColor": "文字颜色",
+          "border": "边框样式",
+          "position": "默认位置",
+          "posAbove": "原文上方",
+          "posReplace": "替换原文",
+          "posBelow": "原文下方",
+          "posInline": "内联"
+        },
+        "sharingan": {
+          "title": "写轮眼图标",
+          "size": "图标尺寸",
+          "opacity": "不透明度",
+          "animation": "动画速度",
+          "glow": "发光效果",
+          "sound": "激活音效"
+        },
+        "accessibility": {
+          "title": "无障碍",
+          "highContrast": "高对比度模式",
+          "largeText": "大字体模式",
+          "reduceMotion": "减少动画"
+        }
+      },
+
+      "hotkeys": {
+        "title": "快捷键设置",
+        "description": "配置键盘快捷键以便快速访问",
+        "modifiers": "修饰键：Ctrl、Alt、Shift",
+        "actions": {
+          "activate": "激活/停用",
+          "quickScan": "快速扫描当前页面",
+          "translateSelection": "翻译选中文字",
+          "toggleOverlays": "显示/隐藏覆盖层",
+          "captureRegion": "捕获自定义区域",
+          "openSettings": "打开设置",
+          "clearCache": "清除翻译缓存"
+        },
+        "conflicts": "检测到快捷键冲突",
+        "reset": "恢复默认"
+      },
+
+      "advanced": {
+        "title": "高级设置",
+        "developer": {
+          "title": "开发者选项",
+          "debugMode": "调试模式",
+          "verboseLogging": "详细日志记录",
+          "showBoundingBoxes": "显示检测边界框",
+          "exportLogs": "导出调试日志"
+        },
+        "network": {
+          "title": "网络",
+          "timeout": "API 超时（秒）",
+          "retries": "最大重试次数",
+          "proxy": "代理服务器",
+          "offlineMode": "强制离线模式"
+        },
+        "storage": {
+          "title": "存储管理",
+          "clearCache": "清除翻译缓存",
+          "clearHistory": "清除历史记录",
+          "exportData": "导出所有数据",
+          "importData": "导入数据",
+          "reset": "重置所有设置"
+        },
+        "experimental": {
+          "title": "实验性功能",
+          "localLLM": "启用本地大模型翻译",
+          "desktopOverlay": "启用桌面覆盖层模式",
+          "cloudSync": "启用云同步",
+          "betaOCR": "使用测试版 OCR 引擎"
+        }
+      },
+
+      "about": {
+        "title": "关于",
+        "version": "版本 {version}",
+        "license": "授权给：{user}",
+        "premium": {
+          "status": "高级版状态",
+          "active": "有效期至 {date}",
+          "inactive": "未激活",
+          "upgrade": "升级到高级版"
+        },
+        "credits": {
+          "title": "致谢",
+          "tesseract": "OCR 引擎：Tesseract.js",
+          "tensorflow": "机器学习：TensorFlow.js",
+          "icons": "图标设计：万花筒设计团队"
+        },
+        "links": {
+          "website": "官方网站",
+          "docs": "文档",
+          "support": "支持",
+          "privacy": "隐私政策",
+          "terms": "服务条款"
+        },
+        "update": {
+          "check": "检查更新",
+          "available": "有可用更新：{version}",
+          "current": "当前已是最新版本"
+        }
+      }
+    },
+
+    "common": {
+      "save": "保存更改",
+      "reset": "恢复默认",
+      "cancel": "取消",
+      "apply": "应用",
+      "close": "关闭",
+      "enabled": "已启用",
+      "disabled": "已禁用",
+      "loading": "加载中...",
+      "success": "成功",
+      "error": "错误",
+      "warning": "警告",
+      "info": "信息"
+    }
+  },
+
+  "errors": {
+    "generic": "发生错误",
+    "network": {
+      "title": "网络错误",
+      "offline": "您似乎处于离线状态",
+      "timeout": "请求超时",
+      "blocked": "连接被防火墙阻止",
+      "dns": "DNS 解析失败"
+    },
+    "ocr": {
+      "title": "OCR 错误",
+      "noText": "图像中未检测到文字",
+      "lowQuality": "图像质量过低",
+      "unsupported": "不支持的语言",
+      "engineFailed": "OCR 引擎初始化失败",
+      "timeout": "OCR 处理超时"
+    },
+    "translation": {
+      "title": "翻译错误",
+      "apiLimit": "超出 API 速率限制",
+      "quota": "超出翻译配额",
+      "unsupportedPair": "不支持的语言对",
+      "contextLost": "上下文丢失 - 正在重试",
+      "censored": "内容被过滤器阻止"
+    },
+    "license": {
+      "title": "许可证错误",
+      "invalid": "无效的许可证密钥",
+      "expired": "许可证已过期",
+      "machineMismatch": "许可证绑定到其他设备",
+      "revoked": "许可证已被撤销",
+      "contactSupport": "请联系支持团队"
+    },
+    "security": {
+      "title": "安全错误",
+      "tampering": "代码完整性检查失败",
+      "checksum": "文件验证失败",
+      "suspicious": "检测到可疑活动",
+      "locked": "扩展因安全原因已锁定"
+    }
+  },
+
+  "notifications": {
+    "translationComplete": {
+      "title": "翻译完成",
+      "body": "已翻译 {count} 个对话框"
+    },
+    "pageDetected": {
+      "title": "检测到漫画页面",
+      "body": "点击写轮眼开始翻译"
+    },
+    "premiumRequired": {
+      "title": "高级功能",
+      "body": "此功能需要高级版订阅"
+    },
+    "updateAvailable": {
+      "title": "有可用更新",
+      "body": "版本 {version} 已准备好安装"
+    }
+  },
+
+  "contextMenu": {
+    "translateSelection": "翻译选中文字",
+    "translateImage": "翻译图像文字",
+    "scanPage": "扫描整个页面",
+    "captureRegion": "捕获区域以翻译",
+    "addToDictionary": "添加到自定义词典",
+    "reportError": "报告翻译错误"
+  },
+
+  "siteAdapters": {
+    "mangaDex": "MangaDex",
+    "webtoon": "Webtoon",
+    "cubari": "Cubari",
+    "generic": "通用漫画网站",
+    "unsupported": "此网站可能未完全支持"
+  },
+
+  "honorifics": {
+    "san": "~桑（先生/女士）",
+    "sama": "~大人/殿下",
+    "kun": "~君（男性）",
+    "chan": "~酱（亲昵）",
+    "senpai": "~前辈",
+    "kohai": "~后辈",
+    "sensei": "~老师/师傅",
+    "dono": "~殿（尊称）",
+    "nee": "~姐",
+    "nii": "~哥"
+  },
+
+  "sfx": {
+    "categories": {
+      "action": "动作",
+      "emotion": "情感",
+      "environment": "环境",
+      "movement": "移动"
+    },
+    "common": {
+      "ドキドキ": "扑通扑通（心跳）",
+      "ガン": "砰（撞击）",
+      "バキ": "咔嚓（断裂）",
+      "ズキズキ": "一跳一跳（阵痛）",
+      "フワフワ": "轻飘飘（漂浮）",
+      "ゴゴゴ": "隆隆隆（压迫感）",
+      "メラメラ": "熊熊（燃烧）"
+    }
+  },
+
+  "time": {
+    "justNow": "刚刚",
+    "minutesAgo": "{count} 分钟前",
+    "hoursAgo": "{count} 小时前",
+    "daysAgo": "{count} 天前",
+    "longAgo": "很久以前"
+  },
+
+  "units": {
+    "pixels": "像素",
+    "megabytes": "MB",
+    "seconds": "秒",
+    "milliseconds": "毫秒",
+    "percentage": "%"
+  }
+}

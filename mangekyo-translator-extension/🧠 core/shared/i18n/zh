@@ -1,0 +1,18 @@
+This Simplified Chinese localization includes:
+Cultural Adaptations:
+Naruto terminology: 写轮眼 (Sharingan), 万花筒 (Mangekyo), 永恒万花筒写轮眼 (Eternal Mangekyo Sharingan), 鼬 (Itachi), 斑 (Madara)
+Chinese comic terms: 对话框 (speech bubbles), 分镜 (panels), 拟声拟态词 (SFX)
+Platform awareness: References to Bilibili Comics, Tencent Anime, and other Chinese manga platforms
+Technical Considerations:
+Writing direction: 横排 (horizontal) and 竖排 (vertical) text support for Japanese manga
+Typography: Chinese font considerations for Simplified Chinese characters (Noto Sans SC)
+Regional variants: Distinguishes between 简体 (Simplified) and 繁体 (Traditional) Chinese OCR modes
+Linguistic Features:
+Formal register: Uses standard polite Chinese throughout (~中, ~了, ~吗)
+Onomatopoeia: Chinese equivalents for Japanese SFX (扑通扑通, 砰, 咔嚓, etc.)
+Tech terminology: Standard Chinese UI terms (缓存, 覆盖层, 激活, etc.)
+UX Localization:
+Concise phrasing: Natural Chinese brevity (e.g., "点击激活" vs. "Click to activate")
+Status indicators: Clear, direct status messages
+Error handling: Polite but informative error messages using standard Chinese error conventions
+The file maintains structural parity with the other language files while providing culturally authentic Chinese manga community terminology and proper handling of Japanese content consumption in Chinese-speaking regions.

@@ -1,0 +1,22 @@
+This Korean localization includes:
+Cultural Adaptations:
+Naruto terminology: 쓰기안 (Sharingan), 만화경 (Mangekyo), 영원한 만화경 쓰기안 (Eternal Mangekyo Sharingan)
+Webtoon/Manhwa terms: 말풍선 (speech bubbles), 컷 (panels), 의성어·의태어 (SFX)
+Korean honorifics: Native Korean explanations with proper context (~님, ~군, 선배님, etc.)
+Technical Considerations:
+Writing direction: References to 가로쓰기 (horizontal) and 세로쓰기 (vertical) text
+Typography: Korean font considerations for Hangul and Hanja characters
+Reading flow: UI elements positioned for Korean reading habits
+Linguistic Features:
+Polite speech level: ~습니다/~니다 form used throughout for professional tone
+Onomatopoeia: Korean equivalents for Japanese SFX (두근두근, 쿵, 쩍, etc.)
+Loanwords: Appropriate use of Konglish terms where standard in tech (오버레이, 모드, 캐시)
+Webtoon-Specific Elements:
+Platform recognition: Naver Webtoon, Daum Webtoon terminology
+Vertical scrolling: References to webtoon infinite scroll format
+Color terminology: Webtoon full-color vs manga monochrome distinctions
+UX Localization:
+Natural phrasing: "클릭하여 활성화" rather than literal translation
+Status messages: Concise, clear status updates
+Error handling: Polite but informative error messages (~세요, ~됩니다)
+The file maintains structural parity with en.json and ja.json while providing culturally authentic Korean webtoon community terminology and proper honorific handling for Japanese content consumption.

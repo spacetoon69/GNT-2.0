@@ -1,0 +1,455 @@
+{
+  "meta": {
+    "language": "English",
+    "locale": "en-US",
+    "translator": "System",
+    "version": "1.0.0"
+  },
+
+  "extension": {
+    "name": "Mangekyo Translator",
+    "shortName": "Mangekyo",
+    "description": "Real-time manga & manhwa translation with AI-powered OCR and speech bubble detection",
+    "author": "Mangekyo Team"
+  },
+
+  "popup": {
+    "title": "Mangekyo Translator",
+    "status": {
+      "idle": "Idle - Click to activate",
+      "scanning": "Scanning page...",
+      "translating": "Translating...",
+      "error": "Error occurred",
+      "offline": "Offline mode",
+      "premium": "Premium active"
+    },
+    "buttons": {
+      "activate": "Activate Sharingan",
+      "deactivate": "Deactivate",
+      "quickTranslate": "Quick Translate",
+      "settings": "Open Settings",
+      "history": "View History"
+    },
+    "toggles": {
+      "autoDetect": "Auto-detect manga pages",
+      "realTime": "Real-time translation",
+      "overlayMode": "Overlay mode",
+      "soundEffects": "Sound effects",
+      "saveHistory": "Save translation history"
+    },
+    "stats": {
+      "today": "Today: {count} translations",
+      "total": "Total: {count} translations",
+      "accuracy": "OCR Accuracy: {percent}%"
+    },
+    "notifications": {
+      "pageDetected": "Manga page detected!",
+      "translationComplete": "Translation complete",
+      "ocrFailed": "Text recognition failed",
+      "apiError": "Translation service unavailable"
+    }
+  },
+
+  "overlay": {
+    "sharingan": {
+      "idleTooltip": "Click to scan page",
+      "activeTooltip": "Scanning active - Click to pause",
+      "dragHint": "Drag to move",
+      "menu": {
+        "scanNow": "Scan Now",
+        "translateAll": "Translate All Bubbles",
+        "clearOverlays": "Clear Overlays",
+        "settings": "Settings",
+        "hide": "Hide Sharingan"
+      }
+    },
+    "madara": {
+      "activeState": "Eternal Mangekyo Active",
+      "processing": "Processing {count} bubbles...",
+      "completed": "Translation complete",
+      "hud": {
+        "detected": "{count} speech bubbles detected",
+        "translated": "{count} translated",
+        "pending": "{count} pending"
+      }
+    },
+    "translationBubble": {
+      "originalText": "Original",
+      "translatedText": "Translation",
+      "copy": "Copy",
+      "speak": "Read aloud",
+      "edit": "Edit translation",
+      "report": "Report error",
+      "close": "Close",
+      "expand": "Expand",
+      "loading": "Translating..."
+    }
+  },
+
+  "options": {
+    "pages": {
+      "general": {
+        "title": "General Settings",
+        "language": {
+          "title": "Interface Language",
+          "uiLanguage": "UI Language",
+          "defaultTarget": "Default Translation Language"
+        },
+        "behavior": {
+          "title": "Extension Behavior",
+          "autoActivate": "Auto-activate on manga sites",
+          "showSharingan": "Show floating Sharingan icon",
+          "minimizeToTray": "Minimize to system tray (desktop)",
+          "startMinimized": "Start minimized"
+        },
+        "performance": {
+          "title": "Performance",
+          "quality": "Image processing quality",
+          "qualityLow": "Low (Fast)",
+          "qualityMedium": "Medium (Balanced)",
+          "qualityHigh": "High (Accurate)",
+          "maxConcurrent": "Max concurrent translations",
+          "cacheSize": "Cache size limit (MB)"
+        }
+      },
+
+      "translation": {
+        "title": "Translation Settings",
+        "engines": {
+          "title": "Translation Engines",
+          "primary": "Primary engine",
+          "fallback": "Fallback engine",
+          "google": "Google Translate",
+          "deepL": "DeepL",
+          "openai": "OpenAI GPT-4 Vision",
+          "local": "Local LLM (Offline)"
+        },
+        "languages": {
+          "title": "Language Pairs",
+          "source": "Source language detection",
+          "target": "Target language",
+          "auto": "Auto-detect",
+          "ja": "Japanese",
+          "ko": "Korean",
+          "zh": "Chinese",
+          "en": "English",
+          "es": "Spanish",
+          "fr": "French",
+          "de": "German",
+          "ru": "Russian"
+        },
+        "context": {
+          "title": "Context Handling",
+          "preserveContext": "Preserve narrative context across pages",
+          "honorifics": "Preserve Japanese honorifics",
+          "sfx": "Translate sound effects (SFX)",
+          "notes": "Show translator notes"
+        },
+        "advanced": {
+          "title": "Advanced",
+          "temperature": "GPT temperature (creativity)",
+          "customPrompt": "Custom translation prompt",
+          "retryFailed": "Auto-retry failed translations"
+        }
+      },
+
+      "ocr": {
+        "title": "OCR Settings",
+        "engine": {
+          "title": "OCR Engine",
+          "tesseract": "Tesseract.js (Local)",
+          "googleVision": "Google Vision API",
+          "azure": "Azure Computer Vision",
+          "auto": "Auto-select best engine"
+        },
+        "preprocessing": {
+          "title": "Image Preprocessing",
+          "denoise": "Noise reduction",
+          "binarize": "Binarization (B&W conversion)",
+          "deskew": "Auto-rotate correction",
+          "contrast": "Contrast enhancement",
+          "upscale": "Upscale small text"
+        },
+        "languages": {
+          "title": "OCR Languages",
+          "japanese": "Japanese (Horizontal)",
+          "japaneseVertical": "Japanese (Vertical)",
+          "korean": "Korean",
+          "chineseSimplified": "Chinese (Simplified)",
+          "chineseTraditional": "Chinese (Traditional)",
+          "english": "English",
+          "multi": "Multi-language mode"
+        },
+        "detection": {
+          "title": "Text Detection",
+          "bubbleDetection": "Speech bubble detection",
+          "panelSegmentation": "Manga panel segmentation",
+          "confidenceThreshold": "Confidence threshold",
+          "minTextSize": "Minimum text size (px)"
+        }
+      },
+
+      "appearance": {
+        "title": "Appearance",
+        "theme": {
+          "title": "Theme",
+          "sharingan": "Sharingan (Red/Black)",
+          "madara": "Madara EMS (Purple/Black)",
+          "itachi": "Itachi (Black/Red)",
+          "custom": "Custom"
+        },
+        "overlay": {
+          "title": "Translation Overlay Style",
+          "background": "Background style",
+          "bgSolid": "Solid color",
+          "bgSemi": "Semi-transparent",
+          "bgManga": "Manga-style bubble",
+          "bgNone": "No background",
+          "font": "Font family",
+          "fontSize": "Base font size",
+          "textColor": "Text color",
+          "border": "Border style",
+          "position": "Default position",
+          "posAbove": "Above original",
+          "posReplace": "Replace original",
+          "posBelow": "Below original",
+          "posInline": "Inline"
+        },
+        "sharingan": {
+          "title": "Sharingan Icon",
+          "size": "Icon size",
+          "opacity": "Opacity",
+          "animation": "Animation speed",
+          "glow": "Glow effect",
+          "sound": "Activation sound"
+        },
+        "accessibility": {
+          "title": "Accessibility",
+          "highContrast": "High contrast mode",
+          "largeText": "Large text mode",
+          "reduceMotion": "Reduce motion"
+        }
+      },
+
+      "hotkeys": {
+        "title": "Hotkey Settings",
+        "description": "Configure keyboard shortcuts for quick access",
+        "modifiers": "Modifier keys: Ctrl, Alt, Shift",
+        "actions": {
+          "activate": "Activate/Deactivate",
+          "quickScan": "Quick scan current page",
+          "translateSelection": "Translate selected text",
+          "toggleOverlays": "Show/Hide overlays",
+          "captureRegion": "Capture custom region",
+          "openSettings": "Open settings",
+          "clearCache": "Clear translation cache"
+        },
+        "conflicts": "Shortcut conflicts detected",
+        "reset": "Reset to defaults"
+      },
+
+      "advanced": {
+        "title": "Advanced Settings",
+        "developer": {
+          "title": "Developer Options",
+          "debugMode": "Debug mode",
+          "verboseLogging": "Verbose logging",
+          "showBoundingBoxes": "Show detection bounding boxes",
+          "exportLogs": "Export debug logs"
+        },
+        "network": {
+          "title": "Network",
+          "timeout": "API timeout (seconds)",
+          "retries": "Max retries",
+          "proxy": "Proxy server",
+          "offlineMode": "Force offline mode"
+        },
+        "storage": {
+          "title": "Storage Management",
+          "clearCache": "Clear translation cache",
+          "clearHistory": "Clear history",
+          "exportData": "Export all data",
+          "importData": "Import data",
+          "reset": "Reset all settings"
+        },
+        "experimental": {
+          "title": "Experimental Features",
+          "localLLM": "Enable local LLM translation",
+          "desktopOverlay": "Enable desktop overlay mode",
+          "cloudSync": "Enable cloud synchronization",
+          "betaOCR": "Use beta OCR engine"
+        }
+      },
+
+      "about": {
+        "title": "About",
+        "version": "Version {version}",
+        "license": "Licensed to: {user}",
+        "premium": {
+          "status": "Premium Status",
+          "active": "Active until {date}",
+          "inactive": "Inactive",
+          "upgrade": "Upgrade to Premium"
+        },
+        "credits": {
+          "title": "Credits",
+          "tesseract": "OCR powered by Tesseract.js",
+          "tensorflow": "ML powered by TensorFlow.js",
+          "icons": "Icons by Mangekyo Design Team"
+        },
+        "links": {
+          "website": "Official Website",
+          "docs": "Documentation",
+          "support": "Support",
+          "privacy": "Privacy Policy",
+          "terms": "Terms of Service"
+        },
+        "update": {
+          "check": "Check for updates",
+          "available": "Update available: {version}",
+          "current": "You have the latest version"
+        }
+      }
+    },
+
+    "common": {
+      "save": "Save Changes",
+      "reset": "Reset to Default",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "close": "Close",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "loading": "Loading...",
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Information"
+    }
+  },
+
+  "errors": {
+    "generic": "An error occurred",
+    "network": {
+      "title": "Network Error",
+      "offline": "You appear to be offline",
+      "timeout": "Request timed out",
+      "blocked": "Connection blocked by firewall",
+      "dns": "DNS resolution failed"
+    },
+    "ocr": {
+      "title": "OCR Error",
+      "noText": "No text detected in image",
+      "lowQuality": "Image quality too low",
+      "unsupported": "Unsupported language",
+      "engineFailed": "OCR engine failed to initialize",
+      "timeout": "OCR processing timed out"
+    },
+    "translation": {
+      "title": "Translation Error",
+      "apiLimit": "API rate limit exceeded",
+      "quota": "Translation quota exceeded",
+      "unsupportedPair": "Unsupported language pair",
+      "contextLost": "Context lost - retrying",
+      "censored": "Content blocked by filter"
+    },
+    "license": {
+      "title": "License Error",
+      "invalid": "Invalid license key",
+      "expired": "License expired",
+      "machineMismatch": "License bound to different machine",
+      "revoked": "License revoked",
+      "contactSupport": "Please contact support"
+    },
+    "security": {
+      "title": "Security Error",
+      "tampering": "Code integrity check failed",
+      "checksum": "File verification failed",
+      "suspicious": "Suspicious activity detected",
+      "locked": "Extension locked for security"
+    }
+  },
+
+  "notifications": {
+    "translationComplete": {
+      "title": "Translation Complete",
+      "body": "Translated {count} speech bubbles"
+    },
+    "pageDetected": {
+      "title": "Manga Page Detected",
+      "body": "Click the Sharingan to start translating"
+    },
+    "premiumRequired": {
+      "title": "Premium Feature",
+      "body": "This feature requires a premium subscription"
+    },
+    "updateAvailable": {
+      "title": "Update Available",
+      "body": "Version {version} is ready to install"
+    }
+  },
+
+  "contextMenu": {
+    "translateSelection": "Translate selected text",
+    "translateImage": "Translate image text",
+    "scanPage": "Scan entire page",
+    "captureRegion": "Capture region to translate",
+    "addToDictionary": "Add to custom dictionary",
+    "reportError": "Report translation error"
+  },
+
+  "siteAdapters": {
+    "mangaDex": "MangaDex",
+    "webtoon": "Webtoon",
+    "cubari": "Cubari",
+    "generic": "Generic Manga Site",
+    "unsupported": "This site may not be fully supported"
+  },
+
+  "honorifics": {
+    "san": "Mr./Ms.",
+    "sama": "Lord/Lady",
+    "kun": "Junior (male)",
+    "chan": "Junior/affectionate",
+    "senpai": "Senior",
+    "kohai": "Junior",
+    "sensei": "Teacher/Master",
+    "dono": "Lord",
+    "nee": "Big sis",
+    "nii": "Big bro"
+  },
+
+  "sfx": {
+    "categories": {
+      "action": "Action",
+      "emotion": "Emotion",
+      "environment": "Environment",
+      "movement": "Movement"
+    },
+    "common": {
+      "ドキドキ": "Heart beating (doki doki)",
+      "ガン": "Impact (gan)",
+      "バキ": "Crack/Split (baki)",
+      "ズキズキ": "Throbbing pain (zuki zuki)",
+      "フワフワ": "Floating softly (fuwa fuwa)",
+      "ゴゴゴ": "Menacing presence (gogogo)",
+      "メラメラ": "Flames burning (meramera)"
+    }
+  },
+
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{count} minutes ago",
+    "hoursAgo": "{count} hours ago",
+    "daysAgo": "{count} days ago",
+    "longAgo": "Long ago"
+  },
+
+  "units": {
+    "pixels": "px",
+    "megabytes": "MB",
+    "seconds": "sec",
+    "milliseconds": "ms",
+    "percentage": "%"
+  }
+}

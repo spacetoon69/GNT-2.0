@@ -1,0 +1,455 @@
+{
+  "meta": {
+    "language": "日本語",
+    "locale": "ja-JP",
+    "translator": "System",
+    "version": "1.0.0"
+  },
+
+  "extension": {
+    "name": "万華鏡翻訳者",
+    "shortName": "万華鏡",
+    "description": "AI搭載OCRと吹き出し検出によるリアルタイム漫画・マンガ翻訳",
+    "author": "万華鏡チーム"
+  },
+
+  "popup": {
+    "title": "万華鏡翻訳者",
+    "status": {
+      "idle": "待機中 - クリックして起動",
+      "scanning": "ページをスキャン中...",
+      "translating": "翻訳中...",
+      "error": "エラーが発生しました",
+      "offline": "オフラインモード",
+      "premium": "プレミアム有効"
+    },
+    "buttons": {
+      "activate": "写輪眼を起動",
+      "deactivate": "停止",
+      "quickTranslate": "クイック翻訳",
+      "settings": "設定を開く",
+      "history": "履歴を表示"
+    },
+    "toggles": {
+      "autoDetect": "漫画ページを自動検出",
+      "realTime": "リアルタイム翻訳",
+      "overlayMode": "オーバーレイモード",
+      "soundEffects": "効果音",
+      "saveHistory": "翻訳履歴を保存"
+    },
+    "stats": {
+      "today": "今日: {count} 翻訳",
+      "total": "累計: {count} 翻訳",
+      "accuracy": "OCR精度: {percent}%"
+    },
+    "notifications": {
+      "pageDetected": "漫画ページを検出しました！",
+      "translationComplete": "翻訳完了",
+      "ocrFailed": "文字認識に失敗しました",
+      "apiError": "翻訳サービスが利用できません"
+    }
+  },
+
+  "overlay": {
+    "sharingan": {
+      "idleTooltip": "クリックしてページをスキャン",
+      "activeTooltip": "スキャン実行中 - クリックして一時停止",
+      "dragHint": "ドラッグして移動",
+      "menu": {
+        "scanNow": "今すぐスキャン",
+        "translateAll": "すべての吹き出しを翻訳",
+        "clearOverlays": "オーバーレイをクリア",
+        "settings": "設定",
+        "hide": "写輪眼を隠す"
+      }
+    },
+    "madara": {
+      "activeState": "永遠の万華鏡写輪眼・起動",
+      "processing": "{count}個の吹き出しを処理中...",
+      "completed": "翻訳完了",
+      "hud": {
+        "detected": "{count}個の吹き出しを検出",
+        "translated": "{count}個翻訳済み",
+        "pending": "{count}個保留中"
+      }
+    },
+    "translationBubble": {
+      "originalText": "原文",
+      "translatedText": "翻訳",
+      "copy": "コピー",
+      "speak": "音声読み上げ",
+      "edit": "翻訳を編集",
+      "report": "エラーを報告",
+      "close": "閉じる",
+      "expand": "展開",
+      "loading": "翻訳中..."
+    }
+  },
+
+  "options": {
+    "pages": {
+      "general": {
+        "title": "一般設定",
+        "language": {
+          "title": "インターフェース言語",
+          "uiLanguage": "UI言語",
+          "defaultTarget": "デフォルト翻訳言語"
+        },
+        "behavior": {
+          "title": "拡張機能の動作",
+          "autoActivate": "漫画サイトで自動起動",
+          "showSharingan": "浮遊写輪眼アイコンを表示",
+          "minimizeToTray": "システムトレイに最小化（デスクトップ）",
+          "startMinimized": "最小化状態で開始"
+        },
+        "performance": {
+          "title": "パフォーマンス",
+          "quality": "画像処理品質",
+          "qualityLow": "低（高速）",
+          "qualityMedium": "中（バランス）",
+          "qualityHigh": "高（高精度）",
+          "maxConcurrent": "最大同時翻訳数",
+          "cacheSize": "キャッシュサイズ上限（MB）"
+        }
+      },
+
+      "translation": {
+        "title": "翻訳設定",
+        "engines": {
+          "title": "翻訳エンジン",
+          "primary": "メインエンジン",
+          "fallback": "フォールバックエンジン",
+          "google": "Google翻訳",
+          "deepL": "DeepL",
+          "openai": "OpenAI GPT-4 Vision",
+          "local": "ローカルLLM（オフライン）"
+        },
+        "languages": {
+          "title": "言語ペア",
+          "source": "ソース言語検出",
+          "target": "ターゲット言語",
+          "auto": "自動検出",
+          "ja": "日本語",
+          "ko": "韓国語",
+          "zh": "中国語",
+          "en": "英語",
+          "es": "スペイン語",
+          "fr": "フランス語",
+          "de": "ドイツ語",
+          "ru": "ロシア語"
+        },
+        "context": {
+          "title": "コンテキスト処理",
+          "preserveContext": "ページ間で物語の文脈を保持",
+          "honorifics": "日本語の敬称を保持",
+          "sfx": "擬音・擬態語を翻訳",
+          "notes": "翻訳者注を表示"
+        },
+        "advanced": {
+          "title": "詳細設定",
+          "temperature": "GPT温度（創造性）",
+          "customPrompt": "カスタム翻訳プロンプト",
+          "retryFailed": "失敗した翻訳を自動再試行"
+        }
+      },
+
+      "ocr": {
+        "title": "OCR設定",
+        "engine": {
+          "title": "OCRエンジン",
+          "tesseract": "Tesseract.js（ローカル）",
+          "googleVision": "Google Vision API",
+          "azure": "Azure Computer Vision",
+          "auto": "最適なエンジンを自動選択"
+        },
+        "preprocessing": {
+          "title": "画像前処理",
+          "denoise": "ノイズ除去",
+          "binarize": "二値化（白黒変換）",
+          "deskew": "自動回転補正",
+          "contrast": "コントラスト強調",
+          "upscale": "小さな文字をアップスケール"
+        },
+        "languages": {
+          "title": "OCR言語",
+          "japanese": "日本語（横書き）",
+          "japaneseVertical": "日本語（縦書き）",
+          "korean": "韓国語",
+          "chineseSimplified": "中国語（簡体字）",
+          "chineseTraditional": "中国語（繁体字）",
+          "english": "英語",
+          "multi": "多言語モード"
+        },
+        "detection": {
+          "title": "文字検出",
+          "bubbleDetection": "吹き出し検出",
+          "panelSegmentation": "漫画コマ分割",
+          "confidenceThreshold": "信頼度閾値",
+          "minTextSize": "最小文字サイズ（px）"
+        }
+      },
+
+      "appearance": {
+        "title": "外観",
+        "theme": {
+          "title": "テーマ",
+          "sharingan": "写輪眼（赤/黒）",
+          "madara": "マダラ永万（紫/黒）",
+          "itachi": "イタチ（黒/赤）",
+          "custom": "カスタム"
+        },
+        "overlay": {
+          "title": "翻訳オーバーレイスタイル",
+          "background": "背景スタイル",
+          "bgSolid": "単色",
+          "bgSemi": "半透明",
+          "bgManga": "漫画風吹き出し",
+          "bgNone": "背景なし",
+          "font": "フォントファミリー",
+          "fontSize": "基本フォントサイズ",
+          "textColor": "文字色",
+          "border": "枠線スタイル",
+          "position": "デフォルト位置",
+          "posAbove": "原文の上",
+          "posReplace": "原文を置き換え",
+          "posBelow": "原文の下",
+          "posInline": "インライン"
+        },
+        "sharingan": {
+          "title": "写輪眼アイコン",
+          "size": "アイコンサイズ",
+          "opacity": "不透明度",
+          "animation": "アニメーション速度",
+          "glow": "発光効果",
+          "sound": "起動音"
+        },
+        "accessibility": {
+          "title": "アクセシビリティ",
+          "highContrast": "高コントラストモード",
+          "largeText": "大きな文字モード",
+          "reduceMotion": "動きを減らす"
+        }
+      },
+
+      "hotkeys": {
+        "title": "ホットキー設定",
+        "description": "クイックアクセス用のキーボードショートカットを設定",
+        "modifiers": "修飾キー: Ctrl、Alt、Shift",
+        "actions": {
+          "activate": "起動/停止",
+          "quickScan": "現在のページをクイックスキャン",
+          "translateSelection": "選択テキストを翻訳",
+          "toggleOverlays": "オーバーレイの表示/非表示",
+          "captureRegion": "カスタム領域をキャプチャ",
+          "openSettings": "設定を開く",
+          "clearCache": "翻訳キャッシュをクリア"
+        },
+        "conflicts": "ショートカットの競合を検出",
+        "reset": "デフォルトにリセット"
+      },
+
+      "advanced": {
+        "title": "詳細設定",
+        "developer": {
+          "title": "開発者オプション",
+          "debugMode": "デバッグモード",
+          "verboseLogging": "詳細ログ記録",
+          "showBoundingBoxes": "検出バウンディングボックスを表示",
+          "exportLogs": "デバッグログをエクスポート"
+        },
+        "network": {
+          "title": "ネットワーク",
+          "timeout": "APIタイムアウト（秒）",
+          "retries": "最大再試行回数",
+          "proxy": "プロキシサーバー",
+          "offlineMode": "強制オフラインモード"
+        },
+        "storage": {
+          "title": "ストレージ管理",
+          "clearCache": "翻訳キャッシュをクリア",
+          "clearHistory": "履歴をクリア",
+          "exportData": "すべてのデータをエクスポート",
+          "importData": "データをインポート",
+          "reset": "すべての設定をリセット"
+        },
+        "experimental": {
+          "title": "実験的機能",
+          "localLLM": "ローカルLLM翻訳を有効化",
+          "desktopOverlay": "デスクトップオーバーレイモードを有効化",
+          "cloudSync": "クラウド同期を有効化",
+          "betaOCR": "ベータ版OCRエンジンを使用"
+        }
+      },
+
+      "about": {
+        "title": "について",
+        "version": "バージョン {version}",
+        "license": "ライセンス: {user}",
+        "premium": {
+          "status": "プレミアムステータス",
+          "active": "{date}まで有効",
+          "inactive": "未アクティブ",
+          "upgrade": "プレミアムにアップグレード"
+        },
+        "credits": {
+          "title": "クレジット",
+          "tesseract": "OCR: Tesseract.js",
+          "tensorflow": "ML: TensorFlow.js",
+          "icons": "アイコン: 万華鏡デザインチーム"
+        },
+        "links": {
+          "website": "公式サイト",
+          "docs": "ドキュメント",
+          "support": "サポート",
+          "privacy": "プライバシーポリシー",
+          "terms": "利用規約"
+        },
+        "update": {
+          "check": "アップデートを確認",
+          "available": "アップデート利用可能: {version}",
+          "current": "最新バージョンを使用中"
+        }
+      }
+    },
+
+    "common": {
+      "save": "変更を保存",
+      "reset": "デフォルトにリセット",
+      "cancel": "キャンセル",
+      "apply": "適用",
+      "close": "閉じる",
+      "enabled": "有効",
+      "disabled": "無効",
+      "loading": "読み込み中...",
+      "success": "成功",
+      "error": "エラー",
+      "warning": "警告",
+      "info": "情報"
+    }
+  },
+
+  "errors": {
+    "generic": "エラーが発生しました",
+    "network": {
+      "title": "ネットワークエラー",
+      "offline": "オフライン状態のようです",
+      "timeout": "リクエストがタイムアウトしました",
+      "blocked": "ファイアウォールにより接続がブロックされました",
+      "dns": "DNS解決に失敗しました"
+    },
+    "ocr": {
+      "title": "OCRエラー",
+      "noText": "画像に文字が検出されませんでした",
+      "lowQuality": "画像品質が低すぎます",
+      "unsupported": "未対応の言語です",
+      "engineFailed": "OCRエンジンの初期化に失敗しました",
+      "timeout": "OCR処理がタイムアウトしました"
+    },
+    "translation": {
+      "title": "翻訳エラー",
+      "apiLimit": "APIレート制限を超過しました",
+      "quota": "翻訳クォータを超過しました",
+      "unsupportedPair": "未対応の言語ペアです",
+      "contextLost": "コンテキストが失われました - 再試行中",
+      "censored": "コンテンツがフィルタによりブロックされました"
+    },
+    "license": {
+      "title": "ライセンスエラー",
+      "invalid": "無効なライセンスキーです",
+      "expired": "ライセンスが期限切れです",
+      "machineMismatch": "ライセンスが別のマシンに紐付けられています",
+      "revoked": "ライセンスが取り消されました",
+      "contactSupport": "サポートにお問い合わせください"
+    },
+    "security": {
+      "title": "セキュリティエラー",
+      "tampering": "コード整合性チェックに失敗しました",
+      "checksum": "ファイル検証に失敗しました",
+      "suspicious": "不審なアクティビティを検出しました",
+      "locked": "セキュリティのため拡張機能がロックされました"
+    }
+  },
+
+  "notifications": {
+    "translationComplete": {
+      "title": "翻訳完了",
+      "body": "{count}個の吹き出しを翻訳しました"
+    },
+    "pageDetected": {
+      "title": "漫画ページを検出",
+      "body": "写輪眼をクリックして翻訳を開始"
+    },
+    "premiumRequired": {
+      "title": "プレミアム機能",
+      "body": "この機能にはプレミアムサブスクリプションが必要です"
+    },
+    "updateAvailable": {
+      "title": "アップデート利用可能",
+      "body": "バージョン {version} のインストール準備ができました"
+    }
+  },
+
+  "contextMenu": {
+    "translateSelection": "選択テキストを翻訳",
+    "translateImage": "画像内の文字を翻訳",
+    "scanPage": "ページ全体をスキャン",
+    "captureRegion": "翻訳する領域をキャプチャ",
+    "addToDictionary": "カスタム辞書に追加",
+    "reportError": "翻訳エラーを報告"
+  },
+
+  "siteAdapters": {
+    "mangaDex": "MangaDex",
+    "webtoon": "Webtoon",
+    "cubari": "Cubari",
+    "generic": "一般漫画サイト",
+    "unsupported": "このサイトは完全にはサポートされていない可能性があります"
+  },
+
+  "honorifics": {
+    "san": "〜さん",
+    "sama": "〜様",
+    "kun": "〜君",
+    "chan": "〜ちゃん",
+    "senpai": "〜先輩",
+    "kohai": "〜後輩",
+    "sensei": "〜先生",
+    "dono": "〜殿",
+    "nee": "〜姉",
+    "nii": "〜兄"
+  },
+
+  "sfx": {
+    "categories": {
+      "action": "アクション",
+      "emotion": "感情",
+      "environment": "環境",
+      "movement": "動作"
+    },
+    "common": {
+      "ドキドキ": "ドキドキ（心臓の鼓動）",
+      "ガン": "ガン（衝撃音）",
+      "バキ": "バキ（割れる音）",
+      "ズキズキ": "ズキズキ（脈打つ痛み）",
+      "フワフワ": "フワフワ（ふわふわ浮く）",
+      "ゴゴゴ": "ゴゴゴ（不気味な雰囲気）",
+      "メラメラ": "メラメラ（炎が燃える）"
+    }
+  },
+
+  "time": {
+    "justNow": "たった今",
+    "minutesAgo": "{count}分前",
+    "hoursAgo": "{count}時間前",
+    "daysAgo": "{count}日前",
+    "longAgo": "かなり前"
+  },
+
+  "units": {
+    "pixels": "px",
+    "megabytes": "MB",
+    "seconds": "秒",
+    "milliseconds": "ms",
+    "percentage": "%"
+  }
+}
