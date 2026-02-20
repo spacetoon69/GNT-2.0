@@ -1,0 +1,17 @@
+| Setting             | Value                              | Purpose                                       |
+| ------------------- | ---------------------------------- | --------------------------------------------- |
+| `optionsPreset`     | `high-obfuscation`                 | Maximum protection for production builds      |
+| `identifiersPrefix` | `_mgky_`                           | Namespace obfuscated vars to avoid collisions |
+| `reservedNames`     | Chrome APIs, WASM, TF.js           | Prevent breaking extension functionality      |
+| `reservedStrings`   | Protocols, MIME types, brand terms | Preserve critical strings                     |
+| `target`            | `browser`                          | Optimized for browser environment             |
+| `selfDefending`     | `true`                             | Anti-tampering code injection                 |
+| `debugProtection`   | `true`                             | Prevents DevTools debugging                   |
+| `deadCodeInjection` | `40%`                              | Adds noise without hurting performance        |
+| `exclude`           | WASM, traineddata, assets          | Skip binary/large files                       |
+
+# Install
+npm install --save-dev javascript-obfuscator
+
+# Usage in webpack.config.js or build script
+javascript-obfuscator --config security/obfuscation/javascript-obfuscator.json --output dist/ src/

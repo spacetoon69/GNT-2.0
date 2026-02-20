@@ -1,0 +1,23 @@
+| Feature                 | Implementation                                        |
+| ----------------------- | ----------------------------------------------------- |
+| **Layered Encryption**  | AES-256-GCM + XOR obfuscation + PBKDF2 key derivation |
+| **Hardware Binding**    | Session salts derived from safe hardware signatures   |
+| **Runtime Obfuscation** | Strings encrypted as self-decrypting code             |
+| **Tamper Detection**    | Checksums + sealed data with expiration               |
+| **Memory Safety**       | Secure cleanup with `destroy()` method                |
+| **Compression**         | LZW-style compression for configs/API keys            |
+
+
+
+
+import { mangekyoCipher, StringVault } from './custom-encryption.js';
+
+// Encrypt API key
+const encrypted = await mangekyoCipher.encryptString(apiKey, userPassword);
+
+// Runtime string protection (appears as random code)
+const obfuscated = mangekyoCipher.runtimeObfuscate('sensitive_string');
+
+// Vault storage
+const vault = new StringVault(mangekyoCipher);
+await vault.store('deepl_key', apiKey, password);
