@@ -1,0 +1,274 @@
+│
+├── 📄 manifest.json                    # Extension configuration (MV3)
+├── 📄 README.md                        # Documentation & setup guide
+├── 📄 LICENSE                          # License file
+├── 📄 .gitignore                       # Git ignore rules
+├── 📄 package.json                     # Node dependencies & build scripts
+├── 📄 webpack.config.js                # Bundler configuration
+├── 📄 tsconfig.json                    # TypeScript configuration
+│
+├── 🔒 security/                        # Anti-reverse engineering layer
+│   ├── obfuscation/                    # Code protection
+│   │   ├── javascript-obfuscator.json  # Obfuscation rules
+│   │   └── custom-encryption.js        # String/algorithm encryption
+│   ├── integrity/                      # Code integrity checks
+│   │   ├── checksums.json              # File hash verification
+│   │   └── tamper-detection.js         # Runtime integrity monitoring
+│   ├── license/                        # Licensing system
+│   │   ├── license-validator.js        # License key verification
+│   │   └── hardware-fingerprint.js     # Machine binding
+│   └── wasm/                           # WebAssembly security modules
+│       ├── core-crypto.wasm            # Compiled crypto operations
+│       ├── ocr-engine.wasm             # Native OCR acceleration
+│       └── wasm-loader.js              # Secure WASM loader with CSP
+│
+├── 🧠 core/                            # Core extension logic
+│   ├── background/                     # Service Worker (MV3)
+│   │   ├── service-worker.js           # Main background entry
+│   │   ├── event-router.js             # Message passing coordinator
+│   │   ├── api-manager.js              # External API orchestration
+│   │   ├── state-manager.js            # Extension state persistence
+│   │   └── lifecycle/                  # Background lifecycle
+│   │       ├── install-handler.js      # Installation setup
+│   │       ├── update-handler.js       # Update migrations
+│   │       └── alarm-scheduler.js      # Periodic tasks
+│   │
+│   ├── content/                        # Content scripts (page injection)
+│   │   ├── manga-scanner.js            # Manga/manhwa page detection
+│   │   ├── text-extractor.js           # DOM text extraction
+│   │   ├── bubble-detector.js          # Speech bubble detection
+│   │   ├── overlay-injector.js         # Translation overlay injection
+│   │   ├── canvas-interceptor.js       # Canvas/WebGL capture
+│   │   ├── image-processor.js          # Image preprocessing for OCR
+│   │   ├── mutation-observer.js        # DOM change detection
+│   │   └── site-adapters/              # Site-specific handlers
+│   │       ├── mangadex-adapter.js
+│   │       ├── webtoon-adapter.js
+│   │       ├── cubari-adapter.js
+│   │       └── generic-manga-adapter.js
+│   │
+│   ├── offscreen/                      # Offscreen documents (MV3)
+│   │   ├── offscreen.html              # Hidden document container
+│   │   ├── offscreen.js                # Offscreen coordinator
+│   │   ├── heavy-ocr.html              # OCR processing document
+│   │   ├── heavy-ocr.js                # Tesseract.js heavy processing
+│   │   ├── translation-bridge.js       # Translation API wrapper
+│   │   └── image-analysis.html         # Computer vision document
+│   │
+│   └── shared/                         # Shared utilities
+│       ├── constants.js                  # Global constants
+│       ├── config-manager.js             # Settings management
+│       ├── i18n/                         # Internationalization
+│       │   ├── en.json
+│       │   ├── ja.json
+│       │   ├── ko.json
+│       │   └── zh.json
+│       └── utils/
+│           ├── dom-helpers.js
+│           ├── image-utils.js
+│           ├── text-sanitizer.js
+│           └── performance-monitor.js
+│
+├── 👁️ computer-vision/                 # CV & OCR engines
+│   ├── ocr/                            # Text recognition
+│   │   ├── tesseract-config.js         # Tesseract.js configuration
+│   │   ├── language-data/              # Trained language models
+│   │   │   ├── eng.traineddata
+│   │   │   ├── jpn.traineddata         # Japanese (vertical/horizontal)
+│   │   │   ├── jpn_vert.traineddata   # Japanese vertical
+│   │   │   ├── kor.traineddata         # Korean
+│   │   │   ├── chi_sim.traineddata     # Simplified Chinese
+│   │   │   ├── chi_tra.traineddata     # Traditional Chinese
+│   │   │   └── osd.traineddata         # Orientation detection
+│   │   ├── preprocessors/              # Image preprocessing
+│   │   │   ├── denoiser.js             # Noise reduction
+│   │   │   ├── binarizer.js            # Black/white conversion
+│   │   │   ├── deskewer.js             # Rotation correction
+│   │   │   └── panel-segmenter.js      # Manga panel detection
+│   │   └── postprocessors/             # Text post-processing
+│   │       ├── manga-text-cleaner.js   # Clean OCR artifacts
+│   │       ├── bubble-classifier.js    # Text type classification
+│   │       └── context-restorer.js     # Fix broken sentences
+│   │
+│   ├── detection/                        # Object detection
+│   │   ├── bubble-detector/            # Speech bubble detection
+│   │   │   ├── model/                  # TensorFlow.js model
+│   │   │   │   ├── model.json
+│   │   │   │   └── weights.bin
+│   │   │   ├── bubble-detector.js      # Detection logic
+│   │   │   └── bounding-box-utils.js   # Box manipulation
+│   │   ├── panel-detector/             # Manga panel layout
+│   │   │   └── panel-segmentation.js
+│   │   └── text-region/                # Text block detection
+│   │       └── text-roi-extractor.js
+│   │
+│   └── translation/                    # Translation pipeline
+│       ├── engines/                      # Translation providers
+│       │   ├── google-translate.js
+│       │   ├── deepL-adapter.js
+│       │   ├── openai-gpt.js           # GPT-4 Vision for context
+│       │   └── local-llm.js            # On-device translation (future)
+│       ├── context-preserver.js         # Maintain narrative context
+│       ├── honorifics-handler.js       # Japanese honorifics logic
+│       ├── sfx-translator.js           # Sound effects translation
+│       └── cache-manager.js            # Translation caching
+│
+├── 🎨 ui/                              # User interface components
+│   ├── popup/                          # Browser popup
+│   │   ├── popup.html
+│   │   ├── popup.css
+│   │   ├── popup.js
+│   │   ├── components/
+│   │   │   ├── status-indicator.js     # Connection status
+│   │   │   ├── quick-toggles.js        # Feature switches
+│   │   │   └── recent-history.js       # Recent translations
+│   │   └── assets/
+│   │       ├── mangekyo-icon.svg       # Sharingan icon
+│   │       └── madara-ems.svg          # EMS active state icon
+│   │
+│   ├── options/                        # Settings page
+│   │   ├── options.html
+│   │   ├── options.css
+│   │   ├── options.js
+│   │   ├── pages/
+│   │   │   ├── general-settings.js
+│   │   │   ├── translation-settings.js
+│   │   │   ├── ocr-settings.js
+│   │   │   ├── appearance-settings.js  # Theme customization
+│   │   │   ├── hotkey-settings.js
+│   │   │   ├── advanced-settings.js    # Performance/security
+│   │   │   └── about.js
+│   │   └── components/
+│   │       ├── setting-card.js
+│   │       ├── color-picker.js
+│   │       └── language-selector.js
+│   │
+│   ├── overlays/                       # Floating UI elements
+│   │   ├── sharingan-float/            # Idle mode (3 Tomoe)
+│   │   │   ├── sharingan.html          # Floating window HTML
+│   │   │   ├── sharingan.css           # Animation styles
+│   │   │   ├── sharingan.js            # Float behavior
+│   │   │   ├── tomoe-animator.js       # Rotation animation
+│   │   │   └── assets/
+│   │   │       ├── tomoe-sharingan.svg # 3 tomoe design
+│   │   │       ├── spinning.css        # CSS keyframes
+│   │   │       └── glow-effects.css    # Visual effects
+│   │   │
+│   │   ├── madara-active/              # Active mode (EMS)
+│   │   │   ├── madara-overlay.html     # Active state container
+│   │   │   ├── madara-overlay.css      # EMS styling
+│   │   │   ├── madara-controller.js    # State management
+│   │   │   ├── ems-animator.js         # Eternal Mangekyo animation
+│   │   │   ├── translation-hud.js      # Active translation HUD
+│   │   │   └── assets/
+│   │   │       ├── ems-madara.svg      # Madara EMS design
+│   │   │       ├── susanoo-aura.css    # Power-up effects
+│   │   │       └── scan-lines.css      # Active scanning FX
+│   │   │
+│   │   ├── translation-bubble/         # Translated text display
+│   │   │   ├── bubble.html
+│   │   │   ├── bubble.css              # Smart positioning
+│   │   │   ├── bubble-renderer.js      # Render translations
+│   │   │   ├── smart-positioner.js     # Avoid overlap logic
+│   │   │   ├── font-matcher.js         # Match original font style
+│   │   │   └── typesetting-engine.js   # Manga typesetting
+│   │   │
+│   │   ├── desktop-overlay/            # System-level overlay (advanced)
+│   │   │   ├── native-bridge.js        # Native messaging host
+│   │   │   ├── overlay-manager.js      # Multi-monitor support
+│   │   │   └── electron-wrapper/       # Optional desktop component
+│   │   │       ├── main.js
+│   │   │       ├── preload.js
+│   │   │       └── package.json
+│   │   │
+│   │   └── shared/
+│   │       ├── drag-controller.js      # Floating window drag
+│   │       ├── resize-handler.js       # Dynamic sizing
+│   │       ├── transparency-manager.js # Opacity controls
+│   │       └── focus-tracker.js        # Z-index management
+│   │
+│   └── components/                     # Reusable UI elements
+│       ├── translation-card/
+│       ├── loading-spinner/
+│       ├── error-boundary/
+│       └── toast-notifications/
+│
+├── 🔌 integration/                     # External integrations
+│   ├── apis/                           # Third-party services
+│   │   ├── translation-apis.js
+│   │   ├── image-hosting.js            # Imgur, etc. for processing
+│   │   └── dictionary-apis.js          # Jisho, etc.
+│   ├── native-messaging/               # Desktop app communication
+│   │   ├── host-manifest.json          # Native messaging manifest
+│   │   ├── host-installer.js           # Install native host
+│   │   └── protocols/
+│   │       ├── screen-capture.proto    # Desktop capture protocol
+│   │       └── overlay-control.proto   # Desktop overlay control
+│   └── cloud-sync/                     # User data synchronization
+│       ├── firebase-config.js
+│       └── sync-manager.js
+│
+├── 💾 storage/                         # Data persistence
+│   ├── indexeddb/                      # Browser database
+│   │   ├── schema.js                   # Database schema
+│   │   ├── translation-cache.js        # Cached translations
+│   │   ├── image-cache.js              # Processed image storage
+│   │   └── settings-store.js           # User preferences
+│   ├── local-storage/                  # Simple key-value
+│   │   └── session-manager.js
+│   └── sync-storage/                   # Chrome sync
+│       └── cross-device-settings.js
+│
+├── 🛡️ privacy/                         # Privacy & security
+│   ├── data-handling/                  # GDPR/CCPA compliance
+│   │   ├── data-retention.js           # Auto-delete policies
+│   │   ├── anonymizer.js               # Data anonymization
+│   │   └── consent-manager.js          # User consent tracking
+│   ├── encryption/                     # Local encryption
+│   │   ├── aes-gcm.js                  # AES-256-GCM implementation
+│   │   ├── key-derivation.js           # PBKDF2/Argon2
+│   │   └── secure-storage.js           # Encrypted storage wrapper
+│   └── permissions/                    # Permission handling
+│       ├── permission-monitor.js
+│       └── least-privilege.js          # Minimal permission enforcement
+│
+├── 🧪 testing/                         # Test suites
+│   ├── unit/                           # Unit tests
+│   ├── integration/                    # Integration tests
+│   ├── e2e/                            # End-to-end tests
+│   ├── fixtures/                       # Test data (sample manga pages)
+│   └── mocks/                          # API mocks
+│
+├── 📦 build/                           # Build configuration
+│   ├── scripts/                        # Build automation
+│   │   ├── obfuscate.js                # Code obfuscation script
+│   │   ├── pack-extension.js           # CRX packaging
+│   │   └── version-bump.js
+│   ├── environments/                   # Env-specific configs
+│   │   ├── development.json
+│   │   ├── staging.json
+│   │   └── production.json
+│   └── assets/                         # Static resources
+│       ├── icons/                      # Extension icons
+│       │   ├── icon16.png
+│       │   ├── icon32.png
+│       │   ├── icon48.png
+│       │   ├── icon128.png
+│       │   ├── icon-active.png         # EMS active state
+│       │   └── icon-idle.png           # Tomoe idle state
+│       ├── fonts/                      # Custom fonts
+│       │   ├── noto-sans-jp.woff2
+│       │   ├── noto-sans-kr.woff2
+│       │   ├── noto-sans-sc.woff2
+│       │   └── manga-fonts/            # Manga-style fonts
+│       └── sounds/                     # Audio feedback (optional)
+│           ├── activate.mp3              # Sharingan activation
+│           └── scan-complete.mp3
+│
+└── 📚 docs/                            # Documentation
+    ├── architecture.md                 # System architecture
+    ├── api-reference.md                # Internal API docs
+    ├── security-whitepaper.md          # Security implementation details
+    ├── privacy-policy.md               # User-facing privacy policy
+    └── contributing.md                 # Developer guidelines
+```

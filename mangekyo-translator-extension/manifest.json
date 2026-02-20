@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "Mangekyō Translator",
+  "version": "1.0.0",
+  "description": "Advanced manga/manhwa translation with computer vision",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "offscreen",
+    "scripting",
+    "sidePanel",
+    "declarativeContent"
+  ],
+  "optional_permissions": [
+    "desktopCapture",
+    "nativeMessaging"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "core/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["core/content/manga-scanner.js"],
+      "css": ["ui/overlays/shared/overlay-styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "computer-vision/ocr/language-data/*",
+        "ui/overlays/*",
+        "security/wasm/*",
+        "assets/fonts/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; child-src 'self';"
+  },
+  "action": {
+    "default_popup": "ui/popup/popup.html",
+    "default_icon": {
+      "16": "build/assets/icons/icon-idle.png",
+      "48": "build/assets/icons/icon48.png",
+      "128": "build/assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "build/assets/icons/icon16.png",
+    "48": "build/assets/icons/icon48.png",
+    "128": "build/assets/icons/icon128.png"
+  },
+  "options_page": "ui/options/options.html",
+  "sandbox": {
+    "pages": [
+      "core/offscreen/offscreen.html",
+      "core/offscreen/heavy-ocr.html"
+    ]
+  }
+}
