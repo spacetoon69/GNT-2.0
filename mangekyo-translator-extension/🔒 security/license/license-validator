@@ -1,0 +1,16 @@
+License System Features:
+
+| Feature              | Implementation                                   |
+| -------------------- | ------------------------------------------------ |
+| **Key Format**       | `MGKY-XXXX-XXXX-XXXX-XXXX-SIGN` (Ed25519 signed) |
+| **Hardware Binding** | Fingerprint hash stored at activation            |
+| **Tier System**      | Trial → Standard → Pro → Enterprise → Lifetime   |
+| **Offline Grace**    | 24-hour offline usage after last validation      |
+| **Usage Tracking**   | Daily page limits with warning thresholds        |
+| **Auto-Reset**       | Daily quota resets at midnight local time        |
+
+
+Integration:
+Uses hardware-fingerprint.js for machine binding
+Uses custom-encryption.js for secure storage
+Communicates with license server for activation/validation

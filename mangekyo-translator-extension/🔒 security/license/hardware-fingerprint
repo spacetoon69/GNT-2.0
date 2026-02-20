@@ -1,0 +1,17 @@
+Fingerprinting Strategy:
+
+| Component    | Data Collected                 | Privacy Protection        |
+| ------------ | ------------------------------ | ------------------------- |
+| **CPU**      | Core count, platform           | No model/serial           |
+| **Memory**   | Rounded to 2GB                 | No exact bytes            |
+| **Screen**   | Resolution, ratio, color depth | No pixel-perfect tracking |
+| **Graphics** | GPU category only              | No specific model names   |
+| **Locale**   | Timezone, primary language     | No geolocation            |
+| **Features** | WebGL, WASM support            | No capability enumeration |
+
+Security Features:
+
+Fuzzy Matching: 70% similarity threshold allows minor hardware changes
+Tamper Detection: Identifies spoofing attempts (resolution/GPU changes)
+Component Export: Selective export for license storage
+Cache Management: 24-hour cache with stability scoring
