@@ -1,0 +1,29 @@
+This translation-bridge.js provides:
+Translation Engines:
+Google Translate: Free, no API key required, supports auto-detection
+DeepL: High-quality neural translation, requires API key, supports formality levels
+OpenAI GPT-4: Context-aware translation with vision support for image-based context
+Local LLM: Placeholder for on-device translation (future implementation)
+Key Features:
+Smart Caching: LRU cache with TTL, compression, and hit rate tracking
+Context Preservation: Maintains narrative context across panels/pages for better translation consistency
+Rate Limiting: Per-engine request throttling to avoid API bans
+Retry Logic: Exponential backoff with jitter for failed requests
+Honorifics Handling: Preserves Japanese honorifics (-san, -kun, etc.) when translating to English
+SFX Translation: Specialized handling for manga sound effects
+Batch Processing: Concurrent translation of multiple text blocks
+API Commands:
+translate:init - Initialize with settings and API keys
+translate:text - Single text translation
+translate:batch - Multiple texts with concurrency control
+translate:detect - Language detection
+translate:context - Update context memory
+translate:stats - Get usage statistics
+translate:config - Update configuration
+translate:clear-cache - Clear translation cache
+Security & Privacy:
+API keys stored in memory only (not persisted)
+No logging of translated content
+Local caching prevents repeated API calls for same text
+Support for local LLM to avoid cloud services entirely
+The bridge communicates with the service worker via Chrome extension messaging and can be used in the offscreen document for heavy translation operations.

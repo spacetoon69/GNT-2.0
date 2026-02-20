@@ -1,0 +1,48 @@
+Visual Design:
+Dark theme with Sharingan/EMS aesthetic (red accents, pulsing animations)
+Real-time preview of source and preprocessed images
+Progress tracking with visual progress bar
+Confidence scoring for extracted text (color-coded badges)
+Functional Areas:
+Image Canvases: Source and processed image previews
+OCR Output: Formatted text display with confidence levels
+Engine Stats: Tesseract version, worker status, memory usage, timing
+Language Grid: Visual indicator of loaded language models
+System Log: Real-time logging console for debugging
+Technical Features:
+CSP-compliant for secure isolated execution
+Hidden by default (offscreen document is not visible to users in production, but this UI helps with debugging)
+Responsive layout using CSS Grid
+Performance optimized with hardware-accelerated animations
+The document is designed to work with heavy-ocr.js which will handle Tesseract.js initialization, image processing, and communication with the service worker via Chrome's messaging APIs.
+
+
+
+js
+
+This heavy-ocr.js provides:
+Core Functionality:
+Tesseract.js Integration: Dynamic loading, worker management, and language handling
+Image Preprocessing Pipeline: Denoising, contrast adjustment, binarization, and deskewing
+Message Passing: Bi-directional communication with the service worker via Chrome runtime messages
+State Management: Job queue, language loading, and processing statistics
+Key Features:
+Progress Tracking: Real-time OCR progress updates sent back to service worker
+Multi-language Support: Dynamic loading of JPN, KOR, CHI, ENG language packs
+Image Optimization: Automatic resizing, format conversion, and preprocessing
+Error Handling: Comprehensive error catching and logging
+Performance Monitoring: Memory usage tracking and timing metrics
+Security & Performance:
+CSP Compliant: No inline scripts, external resources loaded safely
+Worker Isolation: Heavy processing isolated from main extension
+Memory Management: Automatic cleanup and garbage collection hints
+Job Cancellation: Support for aborting long-running OCR operations
+MV3 Compliance:
+Offscreen document stays alive during processing
+Communicates with service worker via chrome.runtime.sendMessage
+Handles beforeunload for proper cleanup
+The module exposes these commands to the service worker:
+ocr:process - Run OCR on image data
+ocr:preload-language - Load language model proactively
+ocr:get-status - Get current engine status
+ocr:cancel - Cancel current operation

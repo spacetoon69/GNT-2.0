@@ -1,0 +1,27 @@
+Key Features
+Architecture
+
+| Component             | Purpose                                                | Resource Usage |
+| --------------------- | ------------------------------------------------------ | -------------- |
+| `offscreen.html`      | Coordinator, message router, lightweight preprocessing | Minimal        |
+| `heavy-ocr.html`      | Tesseract.js OCR (WebAssembly)                         | High memory    |
+| `image-analysis.html` | TensorFlow\.js computer vision                         | High CPU/GPU   |
+| Web Workers           | Background translation tasks                           | Medium         |
+
+
+MV3 Compliance
+No service worker DOM access: All Canvas/Image processing happens here
+Long-running tasks: OCR runs in dedicated documents, not SW
+Message passing: Clean separation between contexts
+CSP compliant: Strict content security policy
+Performance Optimizations
+Worker pools: Reuse OCR/translation workers
+Document caching: Keep heavy-ocr.html alive between tasks
+Queue management: Prevent memory exhaustion with task limits
+Streaming support: Port-based communication for large images
+Processing Pipeline
+Service Worker → Offscreen (routing)
+Offscreen → Preprocessing (canvas operations)
+Offscreen → Heavy Document (OCR/Vision) or Worker (Translation)
+Result → Service Worker → Content Script
+This architecture ensures the extension can handle heavy AI/ML workloads while remaining compliant with Chrome's strict MV3 requirements.

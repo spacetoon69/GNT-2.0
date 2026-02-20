@@ -1,0 +1,29 @@
+This image-analysis.html provides:
+Visual Interface:
+Dark Theme: Manga-reader friendly dark UI with Sharingan red accents
+Canvas Workspace: Large central area for image viewing with detection overlays
+Interactive Overlays: Clickable bounding boxes for bubbles (green) and panels (blue)
+Real-time Stats: Detection count, processing time, confidence scores
+Control Panel:
+Confidence Slider: Adjust detection threshold (0-100%)
+NMS Slider: Control non-maximum suppression for overlapping boxes
+Toggle Switches: Enable/disable bubble, panel, text, and SFX detection
+Detection List: Scrollable list of all detected regions with thumbnails
+Quick Stats: Bubble count, panel count, processing time, average confidence
+Technical Features:
+CSP Compliant: Secure content security policy for offscreen document
+TensorFlow.js Ready: Pre-loaded TF.js for model inference
+Responsive Layout: CSS Grid-based layout that adapts to window size
+Loading States: Visual feedback during model initialization
+Empty States: Helpful UI when no image is loaded
+Interactive Elements:
+Hover Effects: Visual feedback on detection items and overlays
+Selection States: Click to select specific bubbles/panels
+Real-time Updates: Sliders update values immediately
+Smooth Animations: Transitions for all interactive elements
+The document is designed to work with image-analysis.js (which you'll need to create) that handles:
+TensorFlow.js model loading (bubble detection, panel segmentation)
+Canvas rendering and overlay management
+Communication with the service worker
+Image preprocessing for CV pipelines
+This provides a complete computer vision workbench within the offscreen document context required by Manifest V3.

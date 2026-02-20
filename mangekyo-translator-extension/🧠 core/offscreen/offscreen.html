@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mangekyo Offscreen Document</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' https:; img-src 'self' blob: data: https:;">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      background: transparent;
+      opacity: 0;
+      position: fixed;
+      top: -1000px;
+      left: -1000px;
+    }
+
+    #processing-canvas {
+      position: absolute;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #log-container {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 400px;
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.9);
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      padding: 10px;
+      display: none; /* Hidden in production */
+      z-index: 99999;
+    }
+
+    .log-entry {
+      margin-bottom: 4px;
+      border-left: 3px solid #333;
+      padding-left: 8px;
+    }
+
+    .log-entry.info { border-color: #00ff00; }
+    .log-entry.warn { border-color: #ffaa00; }
+    .log-entry.error { border-color: #ff0000; }
+    .log-entry.process { border-color: #0088ff; }
+
+    #status-indicator {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #333;
+      display: none;
+    }
+
+    #status-indicator.active { background: #00ff00; animation: pulse 1s infinite; }
+    #status-indicator.processing { background: #ffaa00; animation: pulse 0.5s infinite; }
+    #status-indicator.error { background: #ff0000; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden canvas for image processing -->
+  <canvas id="processing-canvas"></canvas>
+  
+  <!-- Status indicator (debug mode) -->
+  <div id="status-indicator"></div>
+  
+  <!-- Log container (debug mode) -->
+  <div id="log-container"></div>
+
+  <!-- Module scripts -->
+  <script type="module" src="offscreen.js"></script>
+  
+  <!-- 
+    Note: Heavy OCR processing is loaded dynamically in heavy-ocr.html
+    This document serves as the coordinator and lightweight processor
+  -->
+</body>
+</html>

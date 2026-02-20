@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis - Mangekyo Translator</title>
+    
+    <!-- CSP for secure isolated execution -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-eval' blob: https://cdn.jsdelivr.net;
+        worker-src 'self' blob:;
+        connect-src 'self' blob: data:;
+        img-src 'self' blob: data:;
+        style-src 'self' 'unsafe-inline';
+    ">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --border-color: #2a2a3a;
+            --accent-red: #ff4444;
+            --accent-green: #00ff88;
+            --accent-blue: #4488ff;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --text-muted: #666;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6666 0%, #8b0000 50%, #2a0000 100%);
+            border: 2px solid var(--accent-red);
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+            animation: sharingan-pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes sharingan-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 68, 68, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 68, 68, 0.6); }
+        }
+        
+        .title-group h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.processing {
+            background: var(--accent-red);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Main Layout */
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 0;
+            overflow: hidden;
+        }
+        
+        /* Canvas Workspace */
+        .workspace {
+            position: relative;
+            background: #050508;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .canvas-container {
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        
+        #analysis-canvas {
+            display: block;
+            max-width: 100%;
+            max-height: calc(100vh - 80px);
+        }
+        
+        .canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        /* Detection overlays */
+        .bubble-overlay {
+            position: absolute;
+            border: 2px solid var(--accent-green);
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 50%;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bubble-overlay:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ffaa;
+            transform: scale(1.02);
+        }
+        
+        .bubble-overlay.selected {
+            border-color: var(--accent-red);
+            background: rgba(255, 68, 68, 0.15);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+        }
+        
+        .bubble-label {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-green);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .bubble-overlay.selected .bubble-label {
+            background: var(--accent-red);
+            color: #fff;
+        }
+        
+        .panel-overlay {
+            position: absolute;
+            border: 2px dashed var(--accent-blue);
+            background: rgba(68, 136, 255, 0.05);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        .panel-overlay:hover {
+            background: rgba(68, 136, 255, 0.1);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .sidebar-section {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Detection Controls */
+        .control-group {
+            margin-bottom: 16px;
+        }
+        
+        .control-label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--bg-primary);
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+        
+        .slider-value {
+            min-width: 40px;
+            text-align: right;
+            font-size: 12px;
+            font-family: 'Consolas', monospace;
+            color: var(--accent-red);
+        }
+        
+        /* Toggle switches */
+        .toggle-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .toggle-label {
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .toggle-switch.active {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        /* Detection Results */
+        .detection-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .detection-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        
+        .detection-item:hover {
+            border-color: var(--border-color);
+            transform: translateX(4px);
+        }
+        
+        .detection-item.active {
+            border-color: var(--accent-red);
+            background: rgba(255, 68, 68, 0.1);
+        }
+        
+        .detection-thumb {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+        
+        .detection-info {
+            flex: 1;
+        }
+        
+        .detection-type {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .detection-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        
+        .detection-confidence {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .stat-card {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            padding: 20px;
+            background: var(--bg-secondary);
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: var(--accent-red);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            background: #ff6666;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+        
+        /* Loading State */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.3s;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner-ring {
+            width: 80px;
+            height: 80px;
+            border: 4px solid transparent;
+            border-top-color: var(--accent-red);
+            border-right-color: var(--accent-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+        
+        .spinner-ring::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 3px solid transparent;
+            border-top-color: var(--accent-green);
+            border-left-color: var(--accent-green);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite reverse;
+        }
+        
+        .loading-text {
+            margin-top: 24px;
+            color: var(--accent-red);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+        
+        .loading-subtext {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+        
+        /* Hidden utility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo"></div>
+                <div class="title-group">
+                    <h1>Image Analysis Engine</h1>
+                    <div class="subtitle">Computer Vision & Panel Detection</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-badge">
+                    <div class="status-dot" id="status-dot"></div>
+                    <span id="status-text">Ready</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Canvas Workspace -->
+            <div class="workspace" id="workspace">
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="spinner-ring"></div>
+                    <div class="loading-text">Loading Models...</div>
+                    <div class="loading-subtext" id="loading-subtext">Initializing TensorFlow.js</div>
+                </div>
+                
+                <div class="canvas-container" id="canvas-container">
+                    <canvas id="analysis-canvas"></canvas>
+                    <div class="canvas-overlay" id="overlay-layer"></div>
+                </div>
+                
+                <div class="empty-state hidden" id="empty-state">
+                    <div class="empty-icon">🖼️</div>
+                    <div>No image loaded</div>
+                    <div style="font-size: 12px; margin-top: 8px;">Send image data from extension</div>
+                </div>
+            </div>
+            
+            <!-- Sidebar Controls -->
+            <aside class="sidebar">
+                <!-- Detection Settings -->
+                <div class="sidebar-section">
+                    <div class="section-title">
+                        Detection Settings
+                        <span style="font-size: 10px; color: var(--accent-red);">AI POWERED</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Confidence Threshold</label>
+                        <div class="slider-container">
+                            <input type="range" id="confidence-slider" min="0" max="100" value="65">
+                            <span class="slider-value" id="confidence-value">65%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">NMS Overlap Threshold</label>
+                        <div class="slider-container">
+                            <input type="range" id="nms-slider" min="0" max="100" value="30">
+                            <span class="slider-value" id="nms-value">30%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-list">
+                        <div class="toggle-item">
+                            <span class="toggle-label">Speech Bubbles</span>
+                            <div class="toggle-switch active" id="toggle-bubbles"></div>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label">Panel Detection</span>
+                            <div class="toggle-switch active" id="toggle-panels"></div>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label">Text Regions</span>
+                            <div class="toggle-switch" id="toggle-text"></div>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label">SFX Detection</span>
+                            <div class="toggle-switch" id="toggle-sfx"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Detection Results -->
+                <div class="sidebar-section" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="section-title">
+                        Detected Regions
+                        <span id="detection-count" style="color: var(--text-muted);">(0)</span>
+                    </div>
+                    
+                    <div class="detection-list" id="detection-list">
+                        <div class="empty-state" style="padding: 20px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+                            <div style="font-size: 12px;">No detections yet</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="sidebar-section">
+                    <div class="section-title">Analysis Stats</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-bubbles">0</div>
+                            <div class="stat-label">Bubbles</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-panels">0</div>
+                            <div class="stat-label">Panels</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-time">0ms</div>
+                            <div class="stat-label">Process Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-confidence">0%</div>
+                            <div class="stat-label">Avg Conf</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="btn-reset">Reset</button>
+                    <button class="btn btn-primary" id="btn-analyze">Analyze</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <script src="image-analysis.js"></script>
+</body>
+</html>

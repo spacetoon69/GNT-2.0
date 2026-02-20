@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heavy OCR Processing - Mangekyo Translator</title>
+    
+    <!-- Content Security Policy for isolated context -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-eval' blob:;
+        worker-src 'self' blob:;
+        connect-src 'self' blob: data:;
+        img-src 'self' blob: data:;
+    ">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        /* Header with Sharingan aesthetic */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #2a2a3a;
+            margin-bottom: 16px;
+        }
+        
+        .sharingan-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #8b0000 0%, #2a0000 100%);
+            border: 2px solid #ff0000;
+            position: relative;
+            animation: sharingan-pulse 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        @keyframes sharingan-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        
+        .status-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #ff4444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .status-text.active {
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        /* Processing stage */
+        .processing-stage {
+            background: #12121a;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+        }
+        
+        .stage-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        /* Image preview canvas */
+        .preview-container {
+            position: relative;
+            background: #0d0d12;
+            border-radius: 8px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        #source-canvas, #processed-canvas {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        
+        .canvas-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        
+        /* Progress tracking */
+        .progress-section {
+            background: #1a1a24;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background: #2a2a3a;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000 0%, #ff4444 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .progress-bar.complete {
+            background: linear-gradient(90deg, #00ff88 0%, #00cc6a 100%);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* OCR Output */
+        .output-section {
+            background: #1a1a24;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .ocr-line {
+            padding: 4px 0;
+            border-bottom: 1px solid #2a2a3a;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        
+        .ocr-line:last-child {
+            border-bottom: none;
+        }
+        
+        .confidence-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: #2a2a3a;
+            color: #888;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .confidence-badge.high { background: #004d1a; color: #00ff88; }
+        .confidence-badge.medium { background: #4d4d00; color: #ffff00; }
+        .confidence-badge.low { background: #4d0000; color: #ff4444; }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .info-card {
+            background: #12121a;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .info-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a3a;
+            font-size: 13px;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-value {
+            color: #ff4444;
+            font-weight: 500;
+        }
+        
+        .stat-value.active {
+            color: #00ff88;
+        }
+        
+        /* Language indicators */
+        .lang-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .lang-item {
+            background: #1a1a24;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .lang-item.active {
+            border-color: #ff4444;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        
+        .lang-item.loaded {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+        
+        /* Log console */
+        .log-console {
+            background: #0d0d12;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+            height: 150px;
+            overflow-y: auto;
+            color: #666;
+        }
+        
+        .log-entry {
+            padding: 2px 0;
+            border-left: 2px solid transparent;
+            padding-left: 8px;
+            margin: 2px 0;
+        }
+        
+        .log-entry.info { border-left-color: #0088ff; color: #88ccff; }
+        .log-entry.success { border-left-color: #00ff88; color: #88ffcc; }
+        .log-entry.warning { border-left-color: #ffaa00; color: #ffcc88; }
+        .log-entry.error { border-left-color: #ff0000; color: #ff8888; }
+        
+        /* Hidden elements for Tesseract */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Loading overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.3s;
+        }
+        
+        #loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #2a2a3a;
+            border-top-color: #ff0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #ff4444;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        /* EMS Activation effect */
+        .ems-aura {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 0%, rgba(139, 0, 0, 0.1) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+        
+        .ems-aura.active {
+            opacity: 1;
+            animation: aura-pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes aura-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+    <!-- EMS Visual Effect -->
+    <div class="ems-aura" id="ems-aura"></div>
+    
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Initializing Tesseract Engine...</div>
+    </div>
+    
+    <div id="app-container">
+        <header class="header">
+            <div class="sharingan-indicator" id="status-indicator"></div>
+            <span class="status-text" id="status-text">Standby</span>
+        </header>
+        
+        <main class="main-content">
+            <div class="processing-stage">
+                <div>
+                    <div class="stage-title">Source Image</div>
+                    <div class="preview-container">
+                        <span class="canvas-label">Original</span>
+                        <canvas id="source-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="stage-title">OCR Progress</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="ocr-progress"></div>
+                    </div>
+                    <div class="progress-details">
+                        <span id="progress-status">Waiting for image...</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="stage-title">Preprocessed Image</div>
+                    <div class="preview-container">
+                        <span class="canvas-label">Processed</span>
+                        <canvas id="processed-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="stage-title">Extracted Text</div>
+                    <div class="output-section" id="ocr-output">
+                        <div style="color: #666; font-style: italic;">No text extracted yet...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <aside class="sidebar">
+                <div class="info-card">
+                    <h3>Engine Status</h3>
+                    <div class="stat-row">
+                        <span>Tesseract Version</span>
+                        <span class="stat-value" id="tesseract-version">--</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Worker Status</span>
+                        <span class="stat-value" id="worker-status">Initializing</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Memory Usage</span>
+                        <span class="stat-value" id="memory-usage">-- MB</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Processing Time</span>
+                        <span class="stat-value" id="process-time">-- ms</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Language Models</h3>
+                    <div class="lang-grid" id="lang-grid">
+                        <div class="lang-item" data-lang="eng">English</div>
+                        <div class="lang-item" data-lang="jpn">Japanese</div>
+                        <div class="lang-item" data-lang="jpn_vert">JPN Vert</div>
+                        <div class="lang-item" data-lang="kor">Korean</div>
+                        <div class="lang-item" data-lang="chi_sim">Chinese SC</div>
+                        <div class="lang-item" data-lang="chi_tra">Chinese TC</div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>System Log</h3>
+                    <div class="log-console" id="log-console">
+                        <div class="log-entry info">Offscreen document loaded</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+    
+    <!-- Hidden file input for testing -->
+    <input type="file" id="file-input" class="hidden" accept="image/*">
+    
+    <!-- Tesseract.js will be loaded dynamically by heavy-ocr.js -->
+    <script src="heavy-ocr.js"></script>
+</body>
+</html>
