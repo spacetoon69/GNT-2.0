@@ -1,0 +1,25 @@
+Structure Explanation:
+
+| Section           | Purpose                                |
+| ----------------- | -------------------------------------- |
+| `manifest`        | Extension config hash (MV3 critical)   |
+| `core`            | Background, content, offscreen scripts |
+| `security`        | Self-protected integrity files         |
+| `computer-vision` | OCR and detection modules              |
+| `ui`              | Interface components                   |
+| `wasm`            | Binary WebAssembly modules             |
+| `metadata`        | Build statistics and signing info      |
+| `verification`    | Runtime check behavior                 |
+
+
+Security Features:
+critical: true → File required for extension operation
+selfProtected: true → File contains own integrity checks
+binary: true → Non-text file (WASM)
+shutdownOnCritical: Extension disables if critical file tampered
+
+
+Build Integration:
+
+# Generate checksums during build
+node build/scripts/generate-checksums.js --output security/integrity/checksums.json

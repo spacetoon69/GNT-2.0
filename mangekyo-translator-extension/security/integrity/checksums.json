@@ -1,0 +1,208 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2024-01-15T09:30:00.000Z",
+  "algorithm": "SHA-256",
+  "encoding": "hex",
+  "manifest": {
+    "path": "manifest.json",
+    "hash": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+    "size": 2847,
+    "critical": true
+  },
+  "core": {
+    "background": {
+      "service-worker.js": {
+        "hash": "b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456a1",
+        "size": 15234,
+        "critical": true
+      },
+      "event-router.js": {
+        "hash": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456a1b2",
+        "size": 8932,
+        "critical": true
+      },
+      "api-manager.js": {
+        "hash": "d4e5f6789012345678901234567890abcdef1234567890abcdef123456a1b2c3",
+        "size": 12456,
+        "critical": true
+      },
+      "state-manager.js": {
+        "hash": "e5f6789012345678901234567890abcdef1234567890abcdef123456a1b2c3d4",
+        "size": 9876,
+        "critical": true
+      }
+    },
+    "content": {
+      "manga-scanner.js": {
+        "hash": "f6789012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5",
+        "size": 21567,
+        "critical": true
+      },
+      "text-extractor.js": {
+        "hash": "6789012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f6",
+        "size": 18345,
+        "critical": true
+      },
+      "bubble-detector.js": {
+        "hash": "789012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f67",
+        "size": 15678,
+        "critical": true
+      },
+      "overlay-injector.js": {
+        "hash": "89012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f678",
+        "size": 14234,
+        "critical": true
+      },
+      "canvas-interceptor.js": {
+        "hash": "9012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f6789",
+        "size": 11234,
+        "critical": false
+      },
+      "image-processor.js": {
+        "hash": "012345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f67890",
+        "size": 19876,
+        "critical": true
+      },
+      "mutation-observer.js": {
+        "hash": "12345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f678901",
+        "size": 8765,
+        "critical": false
+      }
+    },
+    "offscreen": {
+      "offscreen.js": {
+        "hash": "2345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f6789012",
+        "size": 6543,
+        "critical": true
+      },
+      "heavy-ocr.js": {
+        "hash": "345678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f67890123",
+        "size": 28765,
+        "critical": true
+      },
+      "translation-bridge.js": {
+        "hash": "45678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f678901234",
+        "size": 14321,
+        "critical": true
+      }
+    }
+  },
+  "security": {
+    "obfuscation": {
+      "custom-encryption.js": {
+        "hash": "5678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f6789012345",
+        "size": 18432,
+        "critical": true,
+        "selfProtected": true
+      }
+    },
+    "integrity": {
+      "tamper-detection.js": {
+        "hash": "678901234567890abcdef1234567890abcdef123456a1b2c3d4e5f67890123456",
+        "size": 12345,
+        "critical": true,
+        "selfProtected": true
+      }
+    },
+    "license": {
+      "license-validator.js": {
+        "hash": "78901234567890abcdef1234567890abcdef123456a1b2c3d4e5f678901234567",
+        "size": 9876,
+        "critical": true,
+        "selfProtected": true
+      },
+      "hardware-fingerprint.js": {
+        "hash": "8901234567890abcdef1234567890abcdef123456a1b2c3d4e5f6789012345678",
+        "size": 7654,
+        "critical": true,
+        "selfProtected": true
+      }
+    }
+  },
+  "computer-vision": {
+    "ocr": {
+      "tesseract-config.js": {
+        "hash": "901234567890abcdef1234567890abcdef123456a1b2c3d4e5f67890123456789",
+        "size": 5432,
+        "critical": false
+      }
+    },
+    "detection": {
+      "bubble-detector.js": {
+        "hash": "01234567890abcdef1234567890abcdef123456a1b2c3d4e5f678901234567890",
+        "size": 22134,
+        "critical": true
+      }
+    }
+  },
+  "ui": {
+    "popup": {
+      "popup.js": {
+        "hash": "1234567890abcdef1234567890abcdef123456a1b2c3d4e5f6789012345678901",
+        "size": 8765,
+        "critical": false
+      }
+    },
+    "overlays": {
+      "sharingan-float": {
+        "sharingan.js": {
+          "hash": "234567890abcdef1234567890abcdef123456a1b2c3d4e5f67890123456789012",
+          "size": 11234,
+          "critical": false
+        }
+      },
+      "madara-active": {
+        "madara-controller.js": {
+          "hash": "34567890abcdef1234567890abcdef123456a1b2c3d4e5f678901234567890123",
+          "size": 15432,
+          "critical": true
+        }
+      }
+    }
+  },
+  "wasm": {
+    "core-crypto.wasm": {
+      "hash": "4567890abcdef1234567890abcdef123456a1b2c3d4e5f6789012345678901234",
+      "size": 524288,
+      "critical": true,
+      "binary": true
+    },
+    "ocr-engine.wasm": {
+      "hash": "567890abcdef1234567890abcdef123456a1b2c3d4e5f67890123456789012345",
+      "size": 1048576,
+      "critical": true,
+      "binary": true
+    },
+    "wasm-loader.js": {
+      "hash": "67890abcdef1234567890abcdef123456a1b2c3d4e5f678901234567890123456",
+      "size": 4321,
+      "critical": true
+    }
+  },
+  "metadata": {
+    "totalFiles": 42,
+    "criticalFiles": 18,
+    "totalSize": 2456789,
+    "checksumsSigned": false,
+    "signature": null,
+    "previousVersion": null,
+    "updateChain": []
+  },
+  "verification": {
+    "excludePatterns": [
+      "**/*.map",
+      "**/*.log",
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/testing/**",
+      "**/docs/**",
+      "**/README.md",
+      "**/LICENSE",
+      "**/.gitignore"
+    ],
+    "scanInterval": 300000,
+    "autoRepair": false,
+    "alertOnMismatch": true,
+    "shutdownOnCritical": true
+  }
+}

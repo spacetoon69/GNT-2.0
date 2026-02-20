@@ -1,0 +1,17 @@
+Protection Layers:
+
+| Layer                  | Mechanism                           | Response      |
+| ---------------------- | ----------------------------------- | ------------- |
+| **Debugger Detection** | Timing analysis, console proxy      | Degrade       |
+| **Code Integrity**     | Hash verification, signature checks | Shutdown      |
+| **API Protection**     | Proxy wrapper on chrome.\* APIs     | Alert         |
+| **Mutation Detection** | MutationObserver on DOM             | Alert         |
+| **Timing Analysis**    | Interval consistency checks         | Degrade       |
+| **Memory Protection**  | Object.freeze/seal                  | Self-destruct |
+
+
+Integration Points:
+Reads from checksums.json for verification
+Reports to background script via SECURITY_EVENT messages
+Degrades/disables on detection
+Self-destruct for critical compromise
