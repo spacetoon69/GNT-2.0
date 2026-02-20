@@ -1,0 +1,33 @@
+This constants.js provides:
+Organized Configuration:
+Extension Metadata: Version, author, repository links
+Environment Settings: Development/staging/production flags with debug options
+Storage Keys: Centralized key names for all storage operations
+Message Types: Standardized communication protocol between contexts
+Engine Configs: OCR, translation, and CV engine settings
+UI Constants: Visual theming, animations, hotkeys
+Site Adapters: Domain-specific selectors for manga sites
+Security: Encryption settings, license validation, data retention
+Performance: Memory limits, timeouts, batch processing limits
+Error Codes: Standardized error identifiers
+Events: Custom DOM event names
+Key Features:
+Deep Freezing: All constants are immutable to prevent runtime modification
+Multiple Export Formats: Supports CommonJS, AMD, ES Modules, and browser globals
+Tree-Shaking Support: Individual exports for modern bundlers
+Comprehensive Documentation: Inline comments explain each section
+Environment Awareness: Different values for dev/staging/prod
+Usage Examples:
+
+// Import specific constants
+import { STORAGE_KEYS, ERROR_CODES } from './constants.js';
+
+// Use in code
+chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+throw new Error(ERROR_CODES.OCR_TIMEOUT);
+
+// Or use the full object
+import Constants from './constants.js';
+console.log(Constants.EXTENSION.VERSION);
+
+This centralizes all magic numbers, strings, and configuration values to make the codebase maintainable and prevent typos in repeated string literals.

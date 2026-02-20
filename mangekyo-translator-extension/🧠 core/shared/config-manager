@@ -1,0 +1,54 @@
+This config-manager.js provides:
+Core Functionality:
+Configuration Storage: Persists settings to Chrome storage with automatic sync
+Schema Validation: Validates all settings against type definitions with auto-fix
+Default Management: Deep merging of user settings with defaults
+Site-Specific Overrides: Per-domain configuration customization
+Migration System: Version-based settings migration for updates
+Event Notifications: Change listeners for reactive UI updates
+Key Features:
+Secure API Key Storage: Obfuscation with Web Crypto API support ready
+Import/Export: JSON configuration backup and restore
+Hotkey Management: Structured hotkey storage with display formatting
+Validation: Type checking, enum validation, range limits, pattern matching
+Deep Paths: Dot notation access (config.getPath('ocr.preprocess.denoise'))
+API Methods:
+initialize() - Load and validate settings
+get(section, key) / getPath(path) - Retrieve values
+set(section, key, value) - Update single value
+setMultiple(section, values) - Batch updates
+setSiteOverride(domain, section, values) - Per-site settings
+reset(section) - Restore defaults
+export() / import(json) - Backup/restore
+migrate(fromVersion) - Version upgrades
+on(event, callback) - Subscribe to changes
+Security & Privacy:
+API keys stored separately with basic obfuscation
+Ready for AES-GCM encryption implementation
+No sensitive data in sync storage
+Local-only storage for keys
+Usage Examples:
+
+// Initialize
+await configManager.initialize();
+
+// Get settings
+const ocrLang = configManager.get('ocr', 'language');
+const fullOcrConfig = configManager.get('ocr');
+
+// Set with validation
+await configManager.set('translation', 'engine', 'deepl');
+
+// Site-specific
+await configManager.setSiteOverride('mangadex.org', 'ocr', {
+    language: 'jpn',
+    verticalText: true
+});
+
+// Listen for changes
+configManager.on('changed', ({ section, key, newValue }) => {
+    console.log(`${section}.${key} changed to ${newValue}`);
+});
+
+
+This provides a robust, type-safe configuration system that maintains consistency across all extension contexts.
