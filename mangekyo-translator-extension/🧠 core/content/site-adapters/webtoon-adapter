@@ -1,0 +1,29 @@
+Key Webtoon-Specific Challenges Addressed:
+
+| Challenge                 | Solution                                 | Implementation                                |
+| ------------------------- | ---------------------------------------- | --------------------------------------------- |
+| **Infinite Scroll**       | Intersection Observer + MutationObserver | Lazy loads images 500px before viewport entry |
+| **Canvas Rendering**      | CanvasInterceptor class                  | Hooks WebGL/2D context for frame capture      |
+| **Data-URL Lazy Loading** | src/dataset.url monitoring               | Waits for actual image load before processing |
+| **Vertical Layout**       | Scroll-linked overlay positioning        | Absolute positioning updates at 10Hz          |
+| **SPA Navigation**        | Episode change detection                 | Resets state and rescans on URL change        |
+| **Mobile Optimization**   | Touch scroll handling                    | Passive event listeners, throttled updates    |
+
+
+Webtoon vs MangaDex Architecture Differences:
+
+| Aspect               | Webtoon                   | MangaDex                         |
+| -------------------- | ------------------------- | -------------------------------- |
+| **Scroll Direction** | Vertical (infinite)       | Horizontal or vertical paginated |
+| **Image Loading**    | Progressive lazy load     | MD\@Home preloading              |
+| **Rendering**        | Canvas or DOM             | DOM only                         |
+| **Page Structure**   | Single continuous episode | Discrete pages                   |
+| **Overlay Strategy** | Scroll-synced absolute    | Per-page fixed                   |
+
+
+Integration Points:
+Uses: CanvasInterceptor for WebGL capture
+Extends: generic-manga-adapter.js for base functionality
+Emits: imageDiscovered, canvasFrameCaptured, scrollUpdate
+Optimized for: Long vertical episodes (100+ images common)
+Would you like me to detail the CanvasInterceptor implementation or the speech bubble positioning algorithm for vertical layouts?

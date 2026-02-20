@@ -1,0 +1,30 @@
+Key Capabilities
+Heuristic Detection System
+
+| Signal            | Weight | Description                                 |
+| ----------------- | ------ | ------------------------------------------- |
+| Aspect Ratio      | 25%    | Manga pages typically tall (0.6-0.8 ratio)  |
+| Image Count       | 20%    | Multiple sequential images indicate gallery |
+| Sequential Naming | 15%    | `001.jpg`, `002.jpg` patterns               |
+| Vertical Layout   | 15%    | Images stacked vertically                   |
+| Text Density      | 10%    | Low text-to-image ratio                     |
+| Navigation        | 10%    | Next/prev button patterns                   |
+| URL               | 5%     | `/manga/`, `/chapter/` patterns             |
+
+
+Computer Vision Features
+Spatial Clustering: Groups nearby images into reading sequences
+Size Consistency: Detects uniform manga page dimensions
+Reading Direction: Auto-detects RTL (manga) vs LTR (comics)
+Infinite Scroll: Detects and handles dynamic loading
+Smart Fallbacks
+No selectors needed: Works on any site structure
+Confidence scoring: Only activates above 60% probability
+Dynamic reanalysis: Adapts to layout changes
+Viewport tracking: Estimates current page without explicit indicators
+Integration
+Extends MangaAdapter base class
+Lowest priority (0) in adapter chain
+Emits detailed analysis events for debugging
+Compatible with all CV/OCR pipelines
+This adapter ensures the extension works on any manga site, even those not explicitly supported, by intelligently analyzing page structure and image characteristics.

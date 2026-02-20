@@ -1,0 +1,22 @@
+Key MangaDex-Specific Features:
+
+| Feature                         | Implementation                             | Purpose                                               |
+| ------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| **MD\@Home Integration**        | Intercepts `window.__DATA__` and API calls | Direct access to image server URLs without scraping   |
+| **Reader Mode Detection**       | CSS class and computed style analysis      | Handles both paginated and long-strip modes           |
+| **Lazy Loading Interception**   | `src` setter override + MutationObserver   | Catches images before they load for OCR preprocessing |
+| **Page Preloading**             | IndexedDB cache with LRU eviction          | Smooth navigation in long chapters                    |
+| **Dynamic Overlay Positioning** | Scroll-aware visibility toggling           | Critical for infinite scroll long-strip mode          |
+
+Integration Points:
+Extends: generic-manga-adapter.js (base class with common methods)
+Uses: mutation-observer.js for DOM watching
+Emits: manga-translator:pageDiscovered, manga-translator:pageChanged
+Consumes: ImageCache for preloading
+MangaDex Challenges Addressed:
+MD@Home Server Rotation: Handles dynamic base URL changes
+Data Saver Mode: Adapts to lower quality images
+Long-Strip Performance: Virtualizes overlays for 100+ page chapters
+SPA Navigation: Detects chapter changes without page reload
+Anti-Scraping: Uses official API endpoints when available
+Would you like me to elaborate on the long-strip virtualization strategy or the MD@Home server failover handling?

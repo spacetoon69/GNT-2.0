@@ -1,0 +1,16 @@
+Key Features of this Implementation:
+Cubari-Specific Handling
+Dynamic Content: Handles React-based lazy loading with mutation observers
+Multi-Source Images: Supports Imgur, Reddit, GitHub, Catbox sources
+URL Parsing: Extracts series/chapter IDs from /read/:series/:chapter/ pattern
+High-Res Recovery: Converts compressed Imgur/Reddit URLs to original quality
+Technical Optimizations
+Hydration Detection: Waits for React to finish rendering
+Image Interception: Overrides Image.prototype.src to catch dynamic loads
+WeakSet Tracking: Memory-efficient processed image tracking
+Navigation Handling: Detects React Router navigation changes
+Integration Points
+Extends MangaAdapter base class (assumed)
+Emits events: ready, imageLoaded, imagesUpdated, navigation, extractText
+Compatible with the image-processor.js and bubble-detector.js pipeline
+Would you like me to create the corresponding base-adapter.js abstract class, or implement any of the other site adapters (MangaDex, Webtoon) with similar patterns?
