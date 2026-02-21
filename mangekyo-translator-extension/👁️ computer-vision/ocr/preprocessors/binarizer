@@ -1,0 +1,61 @@
+Key Features:
+Six Algorithms:
+Otsu: Global, fastest, uniform backgrounds
+Sauvola: Local adaptive, best for manga (default)
+Niblack: Local, fast, light text
+Wolf-Jolion: Improved Sauvola, low-contrast handling
+Bradley: Fastest local method, real-time capable
+Ising: Graph-cut, highest quality, slowest
+Smart Preprocessing:
+CLAHE contrast enhancement
+Auto-inversion detection (corners analysis)
+Adaptive window sizing
+Morphological Cleanup:
+Despeckle (salt & pepper removal)
+Connected component filtering (remove noise)
+Close gaps in text
+Manga Presets:
+standard: Black text on white
+scanQuality: For degraded scans
+lowContrast: Faded prints
+webtoon: Digital comics
+sfx: Sound effects (auto-invert)
+Integral Image Optimization:
+O(1) local statistics calculation
+Fast Sauvola/Niblack implementation
+
+Usage:
+
+import { createBinarizer } from './binarizer.js';
+
+const binarizer = createBinarizer();
+
+// Auto mode
+const result = await binarizer.binarize(imageData);
+
+// Preset
+const result = await binarizer.binarizeWithPreset(imageData, 'scanQuality');
+
+// Manual with options
+const result = await binarizer.binarize(imageData, {
+  method: 'wolf',
+  windowSize: 21,
+  k: 0.3,
+  enhanceContrast: true,
+  denoise: true
+});
+
+// Access binary data
+const binaryBuffer = result.binary; // 1-bit packed format
+const imageData = result.imageData; // For display
+
+Integration with OCR Pipeline:
+
+// Typical preprocessing chain
+const denoised = await denoiser.denoise(imageData, { preset: 'mangaScan' });
+const binarized = await binarizer.binarize(denoised.imageData, { 
+  method: 'sauvola',
+  invert: 'auto'
+});
+const deskewed = await deskewer.deskew(binarized.imageData);
+

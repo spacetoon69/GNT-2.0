@@ -1,0 +1,31 @@
+Key Features:
+Noise Estimation — Laplacian variance, block-based variance, JPEG artifact detection
+Four Algorithms:
+Median: Fast, good for salt & pepper (print defects)
+Bilateral: Edge-preserving, best for manga (default)
+Non-Local Means: Highest quality, heavy noise
+Wavelet: Preserves fine details, light noise
+Smart Selection — Auto-chooses algorithm based on noise analysis
+Manga Presets — mangaScan, webtoon, oldPrint, digital
+Web Worker Support — Offload heavy processing for large images
+Performance Monitoring — Integrated metrics collection
+
+Usage:
+
+import { createDenoiser } from './denoiser.js';
+
+const denoiser = createDenoiser({ fastMode: false });
+
+// Auto mode
+const clean = await denoiser.denoise(imageData);
+
+// Preset
+const clean = await denoiser.denoiseWithPreset(imageData, 'oldPrint');
+
+// Manual
+const clean = await denoiser.denoise(imageData, {
+  algorithm: 'bilateral',
+  strength: 0.6,
+  sigmaColor: 25
+});
+

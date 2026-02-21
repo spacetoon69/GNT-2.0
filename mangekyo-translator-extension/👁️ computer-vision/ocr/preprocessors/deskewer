@@ -1,0 +1,20 @@
+Key Features
+Dual Detection Methods:
+Hough Transform: Detects panel borders and speech bubble edges (geometric approach)
+Projection Profiles: Optimized for text line detection (statistical approach)
+Hybrid Mode: Combines both with confidence weighting (default)
+CJK Optimizations:
+Orientation detection distinguishes horizontal vs vertical text (critical for Japanese manga)
+Projection profiles adapt based on detected text direction
+Handles mixed-orientation pages
+Performance Features:
+Automatic downsampling for large images
+OffscreenCanvas support for background processing
+Configurable concurrency for batch operations
+Performance monitoring integration
+Quality Features:
+High-quality bicubic interpolation for rotation
+Adaptive thresholding for binarization
+Sobel edge detection for Hough transform
+Confidence scoring for reliability assessment
+The module integrates with the existing performance-monitor.js utility and follows the project's architecture patterns. It's designed to work in both main thread and offscreen document contexts (MV3 compatible).

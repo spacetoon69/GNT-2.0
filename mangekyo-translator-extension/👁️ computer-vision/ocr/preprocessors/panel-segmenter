@@ -1,0 +1,26 @@
+Key Features
+Multi-Layout Support:
+Traditional Manga: Complex nested panels with gutter detection
+Webtoon: Vertical scrolling format with gap-based segmentation
+Grid Layout: 4-koma and regular grid patterns
+Advanced Detection:
+Gutter Analysis: Detects gaps between panels using projection profiles
+Borderless Panels: Content clustering for panels without visible borders
+Inset Detection: Finds panels nested within other panels
+Line Detection: Hough transform for strong panel borders
+Panel Intelligence:
+Content Bounds: Tight bounding box around actual ink (excludes white margins)
+Ink Density: Measures how much content is in each panel
+Type Classification: Standard, full-bleed, borderless, inset, edge-panel
+Neighbor Relationships: Top/bottom/left/right panel connections
+Reading Order:
+RTL Support: Traditional manga right-to-left, top-to-bottom
+Z-Pattern Algorithm: Proper manga reading flow
+Configurable Direction: Supports LTR comics and TTB webtoons
+Automatic Detection: Determines layout type from image analysis
+Performance Optimizations:
+Downsamples large images for processing
+Efficient connected components using BFS
+Merges overlapping detections intelligently
+Web Worker/OffscreenCanvas compatible
+The MangaPanel class provides rich metadata for each panel, enabling the OCR pipeline to process panels in reading order with proper context for translation.
