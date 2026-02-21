@@ -1,0 +1,36 @@
+This performance-monitor.js provides:
+Core Monitoring:
+Operation tracking - Start/end timing with metadata for OCR, translation, detection, rendering
+Automatic threshold alerts - Warns when operations exceed limits (2s OCR, 3s translation)
+Memory tracking - Monitors heap usage with 5-second intervals (if performance.memory available)
+Frame rate monitoring - Tracks FPS and detects frame drops for smooth UI
+Key Features:
+measure() / measureSync() - Wrap async/sync functions for automatic timing
+Sampling support - Configurable rate limiting for high-frequency operations
+Alert system - Register handlers for performance degradation events
+Long task observer - Detects blocking operations via PerformanceObserver
+Component Monitors:
+ComponentMonitors.createOCRMonitor() - Specialized for Tesseract.js pipeline
+createTranslationMonitor() - Tracks API latency and cache hits
+createDetectionMonitor() - Monitors TensorFlow.js bubble detection
+Utilities:
+PerformanceUtils.debounce() - Debounce with wait-time tracking
+PerformanceUtils.throttleRAF() - Throttle to animation frames
+PerformanceUtils.measureMemory() - Heap impact measurement
+createBudget() - Performance budgeting for operations
+
+Integration Example:
+
+const monitor = new PerformanceMonitor({ enableLogging: true });
+
+// Wrap OCR
+const result = await monitor.measure('ocr', () => tesseract.recognize(image), { page: 1 });
+
+// Or use specialized monitor
+const ocr = ComponentMonitors.createOCRMonitor(monitor);
+const text = await ocr.recognize(imageData, 'jpn');
+
+// Get report
+console.log(monitor.getReport());
+
+The monitor feeds data to your state-manager.js for persistence and popup.js for real-time performance display in the UI.

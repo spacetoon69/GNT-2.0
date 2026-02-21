@@ -1,0 +1,18 @@
+This text-sanitizer.js provides:
+Core Features:
+Language-aware cleaning - Specific patterns for Japanese, Korean, and Chinese OCR artifacts
+Broken sentence repair - Fixes text split across lines/bubbles (hyphenation, particle attachment)
+SFX detection - Identifies sound effects vs dialogue using regex patterns
+Honorific preservation - Extracts Japanese honorifics before translation, can restore them after
+Confidence scoring - Calculates reliability based on modification intensity
+Key Methods:
+sanitize() - Main pipeline returning rich metadata (isSFX, honorifics, confidence, etc.)
+detectSFX() - Identifies onomatopoeia like ドキドキ, バタン, 쿵쿵
+fixBrokenSentences() - Repairs mid-word line breaks
+mergeRelatedSegments() - Combines text across multiple bubbles if they're one sentence
+Utilities:
+TextUtils.quickSanitize() - One-liner cleaning
+TextUtils.isSFX() - Quick SFX check
+TextUtils.cleanForSite() - Adapter-specific cleaning (MangaDex, Webtoon, etc.)
+TextUtils.estimateReadingTime() - For UI timing
+The sanitizer integrates with your constants.js for patterns and returns structured data that your translation-hud.js and bubble-renderer.js can use for styling decisions (shouting detection, font sizing, etc.).

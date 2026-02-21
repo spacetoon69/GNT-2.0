@@ -1,0 +1,27 @@
+Key Features
+Advanced Preprocessing Pipeline:
+preprocessForOCR - Complete pipeline: color analysis → grayscale → contrast → denoise → deskew → binarize
+adaptiveBinarize - Sauvola local thresholding (handles uneven lighting)
+otsuBinarize - Global Otsu thresholding for uniform backgrounds
+deskewImage - Projection profile method for rotation correction
+Computer Vision Operations:
+detectTextRegions - Sobel edge detection with sliding window analysis
+analyzeColorMode - Detects color vs grayscale, screen tones, dominant colors
+medianFilter - Noise removal while preserving edges
+enhanceContrast - Histogram equalization for faded scans
+Performance & Memory:
+ProcessingQueue - Limits concurrent operations to prevent memory spikes
+ImageCache - LRU cache with TTL for processed regions
+createCanvasFromImage - Automatic dimension limiting, even sizing for WASM
+extractRegion - Zero-copy region extraction with optional rescaling
+Utility Functions:
+loadImage - Universal loader (URL, File, Blob, ImageData) with CORS handling
+compressImage - Smart resizing and format conversion
+calculateImageHash/compareHashes - Perceptual hashing for deduplication
+rotateImageData - High-quality rotation with proper bounds calculation
+Manga-Specific Optimizations:
+Screen tone (halftone) detection
+Writing mode detection preparation
+Bubble region extraction with padding
+Scale factor tracking for coordinate mapping back to original image
+This module integrates with the Tesseract.js OCR pipeline and provides WebAssembly-ready image data formats for the core-crypto.wasm and ocr-engine.wasm modules.

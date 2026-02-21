@@ -1,0 +1,23 @@
+Key Features
+Performance Optimizations:
+debounce/throttle for scroll/resize handlers
+createBatchedMutationObserver - RAF-batched mutations to prevent layout thrashing
+ElementCache - LRU cache for DOM queries
+createSmartScrollHandler - Pauses processing during scroll
+Manga-Specific Utilities:
+findMangaImages - Multi-strategy detection (selectors, dimensions, containers)
+isValidMangaImage - Filters logos/banners/thumbnails
+findTextInRegion - TreeWalker-based text extraction within bounding boxes
+cloneForOCR - Preserves computed styles for canvas rendering
+Overlay Management:
+createShadowContainer - Isolated styling via Shadow DOM
+isolateElement - Prevents event bubbling for interactive overlays
+getAbsoluteRect - Document-relative coordinates accounting for scroll
+Visual Analysis:
+getContrastRatio - WCAG contrast calculation for text readability
+rectsIntersect/getIntersectionArea - Geometry utilities for bubble detection
+Developer Experience:
+waitForElement - Promise-based element detection
+getElementPath - Debug-friendly CSS selectors
+detectInfiniteScroll - Adapts to lazy-loading readers
+This module integrates with the extension's performance monitoring and follows MV3 best practices (no memory leaks, efficient observers).

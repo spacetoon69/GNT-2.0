@@ -1,0 +1,18 @@
+This Japanese localization includes:
+Cultural Adaptations:
+Naruto terminology: 写輪眼 (Sharingan), 万華鏡 (Mangekyo), 永遠の万華鏡写輪眼 (Eternal Mangekyo Sharingan)
+Manga-specific terms: 吹き出し (speech bubbles), コマ (panels), 擬音・擬態語 (SFX)
+Proper honorifics: Native Japanese explanations (〜さん, 〜様, 〜君, etc.) rather than English approximations
+Technical Considerations:
+Writing direction: References to 横書き (horizontal) and 縦書き (vertical) Japanese text
+Typography: Manga font considerations for Japanese characters
+Reading flow: UI elements positioned for Japanese reading habits
+Linguistic Features:
+Keigo (敬語): Polite form used throughout (〜です, 〜ます調)
+Onomatopoeia: Comprehensive SFX translations preserving Japanese sound words
+Context awareness: Translation notes for maintaining narrative context across pages
+UX Localization:
+Natural phrasing: "クリックして起動" rather than literal "Activate"
+Status messages: Culturally appropriate brevity
+Error messages: Polite but clear error handling (〜してください, 〜となります)
+The file maintains structural parity with en.json while providing culturally authentic Japanese manga/otaku community terminology.

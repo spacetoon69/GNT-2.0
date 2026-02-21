@@ -1,0 +1,26 @@
+This configuration provides:
+Key Features:
+Worker Pool Management — Automatic pooling with scheduler for concurrent processing
+Language Auto-Detection — OSD (Orientation Script Detection) for unknown content
+Vertical Text Support — Automatic handling of jpn_vert for traditional manga
+Smart Caching — LRU cache to avoid re-processing identical regions
+Manga-Specific Optimizations — PSM modes, noise filtering, inversion detection
+Robust Error Handling — Retry logic with exponential backoff, custom error classes
+Performance Monitoring — Built-in metrics collection
+Integration Points:
+Connects to your preprocessors/ modules (denoiser, binarizer, deskewer)
+Works with postprocessors/ (manga-text-cleaner, bubble-classifier)
+Uses performance-monitor.js from shared utils
+
+Usage Example:
+
+import { getTesseractManager } from './tesseract-config.js';
+
+const ocr = getTesseractManager();
+await ocr.initialize(['jpn', 'jpn_vert', 'kor']);
+
+const result = await ocr.recognize(imageBlob, {
+  language: 'auto',
+  detectOrientation: true,
+  region: { x: 100, y: 200, width: 300, height: 150 }
+});
