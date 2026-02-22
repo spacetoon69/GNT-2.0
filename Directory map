@@ -123,8 +123,9 @@
 │   │   │   ├── quick-toggles.js        # Feature switches
 │   │   │   └── recent-history.js       # Recent translations
 │   │   └── assets/
-│   │       ├── mangekyo-icon.svg       # Sharingan icon
-│   │       └── madara-ems.svg          # EMS active state icon
+│   │       ├── tomoe-sharingan.png     # Sharingan icon
+│   │       ├── rinnegan.png            # Rinnegan icon
+│   │       └── ems-madara.png          # EMS active state icon
 │   │
 │   ├── options/                        # Settings page
 │   │   ├── options.html
