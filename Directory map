@@ -151,7 +151,7 @@
 │   │   │   ├── sharingan.js            # Float behavior
 │   │   │   ├── tomoe-animator.js       # Rotation animation
 │   │   │   └── assets/
-│   │   │       ├── tomoe-sharingan.svg # 3 tomoe design
+│   │   │       ├── tomoe-sharingan.png # 3 tomoe design
 │   │   │       ├── spinning.css        # CSS keyframes
 │   │   │       └── glow-effects.css    # Visual effects
 │   │   │
@@ -162,7 +162,7 @@
 │   │   │   ├── ems-animator.js         # Eternal Mangekyo animation
 │   │   │   ├── translation-hud.js      # Active translation HUD
 │   │   │   └── assets/
-│   │   │       ├── ems-madara.svg      # Madara EMS design
+│   │   │       ├── ems-madara.png      # Madara EMS design
 │   │   │       ├── susanoo-aura.css    # Power-up effects
 │   │   │       └── scan-lines.css      # Active scanning FX
 │   │   │
