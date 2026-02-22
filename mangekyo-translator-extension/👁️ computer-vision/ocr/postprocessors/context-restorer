@@ -1,0 +1,79 @@
+Key Features
+
+| Feature                    | Implementation                                                            |
+| -------------------------- | ------------------------------------------------------------------------- |
+| **Fragment Relations**     | 8 relationship types: continuation, response, parallel, interrupted, etc. |
+| **Multi-language Support** | Boundary markers for JA/KO/ZH/EN with language-specific logic             |
+| **Smart Merging**          | Lookahead merging for sentences split across 2-3 bubbles                  |
+| **Quote Balancing**        | Auto-fix for unbalanced Japanese quotation marks                          |
+| **Speaker Tracking**       | Maintains speaker identity across panels for continuity                   |
+| **OCR Artifact Repair**    | Mixed script separation, spacing fixes, interruption marks                |
+| **Cross-panel Logic**      | Reduced confidence but enabled for page-turn continuity                   |
+
+
+Usage Example
+
+import { ContextRestorer, FragmentRelation } from './context-restorer.js';
+
+const restorer = new ContextRestorer({
+  language: 'ja',
+  maxContextWindow: 5,
+  enableSpeakerTracking: true
+});
+
+// Register speakers
+restorer.registerSpeaker('char1', { name: 'Tanjiro', gender: 'male' });
+restorer.registerSpeaker('char2', { name: 'Nezuko', gender: 'female' });
+
+// Process fragments
+const fragments = [
+  { 
+    id: 'b1', 
+    text: '「鬼を滅する',  // Open quote, no ending
+    type: 'dialogue',
+    speaker: 'char1',
+    panelId: 'p1'
+  },
+  { 
+    id: 'b2', 
+    text: 'それが俺の',  // Continuation
+    type: 'dialogue', 
+    speaker: 'char1',
+    panelId: 'p1'
+  },
+  { 
+    id: 'b3', 
+    text: '役目だ」',  // Completion
+    type: 'dialogue',
+    speaker: 'char1', 
+    panelId: 'p1'
+  }
+];
+
+const results = restorer.restoreBatch(fragments);
+
+// Result[0]: "「鬼を滅する" -> relation: NEW_SENTENCE
+// Result[1]: "それが俺の" -> relation: CONTINUATION (merged trailing)
+// Result[2]: "役目だ」" -> relation: CONTINUATION (completed)
+
+
+Integration with Pipeline
+
+// Typical OCR post-processing chain
+const cleaner = new MangaTextCleaner();
+const classifier = new BubbleClassifier();
+const restorer = new ContextRestorer();
+
+// Process flow
+const cleaned = cleaner.clean(rawOcr);
+const classified = classifier.classify(cleaned.text, visualFeatures);
+const restored = restorer.restore({
+  text: cleaned.text,
+  type: classified.primaryType,
+  speaker: detectedSpeaker,
+  panelId: currentPanel
+});
+
+// Final output for translation
+const translationInput = restored.restored;
+

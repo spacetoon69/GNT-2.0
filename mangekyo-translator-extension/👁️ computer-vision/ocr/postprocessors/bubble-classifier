@@ -1,0 +1,51 @@
+Key Features
+
+| Feature                         | Implementation                                                                      |
+| ------------------------------- | ----------------------------------------------------------------------------------- |
+| **Multi-factor Classification** | Combines textual analysis, visual features, context, and structure                  |
+| **10 Text Types**               | Dialogue, narration, thought, SFX, whisper, shout, sign, foreign, handwritten, meta |
+| **Visual Integration**          | Bubble style detection (shout, thought, whisper shapes)                             |
+| **Translation Strategy**        | Returns specific approach per type (honorifics handling, register, formatting)      |
+| **Confidence Scoring**          | Tiered confidence with score differentials                                          |
+| **Gender Inference**            | Based on Japanese first-person pronouns and sentence endings                        |
+| **Batch Processing**            | Contextual awareness of surrounding bubbles                                         |
+
+Usage Example
+
+import { BubbleClassifier, TextType } from './bubble-classifier.js';
+
+const classifier = new BubbleClassifier({
+  language: 'ja',
+  detectHonorifics: true
+});
+
+const result = classifier.classify(
+  "「お兄ちゃん、何してるの？」",
+  {
+    bubbleStyle: 'standard',
+    tailDirection: 'left',
+    fontSize: 14,
+    isVertical: false
+  },
+  {
+    speakerKnown: true,
+    speakerRole: 'protagonist'
+  }
+);
+
+// Result:
+// {
+//   primaryType: 'dialogue',
+//   confidence: 'high',
+//   strategy: {
+//     approach: 'natural_speech',
+//     honorifics: 'preserve',
+//     register: 'casual'
+//   },
+//   metadata: {
+//     hasHonorifics: true,
+//     speakerGender: 'female',
+//     emotionalTone: 'neutral'
+//   }
+// }
+

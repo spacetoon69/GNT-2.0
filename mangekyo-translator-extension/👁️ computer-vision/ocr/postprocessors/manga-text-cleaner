@@ -1,0 +1,36 @@
+Key Features Implemented
+
+| Feature                 | Implementation                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------------- |
+| **Furigana Removal**    | Regex-based detection of ruby text artifacts, parenthesized readings, and floating kana |
+| **Vertical Text Fix**   | Corrects reading order artifacts, rotated punctuation mapping, broken column detection  |
+| **SFX Detection**       | Pattern matching for 擬音語 (impact, motion, emotion categories) + repetition detection    |
+| **Artifact Cleaning**   | Box-drawing char removal, half-width katakana normalization, Latin noise filtering      |
+| **Context Restoration** | Ellipsis repair, quotation balancing, punctuation spacing                               |
+| **Reading Order Sort**  | Right-to-left, top-to-bottom sorting for batch processing                               |
+
+
+Usage Example
+
+import { MangaTextCleaner } from './computer-vision/ocr/postprocessors/manga-text-cleaner.js';
+
+const cleaner = new MangaTextCleaner({
+  removeFurigana: true,
+  filterSoundEffects: false, // Keep SFX for translation
+  fixVerticalArtifacts: true,
+});
+
+// Single text
+const result = cleaner.clean("勉強（べんきょう）する", {
+  isVertical: false,
+  confidence: 0.92,
+  x: 100, y: 200
+});
+// Result: "勉強する"
+
+// Batch processing
+const batchResults = cleaner.cleanBatch([
+  { text: "ドキドキ...", metadata: { x: 50, y: 100 } },
+  { text: "「おはよう」", metadata: { x: 200, y: 100 } }
+]);
+
