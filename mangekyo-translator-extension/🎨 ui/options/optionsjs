@@ -1,0 +1,20 @@
+Key Features Implemented:
+PNG Image Integration: Uses your three images (sharingan.png, ems.png, rinnegan.png) throughout the UI for:
+Logo/brand identity in sidebar
+Theme selection previews
+Power level indicators
+Premium feature badges
+License status display
+Visual Theme System:
+Tomoe (Sharingan): Free tier, basic rotation animation
+Eternal Mangekyo (EMS): Premium tier, continuous rotation glow
+Rinnegan: Developer tier, locked by default with pulsing animation
+Interactive Elements:
+Real-time settings sync with Chrome storage
+Custom hotkey recording system
+Dynamic power level indicators
+Toast notifications
+Smooth page transitions
+Responsive Layout: Sidebar navigation with card-based settings grid
+Security/Privacy: Privacy mode toggle, cache management, data retention controls
+Place these files in ui/options/ and ensure your PNG images are in build/assets/icons/. The paths are relative from the options page location.
