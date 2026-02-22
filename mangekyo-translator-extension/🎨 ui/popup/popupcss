@@ -1,0 +1,6 @@
+Key spinning transition features:
+Tomoe → EMS: 1440° (4 full rotations) with scale pulse and brightness flare
+EMS → Rinnegan: 1440° rotation with purple glow intensification
+Rinnegan idle: Gentle floating animation with subtle glow pulse
+Floating iris: Appears with spin, floats gently when idle, spins again on interactions
+Each transition uses cubic-bezier(0.4, 0, 0.2, 1) for smooth acceleration/deceleration. The animations are triggered by adding/removing classes via JavaScript (.spinning, .spinning-in, .spinning-out).

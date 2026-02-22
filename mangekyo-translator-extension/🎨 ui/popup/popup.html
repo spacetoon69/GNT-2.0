@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangekyō Translator</title>
+</head>
+<body>
+
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Online</span>
+    </div>
+
+    <!-- Header with Sharingan States -->
+    <div class="header">
+        <div class="sharingan-container" id="sharinganToggle" draggable="false">
+            <!-- 3 Tomoe Sharingan (Idle/Hover) -->
+            <img 
+                src="assets/icons/tomoe-sharingan.png" 
+                alt="3 Tomoe Sharingan" 
+                class="sharingan-img tomoe" 
+                id="tomoeState"
+                draggable="false"
+            >
+            <!-- Eternal Mangekyou Sharingan (Active/Clicked) -->
+            <img 
+                src="assets/icons/ems-madara.png" 
+                alt="Eternal Mangekyou Sharingan" 
+                class="sharingan-img ems" 
+                id="emsState"
+                draggable="false"
+            >
+            <!-- Rinnegan (Reading/Scrolling) -->
+            <img 
+                src="assets/icons/rinnegan.png" 
+                alt="Rinnegan" 
+                class="sharingan-img rinnegan" 
+                id="rinneganState"
+                draggable="false"
+            >
+        </div>
+        <div class="status-text idle" id="mainStatus">DORMANT</div>
+        <div class="site-detection">
+            <div class="detection-dot" id="siteDot"></div>
+            <span id="siteText">No manga detected</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value" id="translatedCount">0</span>
+                <div class="stat-label">Translated</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="cachedCount">0</span>
+                <div class="stat-label">Cached</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="accuracyRate">--</span>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+
+        <!-- Quick Toggles -->
+        <div class="section">
+            <div class="section-title">Quick Controls</div>
+            <div class="toggle-list">
+                <div class="toggle-item" id="toggleAutoDetect">
+                    <div class="toggle-info">
+                        <div class="toggle-icon">🔍</div>
+                        <div class="toggle-text">
+                            <span class="toggle-label">Auto-Detect Manga</span>
+                            <span class="toggle-desc">Scan pages automatically</span>
+                        </div>
+                    </div>
+                    <div class="switch active" id="switchAutoDetect">
+                        <div class="switch-knob"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-item" id="toggleLiveTranslate">
+                    <div class="toggle-info">
+                        <div class="toggle-icon">⚡</div>
+                        <div class="toggle-text">
+                            <span class="toggle-label">Live Translation</span>
+                            <span class="toggle-desc">Real-time bubble detection</span>
+                        </div>
+                    </div>
+                    <div class="switch" id="switchLiveTranslate">
+                        <div class="switch-knob"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-item" id="toggleOverlay">
+                    <div class="toggle-info">
+                        <div class="toggle-icon">👁️</div>
+                        <div class="toggle-text">
+                            <span class="toggle-label">Visual Overlay</span>
+                            <span class="toggle-desc">Show translated text on page</span>
+                        </div>
+                    </div>
+                    <div class="switch active" id="switchOverlay">
+                        <div class="switch-knob"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Translation Engine -->
+        <div class="section">
+            <div class="section-title">Translation Engine</div>
+            <div class="engine-selector">
+                <button class="engine-btn active" data-engine="google">Google</button>
+                <button class="engine-btn" data-engine="deepl">DeepL</button>
+                <button class="engine-btn" data-engine="gpt4">GPT-4V</button>
+                <button class="engine-btn" data-engine="local">Local LLM</button>
+            </div>
+        </div>
+
+        <!-- Recent History -->
+        <div class="section">
+            <div class="section-title">Recent Translations</div>
+            <div class="recent-list" id="recentList">
+                <div class="recent-item" data-url="example.com/manga/1">
+                    <div class="recent-thumb">📖</div>
+                    <div class="recent-info">
+                        <div class="recent-title">Solo Leveling - Chapter 142</div>
+                        <div class="recent-meta">
+                            <span class="recent-lang">KO → EN</span>
+                            <span>2 min ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-item" data-url="example.com/manga/2">
+                    <div class="recent-thumb">📖</div>
+                    <div class="recent-info">
+                        <div class="recent-title">Jujutsu Kaisen - Chapter 215</div>
+                        <div class="recent-meta">
+                            <span class="recent-lang">JA → EN</span>
+                            <span>15 min ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <button class="btn btn-secondary" id="btnSettings">Settings</button>
+        <button class="btn btn-primary" id="btnActivate">Activate</button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Awakening Sharingan...</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✦</span>
+        <span id="toastMessage">Notification</span>
+    </div>
+
+    <!-- Floating Iris Container (Appears when reading) -->
+    <div class="floating-iris" id="floatingIris">
+        <img 
+            src="assets/icons/rinnegan.png" 
+            alt="Rinnegan" 
+            class="iris-img"
+            id="irisImage"
+            draggable="false"
+        >
+    </div>
+
+</body>
+</html>

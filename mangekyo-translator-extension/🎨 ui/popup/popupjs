@@ -1,0 +1,11 @@
+Key features implemented:
+Three-state transitions with proper spinning animations (Tomoe → EMS → Rinnegan)
+Floating iris with drag-and-drop positioning that persists across sessions
+Scroll detection integration to auto-trigger Rinnegan mode when reading
+State persistence using Chrome storage API
+Content script communication with auto-injection fallback
+Keyboard shortcuts (Ctrl+Shift+S to toggle, Escape to deactivate)
+Real-time stats synchronization with content script
+Error handling and toast notifications
+Touch support for mobile/tablet dragging
+The script manages all animation classes timing to match the CSS keyframes and handles the complex state machine of the three dojutsu forms.

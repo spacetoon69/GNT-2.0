@@ -1,0 +1,9 @@
+Key changes made:
+Replaced SVG with PNG images in three states:
+tomoe-sharingan.png (3 Tomoe - idle/hover)
+ems-madara.png (Eternal Mangekyou - active/clicked)
+rinnegan.png (Rinnegan - reading/scrolling)
+Added floating iris element (#floatingIris) that will serve as the draggable overlay when user is reading manga
+Prepared structure for drag functionality with draggable="false" attributes on images to prevent native browser dragging, allowing custom drag implementation in your separate JavaScript
+State management ready with three distinct image layers that CSS will show/hide based on interaction state
+The HTML expects your PNG files at assets/icons/ path. The floating iris is positioned outside the popup flow for overlay functionality.

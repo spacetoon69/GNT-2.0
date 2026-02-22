@@ -1,0 +1,941 @@
+/* ============================================
+   BASE & RESET
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+:root {
+    --sharingan-red: #8B0000;
+    --sharingan-dark: #1a0000;
+    --sharingan-glow: #ff1a1a;
+    --ems-purple: #4a0080;
+    --rinnegan-gray: #2a2a3a;
+    --rinnegan-purple: #6a4c93;
+    --text-primary: #e0e0e0;
+    --text-secondary: #888;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #151515;
+    --bg-card: #1a1a1a;
+    --border-color: #2a2a2a;
+    --success: #00ff88;
+    --warning: #ffaa00;
+    --error: #ff0044;
+}
+
+body {
+    width: 380px;
+    min-height: 500px;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--sharingan-dark) 100%);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(74, 0, 128, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ============================================
+   CONNECTION STATUS
+   ============================================ */
+.connection-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    z-index: 10;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+    background: var(--error);
+    box-shadow: 0 0 6px var(--error);
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ============================================
+   HEADER & SHARINGAN CONTAINER
+   ============================================ */
+.header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Main Sharingan Container */
+.sharingan-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.sharingan-container:hover {
+    transform: scale(1.05);
+}
+
+/* Image Base Styles */
+.sharingan-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+/* ============================================
+   SHARINGAN STATES & SPINNING TRANSITIONS
+   ============================================ */
+
+/* 3 Tomoe (Idle) State */
+.tomoe {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.6));
+}
+
+/* Spinning animation for Tomoe */
+.tomoe.spinning {
+    animation: tomoe-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tomoe-spin {
+    0% {
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.6));
+    }
+    50% {
+        transform: rotate(720deg) scale(0.8);
+        filter: drop-shadow(0 0 30px rgba(139, 0, 0, 1)) brightness(1.5);
+    }
+    100% {
+        transform: rotate(1440deg) scale(1);
+        filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.6));
+    }
+}
+
+/* Eternal Mangekyou (Active) State */
+.ems {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+    filter: drop-shadow(0 0 20px rgba(74, 0, 128, 0));
+    pointer-events: none;
+}
+
+/* EMS Spinning Transition */
+.ems.spinning-in {
+    animation: ems-spin-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes ems-spin-in {
+    0% {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0.5);
+        filter: drop-shadow(0 0 20px rgba(74, 0, 128, 0));
+    }
+    30% {
+        opacity: 0.5;
+        transform: rotate(0deg) scale(1.2);
+        filter: drop-shadow(0 0 40px rgba(74, 0, 128, 0.8)) brightness(1.3);
+    }
+    60% {
+        opacity: 1;
+        transform: rotate(180deg) scale(0.9);
+        filter: drop-shadow(0 0 30px rgba(74, 0, 128, 1));
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(360deg) scale(1);
+        filter: drop-shadow(0 0 20px rgba(74, 0, 128, 0.8));
+    }
+}
+
+/* EMS Spinning Out (to Rinnegan) */
+.ems.spinning-out {
+    animation: ems-spin-out 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes ems-spin-out {
+    0% {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 20px rgba(74, 0, 128, 0.8));
+    }
+    50% {
+        opacity: 0.5;
+        transform: rotate(-720deg) scale(1.3);
+        filter: drop-shadow(0 0 40px rgba(74, 0, 128, 1)) brightness(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(-1440deg) scale(0.3);
+        filter: drop-shadow(0 0 60px rgba(74, 0, 128, 0));
+    }
+}
+
+/* Rinnegan (Reading) State */
+.rinnegan {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.3);
+    filter: drop-shadow(0 0 30px rgba(106, 76, 147, 0));
+    pointer-events: none;
+}
+
+/* Rinnegan Spinning Transition */
+.rinnegan.spinning-in {
+    animation: rinnegan-spin-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes rinnegan-spin-in {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.3);
+        filter: drop-shadow(0 0 30px rgba(106, 76, 147, 0));
+    }
+    25% {
+        opacity: 0.6;
+        transform: rotate(360deg) scale(1.1);
+        filter: drop-shadow(0 0 50px rgba(106, 76, 147, 0.6)) brightness(1.2);
+    }
+    50% {
+        opacity: 0.8;
+        transform: rotate(720deg) scale(0.95);
+        filter: drop-shadow(0 0 40px rgba(106, 76, 147, 0.8));
+    }
+    75% {
+        opacity: 1;
+        transform: rotate(1080deg) scale(1.05);
+        filter: drop-shadow(0 0 60px rgba(106, 76, 147, 1)) brightness(1.3);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(1440deg) scale(1);
+        filter: drop-shadow(0 0 30px rgba(106, 76, 147, 0.9));
+    }
+}
+
+/* Rinnegan Idle Animation (gentle pulse when active) */
+.rinnegan.active {
+    animation: rinnegan-idle 4s ease-in-out infinite;
+}
+
+@keyframes rinnegan-idle {
+    0%, 100% {
+        filter: drop-shadow(0 0 30px rgba(106, 76, 147, 0.9));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 50px rgba(106, 76, 147, 1)) brightness(1.1);
+        transform: scale(1.02);
+    }
+}
+
+/* State Visibility Classes */
+.sharingan-container.state-tomoe .tomoe {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sharingan-container.state-tomoe .ems,
+.sharingan-container.state-tomoe .rinnegan {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sharingan-container.state-ems .ems {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sharingan-container.state-ems .tomoe,
+.sharingan-container.state-ems .rinnegan {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sharingan-container.state-rinnegan .rinnegan {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sharingan-container.state-rinnegan .tomoe,
+.sharingan-container.state-rinnegan .ems {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Status Text */
+.status-text {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    transition: all 0.3s;
+}
+
+.status-text.idle { 
+    color: var(--sharingan-red);
+    text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+}
+
+.status-text.active { 
+    color: #9d4edd;
+    text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+}
+
+.status-text.reading { 
+    color: var(--rinnegan-purple);
+    text-shadow: 0 0 15px rgba(106, 76, 147, 0.8);
+}
+
+/* Site Detection */
+.site-detection {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.detection-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    transition: all 0.3s;
+}
+
+.detection-dot.detected {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+/* ============================================
+   CONTENT & STATS
+   ============================================ */
+.content {
+    padding: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    border-color: var(--sharingan-red);
+    transform: translateY(-2px);
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sharingan-glow);
+    display: block;
+    transition: all 0.3s;
+}
+
+.stat-card:hover .stat-value {
+    text-shadow: 0 0 10px var(--sharingan-glow);
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+/* ============================================
+   SECTIONS & TOGGLES
+   ============================================ */
+.section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-color), transparent);
+}
+
+.toggle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toggle-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.toggle-item:hover {
+    background: var(--bg-secondary);
+    border-color: rgba(139, 0, 0, 0.5);
+}
+
+.toggle-item.active {
+    border-color: var(--sharingan-red);
+    background: rgba(139, 0, 0, 0.1);
+}
+
+.toggle-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(139, 0, 0, 0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.toggle-item.active .toggle-icon {
+    background: rgba(139, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+}
+
+.toggle-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.toggle-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.toggle-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* Switch Toggle */
+.switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.switch.active {
+    background: var(--sharingan-red);
+    border-color: var(--sharingan-red);
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.4);
+}
+
+.switch-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.switch.active .switch-knob {
+    transform: translateX(20px);
+}
+
+/* ============================================
+   ENGINE SELECTOR
+   ============================================ */
+.engine-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.engine-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+.engine-btn:hover {
+    border-color: var(--sharingan-red);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.engine-btn.active {
+    background: rgba(139, 0, 0, 0.2);
+    border-color: var(--sharingan-red);
+    color: var(--sharingan-glow);
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+}
+
+/* ============================================
+   RECENT HISTORY
+   ============================================ */
+.recent-list {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.recent-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recent-item:hover {
+    border-color: var(--sharingan-red);
+    background: rgba(139, 0, 0, 0.1);
+    transform: translateX(4px);
+}
+
+.recent-thumb {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.recent-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recent-title {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
+
+.recent-meta {
+    font-size: 10px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.recent-lang {
+    color: var(--sharingan-glow);
+    font-weight: 600;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--sharingan-red), #6b0000);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+}
+
+/* Button States for Different Modes */
+.btn-primary.state-ems {
+    background: linear-gradient(135deg, var(--ems-purple), #2a0040);
+    box-shadow: 0 0 20px rgba(74, 0, 128, 0.4);
+}
+
+.btn-primary.state-rinnegan {
+    background: linear-gradient(135deg, var(--rinnegan-purple), #3d2b54);
+    box-shadow: 0 0 20px rgba(106, 76, 147, 0.5);
+}
+
+/* ============================================
+   LOADING OVERLAY
+   ============================================ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid transparent;
+    border-top-color: var(--sharingan-red);
+    border-right-color: var(--sharingan-red);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: relative;
+}
+
+.loading-spinner::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 3px solid transparent;
+    border-top-color: var(--ems-purple);
+    border-radius: 50%;
+    animation: spin 2s linear infinite reverse;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    animation: pulse-text 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-card);
+    border: 1px solid var(--sharingan-red);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast-icon {
+    color: var(--sharingan-glow);
+    font-size: 16px;
+}
+
+/* ============================================
+   FLOATING IRIS (READING MODE)
+   ============================================ */
+.floating-iris {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: grab;
+    z-index: 9999;
+    display: none;
+    pointer-events: auto;
+    filter: drop-shadow(0 0 20px rgba(106, 76, 147, 0.8));
+    transition: transform 0.1s, filter 0.3s;
+}
+
+.floating-iris.visible {
+    display: block;
+    animation: iris-appear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes iris-appear {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.floating-iris:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.floating-iris.dragging {
+    transition: none;
+    filter: drop-shadow(0 0 30px rgba(106, 76, 147, 1)) brightness(1.2);
+}
+
+.floating-iris .iris-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Iris idle animation */
+.floating-iris.visible:not(.dragging) {
+    animation: iris-float 3s ease-in-out infinite, iris-appear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes iris-float {
+    0%, 100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 20px rgba(106, 76, 147, 0.8));
+    }
+    50% {
+        transform: translateY(-10px);
+        filter: drop-shadow(0 0 30px rgba(106, 76, 147, 1));
+    }
+}
+
+/* Iris spinning when transitioning */
+.floating-iris.spinning {
+    animation: iris-spin 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes iris-spin {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(720deg) scale(1.1);
+        filter: drop-shadow(0 0 40px rgba(106, 76, 147, 1)) brightness(1.3);
+    }
+    100% {
+        transform: rotate(1440deg) scale(1);
+    }
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sharingan-red);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sharingan-glow);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.glow-effect {
+    animation: glow-pulse 2s infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
