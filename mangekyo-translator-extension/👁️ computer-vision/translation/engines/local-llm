@@ -1,0 +1,20 @@
+This implementation provides:
+Core Features:
+Privacy-First: All inference happens locally, no API calls
+Hardware Adaptation: Auto-detects WebGPU/WebGL/CPU capabilities
+Model Registry: Curated models from lightweight (300MB) to manga-optimized (7GB)
+Manga-Specific Processing: Honorifics preservation, SFX translation, context awareness
+MV3 Compatibility: Lazy loading, yield to main thread, memory management
+Key Capabilities:
+Progressive Loading: Models load on-demand with quantization (q4) for memory efficiency
+Smart Caching: LRU cache for translation results
+Batch Processing: Optimized for multiple speech bubbles with chunking
+Context Preservation: Maintains narrative context across bubbles (for larger models)
+SFX Handling: Special logic for Japanese sound effects
+Performance Monitoring: Built-in metrics for optimization
+Integration Points:
+Works with ConfigManager for settings
+Uses SecureStorage for any sensitive data
+Reports to PerformanceMonitor for analytics
+Designed to run in offscreen documents for heavy processing (MV3 compliance)
+The module is designed to gracefully degrade (fallback to API translation if local model fails) and includes comprehensive error handling for the constraints of browser extension environments.

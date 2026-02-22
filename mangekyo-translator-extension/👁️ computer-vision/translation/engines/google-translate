@@ -1,0 +1,45 @@
+Key Features
+
+1. Rate Limiting & Quota Management
+Per-minute and daily request tracking
+Automatic cooldown enforcement
+Soft warnings at 80% daily quota
+2. Smart Caching Integration
+Works with extension's CacheManager
+Cache key includes text, source/target languages
+Automatic cache retrieval and storage
+3. Manga-Specific Processing
+Honorifics preservation: Extracts Japanese honorifics before translation, restores after
+Context preservation: Maintains narrative flow markers
+Batch optimization: Groups up to 128 strings per API call
+4. Robust Error Handling
+Exponential backoff with jitter
+Specific error types for quota/API key issues
+Graceful degradation on failures
+5. Performance Monitoring
+Integration with extension's PerformanceMonitor
+Tracks latency, cache hits, error rates
+
+Usage Examples
+
+// Basic translation
+const result = await googleTranslate.translate("こんにちは", {
+  sourceLang: "ja",
+  targetLang: "en"
+});
+// Returns: { text: "Hello", detectedLanguage: "ja", confidence: 0.98 }
+
+// Batch translation (efficient for manga pages)
+const bubbles = ["おはよう", "何？", "ありがとう"];
+const results = await googleTranslate.translateBatch(bubbles, {
+  sourceLang: "ja",
+  targetLang: "en"
+});
+
+// With context preservation
+const engine = new GoogleTranslateEngine({
+  preserveHonorifics: true,
+  useContext: true
+});
+
+This module follows the extension's architecture patterns and integrates seamlessly with the existing computer-vision/translation/ pipeline structure you provided.

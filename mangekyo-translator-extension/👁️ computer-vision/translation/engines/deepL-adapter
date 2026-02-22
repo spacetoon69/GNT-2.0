@@ -1,0 +1,41 @@
+Key DeepL-Specific Features
+1. Superior Quality Indicators
+Formality control (more/less/prefer_more/prefer_less) for languages that support it
+Glossary support for consistent character names/terminology
+Better handling of Japanese nuance and context
+2. Smart Text Handling
+Automatic sentence splitting with split_sentences: '1'
+Intelligent chunking for texts exceeding limits (5000 free / 50000 pro)
+XML tag handling for preserving formatting markers
+3. Manga-Specific Optimizations
+SFX Translation: Detects and translates sound effects (ドキドキ → thump thump)
+Honorifics preservation: Maintains -san, -kun, -chan with cultural context
+Context preservation: Maintains narrative flow across speech bubbles
+4. Tier Detection
+Auto-detects Pro vs Free from API key format (:fx suffix = Free)
+Different limits and features per tier
+Usage tracking for quota management
+
+Usage Examples
+
+// Basic usage
+const result = await deepLAdapter.translate("おはようございます", {
+  sourceLang: "ja",
+  targetLang: "en",
+  formality: "less" // Casual "Good morning" vs formal
+});
+
+// With glossary for consistent terms
+await deepLAdapter.createGlossary("Manga Terms", [
+  { source: "忍術", target: "Ninjutsu" },
+  { source: "写輪眼", target: "Sharingan" }
+], "ja", "en");
+
+// Batch translate entire page
+const bubbles = ["どうした？", "なんでもない", "行こう"];
+const results = await deepLAdapter.translateBatch(bubbles, {
+  targetLang: "en",
+  formality: "default"
+});
+
+his adapter provides significantly better translation quality than Google Translate for manga content, especially preserving cultural nuances and character voice.

@@ -1,0 +1,54 @@
+Key GPT-4 Vision Features
+1. Multimodal Translation
+Analyzes manga panels as images to understand visual context
+Identifies character expressions, scene mood, and action
+Uses visual cues to improve translation accuracy
+2. Context Memory System
+Maintains narrative continuity across panels (last 5 panels)
+Preserves character voice consistency
+Tracks emotional arcs through scenes
+3. Advanced Capabilities
+Streaming: Real-time translation updates for UI feedback
+Cultural consultation: Explains references and wordplay
+Vision analysis: JSON-structured panel understanding
+Cost tracking: Per-request cost calculation and budgeting
+4. Manga-Specific Optimizations
+Specialized system prompts for anime/manga translation
+SFX handling with visual context
+Honorifics preservation with personality awareness
+Character voice consistency across panels
+5. Resilience
+Automatic fallback to cheaper models (gpt-4o-mini) on quota issues
+Retry logic with exponential backoff
+Context window management for long conversations
+
+Usage Examples
+
+// Basic translation
+const result = await openaiGPT.translate("お前はもう死んでいる", {
+  sourceLang: "ja",
+  targetLang: "en",
+  sceneContext: "dramatic confrontation"
+});
+// Returns: { text: "You're already dead", confidence: 0.95, cost: 0.002 }
+
+// With image context (GPT-4 Vision)
+const panelResult = await openaiGPT.translateWithVision(
+  "どうしたの？",
+  imageBase64,
+  {
+    analyzeFirst: true, // Analyze image before translating
+    characterContext: { name: "Naruto", personality: "energetic" }
+  }
+);
+
+// Streaming for real-time display
+await openaiGPT.translateStreaming("長いテキスト...", {}, (chunk, full) => {
+  updateUI(full); // Update translation as it arrives
+});
+
+// Cultural explanation
+const culture = await openaiGPT.explainCulturalContext("桜の季節", "ja");
+// Returns cultural context about cherry blossom season symbolism
+
+his adapter provides the highest quality translations by understanding visual context, maintaining narrative continuity, and leveraging GPT-4's superior reasoning for complex cultural nuances.
