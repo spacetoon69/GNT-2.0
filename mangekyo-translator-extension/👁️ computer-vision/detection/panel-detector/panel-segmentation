@@ -1,0 +1,33 @@
+This implementation provides:
+Key Features:
+1. Classical CV Pipeline (Based on academic research)
+Background Detection: Flood fill from edges to identify page background
+Panel Block Generation: Morphological operations (dilate/erode) to connect joined panels
+Recursive Binary Splitting: Adaptive algorithm to separate joined panels by finding optimal splitting lines
+Shape Extraction: Convex hull + corner optimization for precise panel boundaries
+2. Advanced Algorithms:
+Connected Components Analysis: 4-connectivity labeling for region detection
+Optimal Split Detection: Cost function based on pixel density projections
+Corner Optimization: Local search to maximize quadrilateral area
+Convex Hull: Graham scan algorithm for shape analysis
+3. Panel Type Classification:
+Standard: Rectangular panels with borders
+Borderless: Inferred from content arrangement
+Irregular: Non-rectangular shapes (detected via solidity metric)
+Joined: Connected to adjacent panels
+Full Bleed: Extends to page edges
+Inset: Panels within other panels
+4. Manga-Specific Logic:
+Right-to-left, top-to-bottom reading order calculation
+Screentone handling: Background thresholding ignores halftone patterns
+Fourth wall breaks: Handles unclosed panels using background repair
+Panel grouping: Detects joined panels for layout analysis
+5. Performance Optimizations:
+Downsampling: Processes large images at reduced resolution
+Web Worker support: For non-blocking processing
+Efficient algorithms: BFS/DFS with typed arrays for speed
+6. Integration Points:
+Uses BoundingBoxUtils for geometric operations
+Returns precise corner points for perspective correction
+Provides panel extraction for isolated OCR/processing
+The segmenter handles complex manga layouts including irregular panels, joined panels, borderless designs, and "fourth wall break" effects where panels extend beyond normal boundaries.

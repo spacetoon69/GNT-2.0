@@ -1,0 +1,37 @@
+This implementation provides:
+Key Features:
+1. Connected Component Analysis (CCA)
+8-connectivity labeling: Groups connected text pixels into blobs
+BFS traversal: Efficient component labeling with queue-based flood fill
+Feature extraction: Calculates area, density, centroid for each blob
+2. Text Orientation Detection
+Projection profiles: Analyzes horizontal vs vertical pixel density variance
+Automatic detection: Determines if text is horizontal, vertical, or mixed
+Orientation-specific processing: Adjusts morphological kernels accordingly
+3. Morphological Preprocessing
+Adaptive thresholding: Local threshold based on neighborhood statistics
+Orientation-aware closing: Uses different kernel shapes for horizontal (wider) vs vertical (taller) text
+Noise reduction: Filters small artifacts while preserving text structure
+4. Furigana Detection (Based on academic research )
+Size-based filtering: Detects small text above/beside main characters
+Position analysis: Associates furigana with nearest main text line
+Configurable thresholds: Max height and size ratio parameters
+5. Text Line Grouping
+Clustering algorithm: Groups character blobs into lines based on proximity
+Orientation-aware sorting:
+Vertical: Right-to-left columns, top-to-bottom within column
+Horizontal: Top-to-bottom rows, left-to-right within row
+Gap analysis: Respects manga reading conventions
+6. Reading Order Calculation
+Manga-specific logic: Right-to-left, top-to-bottom for vertical text
+Column detection: Groups lines into columns for Japanese text
+Sequential numbering: Assigns reading order to each text region
+7. Integration Features
+Mask extraction: Provides binary masks for precise OCR
+Batch processing: Handles multiple bubbles/panels efficiently
+Confidence scoring: Based on character size consistency and density
+8. Performance Optimizations
+Downsampling: Processes large images at reduced resolution
+Typed arrays: Uses Uint8Array for efficient binary image processing
+Single-pass algorithms: Minimizes iterations over pixel data
+The extractor integrates seamlessly with the bubble detection system, taking detected speech bubbles as input and producing precise text regions ready for OCR processing, with proper handling of Japanese vertical text and furigana.
