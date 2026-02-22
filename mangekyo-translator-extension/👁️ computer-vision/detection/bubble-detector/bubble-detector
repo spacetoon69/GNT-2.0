@@ -1,0 +1,32 @@
+This implementation provides:
+Key Features:
+TensorFlow.js Integration: Loads and runs object detection models with multi-scale inference for better accuracy on small/large bubbles
+Advanced Preprocessing:
+ImageNet normalization
+Aspect ratio-preserving resize with padding
+Multi-scale detection (0.5x, 1x, 1.5x, 2x)
+Contour Analysis:
+Adaptive thresholding for bubble segmentation
+Convex hull calculation for shape analysis
+Tail detection for speech bubbles
+Edge roughness analysis for thought clouds
+Bubble Classification:
+Speech (round/oval)
+Thought (cloud-like)
+Narration (rectangular)
+SFX (spiky/irregular)
+Based on circularity, solidity, and edge characteristics
+Manga-Specific Logic:
+Right-to-left, top-to-bottom reading order calculation
+Vertical text detection support
+Tail detection for speech indicators
+Performance Optimizations:
+Non-Maximum Suppression (NMS) for duplicate removal
+Batch processing support
+Video stream processing with frame throttling
+Temporary canvas pooling
+Integration Points:
+Works with bounding-box-utils.js for NMS
+Returns masks for OCR preprocessing
+Provides reading order for translation sequencing
+The detector handles the complex shapes found in manga (round bubbles, jagged shout bubbles, cloud thoughts) and prepares data for the OCR pipeline with precise boundary masks.

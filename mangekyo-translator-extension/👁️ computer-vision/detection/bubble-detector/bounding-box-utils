@@ -1,0 +1,36 @@
+This implementation provides:
+Core Features:
+1. IoU Variants
+Standard IoU: Basic intersection over union
+GIoU: Handles non-overlapping boxes (returns negative values for distance)
+DIoU: Incorporates center point distance
+CIoU: Adds aspect ratio consistency (best for object detection)
+IoM: Intersection over minimum area (good for containment checks)
+2. NMS Variants
+Standard NMS: Hard suppression of overlapping boxes
+Soft-NMS: Gaussian decay of scores instead of hard removal (better for manga bubbles that legitimately overlap)
+Class-Aware NMS: Only suppresses same-class detections
+Multi-Class NMS: Handles different bubble types intelligently
+DIoU-NMS: Uses distance metric for better localization
+3. Geometric Operations
+Box merging (union, intersection, weighted)
+Expansion by pixels or ratio
+Clipping to image boundaries
+Scaling and translation
+Aspect ratio calculation
+Enclosing box calculation
+4. Clustering Algorithms
+DBSCAN: Groups nearby bubbles for panel detection
+Hierarchical: Agglomerative clustering for bubble grouping
+Useful for detecting speech bubble clusters that belong to the same panel
+5. Reading Order Calculation
+Row-based: Right-to-left, top-to-bottom (standard manga)
+Column-based: Top-to-bottom, right-to-left (vertical text)
+Smart detection: Automatically detects layout orientation based on variance analysis
+Configurable tolerance for row/column grouping
+6. Utility Functions
+Box validation
+Coverage area calculation (accurate union of multiple boxes)
+Serialization/deserialization
+Performance-optimized distance calculations
+The utilities integrate seamlessly with bubble-detector.js for post-processing detections and preparing data for the OCR pipeline.
