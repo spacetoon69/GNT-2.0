@@ -1,0 +1,47 @@
+Key Features
+Visual Design:
+Sharingan Pulse: Header icon with rhythmic animation
+Type Color Coding: Panels (crimson), Pages (dark red), Chapters (orange), Bubbles (gold)
+EMS Hover Effects: Left border glow, horizontal slide, thumbnail brightness
+Expanded View: Side-by-side original/translated comparison with "EMS" red text glow
+Functionality:
+Smart Filtering: All/Panel/Page/Chapter tabs with instant filtering
+Privacy-First: 7-day auto-delete, local storage only, explicit privacy notice
+Quick Actions: Retranslate, copy text, go to page, delete with confirmation
+Duplicate Prevention: Same URL+text combinations are deduplicated
+Time Intelligence: "Just now", "5m ago", "2h ago" formatting
+Data Management:
+Deduplication: Prevents history spam from re-reading same panels
+Auto-Cleanup: Hourly purge of entries >7 days old
+Size Limits: Maximum 10 items (configurable)
+Rich Metadata: Manga title, chapter, page numbers, language pairs
+Events:
+historyupdate - Add/delete/clear operations
+itemexpand - User expands detail view
+retranslate - Request to retranslate specific item
+
+
+Integration:
+
+<recent-history id="history"></recent-history>
+<script>
+  const history = document.getElementById('history');
+  
+  // Add new translation
+  history.addEntry({
+    type: 'panel',
+    title: 'Speech bubble text...',
+    originalText: '元気ですか？',
+    translatedText: 'How are you?',
+    mangaTitle: 'Naruto',
+    chapterNum: 1,
+    pageNum: 5,
+    sourceUrl: 'https://mangadex.org/chapter/...',
+    thumbnail: 'data:image/jpeg;base64,...'
+  });
+  
+  // Listen for retranslate requests
+  history.addEventListener('retranslate', (e) => {
+    console.log('Retranslate:', e.detail);
+  });
+</script>

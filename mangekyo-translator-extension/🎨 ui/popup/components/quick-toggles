@@ -1,0 +1,29 @@
+Key Features
+Visual Design:
+EMS Switch: Custom toggle with radial gradient that transforms from gray to crimson when active
+Sharingan Icon Animation: Rotating tomoe when auto-translate is enabled
+Active Glow: Each toggle has its own color theme (crimson, gold, purple) with matching shadows
+Ripple Effects: Click feedback with expanding circles
+Functionality:
+Dependency Management: OCR must be enabled before auto-translate/bubble overlay
+Permission Handling: Desktop capture requests browser permissions dynamically
+Batch Operations: Enable/disable all (except experimental features)
+State Persistence: Automatic save/load via Chrome storage API
+Master Toggle Logic: Disabling OCR auto-disables dependent features
+States:
+Active: Crimson gradient, spinning icons, left border accent
+Disabled: Grayed out, reduced opacity, no pointer events
+Experimental: "BETA" badge in corner (desktop capture)
+Premium: Gold "PRO" badge (sound effects)
+Events:
+togglechange - Individual toggle change
+batchtoggle - Mass enable/disable
+Background script messaging for real-time sync
+Usage in popup.html:
+
+<quick-toggles id="mainToggles"></quick-toggles>
+<script>
+  document.getElementById('mainToggles').addEventListener('togglechange', (e) => {
+    console.log('Toggle changed:', e.detail);
+  });
+</script>

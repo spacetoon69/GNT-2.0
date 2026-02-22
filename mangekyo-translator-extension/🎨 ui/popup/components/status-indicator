@@ -1,0 +1,22 @@
+Key Features
+Visual States:
+Idle (Tomoe): Deep red pulsing, waiting for input
+Scanning: Spinning animation while detecting text
+Processing (EMS Activating): Intensifying glow with progress bar
+Active (EMS): Golden aura indicating translation overlay active
+Error: Glitch effect with dark red tones
+Offline: Dimmed, disabled appearance
+Functionality:
+Real-time health monitoring via Chrome extension messaging
+Automatic retry logic with exponential backoff
+Progress tracking for OCR/translation operations
+Error logging with detailed diagnostics
+Custom element API for easy integration (<status-indicator status="scanning" progress="45">)
+Integration:
+Dispatches statuschange and statusclick events
+Responds to background script STATUS_UPDATE messages
+Shadow DOM encapsulation for style isolation
+Usage in popup.html:
+
+<status-indicator id="mainStatus" status="idle"></status-indicator>
+<script src="components/status-indicator.js"></script>
