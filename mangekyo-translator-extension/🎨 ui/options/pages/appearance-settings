@@ -1,0 +1,16 @@
+This appearance-settings.js file provides:
+Key Features:
+Theme System - 4 built-in themes (Sharingan, Mangekyō, Rinnegan, Byakugan) + custom color picker
+Sharingan Eye Configuration - Position, size, opacity, animation speeds, EMS pulse intensity
+Translation Bubble Styling - 4 bubble styles, font selection, colors, sizing, smart positioning
+Advanced Visual Effects - Scanlines, chakra particles, screen shake, chromatic aberration
+Accessibility Options - Reduced motion, high contrast, large text, color blind modes
+Live Preview - Real-time bubble preview that updates as you change settings
+Technical Highlights:
+Event-driven architecture with EventEmitter
+Deep merge for settings management
+Performance impact detection for heavy effects
+Import/export functionality for settings backup
+CSS variable generation for theme application
+Comprehensive validation and error handling
+The file integrates with the extension's config manager and communicates changes to background scripts via Chrome messaging.

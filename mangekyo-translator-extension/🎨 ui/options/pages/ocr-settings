@@ -1,0 +1,30 @@
+This ocr-settings.js module provides:
+Core OCR Configuration:
+Language Management: Primary/secondary language selection with vertical text support
+Tesseract Core: PSM (Page Segmentation Mode) and OEM (OCR Engine Mode) fine-tuning
+Live Testing: Image upload with visual bounding box overlay and confidence stats
+Image Preprocessing Pipeline:
+Denoising: Bilateral, Gaussian, or NLMeans filters with strength levels
+Contrast Enhancement: CLAHE (Contrast Limited Adaptive Histogram Equalization)
+Binarization: Adaptive, Otsu, or Sauvola thresholding methods
+Deskew: Automatic rotation correction up to ±45°
+Scaling: DPI targeting for optimal OCR resolution
+Manga-Specific Detection:
+Panel Detection: Layout analysis for reading order
+Bubble Detection: ML-based (TensorFlow.js) or heuristic speech bubble detection
+SFX Handling: Separate sound effects detection (Beta)
+Reading Direction: RTL (Manga), LTR (Comics), TTB (Manhua) support
+Performance Tuning:
+Worker Management: Multi-threading control (1-4 workers)
+Timeout & Retry: Configurable limits for reliability
+Confidence Thresholding: Quality gates with fallback options
+Computer Vision:
+ROI Expansion: Padding around detected text regions
+Text Height Filtering: Min/max size constraints
+Overlap Merging: IoU-based duplicate detection
+Experimental Features:
+GPU Acceleration: WebGL support for preprocessing
+WASM Optimization: Native-speed computations
+Fast Mode: Speed vs. accuracy trade-off
+Legacy Mode: Tesseract v4 compatibility
+The module includes a live preview system with visual feedback for OCR testing and real-time bounding box visualization.

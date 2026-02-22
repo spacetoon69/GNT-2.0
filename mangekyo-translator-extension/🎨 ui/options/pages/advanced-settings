@@ -1,0 +1,31 @@
+This creates a comprehensive advanced settings page with:
+Performance Controls:
+OCR concurrency threading (1-8 threads)
+Image cache size limits with auto-cleanup
+GPU acceleration toggle for WebGL/TensorFlow.js
+Lazy loading distance thresholds
+Memory pressure handling
+Security Hardening:
+Runtime integrity verification
+WASM sandboxing with CSP
+Hardware-backed encryption for API keys
+Network isolation enforcement
+Security audit logging
+OCR Engine Tuning:
+Tesseract page segmentation modes (including manga-optimized)
+Neural net vs legacy engine selection
+Vertical text (tategaki) optimization
+Experimental handwriting detection
+Experimental Features:
+On-device LLM translation (WebGPU)
+Predictive preloading via behavioral analysis
+Cross-bubble translation context
+Desktop overlay mode
+Developer debug mode with performance overlay
+System Information Panel:
+Real-time hardware capability detection (WebGPU, memory, cores)
+Storage quota monitoring
+Cache statistics with manual clearing
+Diagnostic log export
+One-click reset to defaults
+The component includes debounced setting persistence, immediate runtime communication for critical toggles, and comprehensive warning labels for potentially destabilizing options.

@@ -1,0 +1,27 @@
+This hotkey-settings.js file provides:
+Core Features:
+Comprehensive Shortcut Categories - Activation, Navigation, Translation, OCR, UI, Advanced, and Mouse bindings
+Visual Recording System - Click any shortcut to record a new key combination with live conflict detection
+Conflict Detection - Automatically detects overlapping shortcuts and browser-reserved combinations
+Preset System - Quick presets: Default, Vim-style (HJKL), Gaming (WASD), Minimal, Power User
+Mouse Binding Support - Configure middle-click, alt+click, ctrl+alt+drag operations
+Import/Export - Backup and share hotkey configurations via JSON
+Test Zone - Interactive area to verify shortcuts work correctly
+Technical Highlights:
+Real-time validation against Chrome's reserved shortcuts
+Global shortcut support via Chrome commands API
+Context-aware bindings (content script vs popup vs all contexts)
+Modifier normalization (Ctrl/Cmd handling for cross-platform)
+Visual feedback with conflict warnings and resolution suggestions
+Accessibility - Keyboard-navigable interface, clear visual indicators
+Key Bindings Configured:
+Alt+T - Toggle extension
+Alt+Shift+S - Activate Sharingan scan mode
+Alt+Q - Quick translate under cursor
+Alt+R - Translate entire page
+Alt+B - Manual bubble selection
+Arrow keys / HJKL / WASD - Panel navigation
+Escape - Emergency stop
+Middle-click - Quick translate
+Alt+Click - Select specific bubble
+The system prevents users from binding browser-reserved shortcuts (like Ctrl+W, Ctrl+T) and provides intelligent conflict resolution.

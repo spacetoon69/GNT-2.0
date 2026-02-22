@@ -1,0 +1,17 @@
+This general-settings.js module provides:
+Core Features:
+Activation Modes: Click, hover, auto-detect, and hotkey triggering
+Language Management: Source/target language selection with auto-detection
+Sharingan UI Controls: Position, size, and auto-hide behavior for the themed floating interface
+Performance Tuning: Quality presets, concurrent request limits, and caching policies
+Privacy Controls: Analytics, crash reporting, and cloud sync toggles
+Data Management: Export/import/reset functionality
+Technical Highlights:
+Event-driven architecture with EventEmitter
+Conditional UI logic (showing/hiding dependent settings)
+Real-time preview for sound effects
+Double-confirmation for destructive actions
+Toast notification system
+Full i18n support
+Automatic background script synchronization
+The UI follows the Naruto theme with Sharingan-specific styling hooks while maintaining professional usability standards.

@@ -1,0 +1,30 @@
+This creates a comprehensive about page featuring:
+Hero Section:
+Animated EMS/Mangekyō Sharingan logo with pulse effects
+"I alone am the translator of all manga" tagline
+Version badge with channel indicator (Stable/Beta/Dev)
+Live Statistics:
+Animated counters for pages translated, OCR accuracy, active sessions
+Persistent stats fetched from background service worker
+Update Manager:
+Automatic update checking on load
+Manual check button with status indicators
+Inline changelog display for available updates
+One-click installation trigger
+The Journey Timeline:
+Visual roadmap from "Awakening" (v1.0) → "Mangekyō" (v2.0) → "Eternal Mangekyō" (current) → "Rinnegan" (v3.0 roadmap)
+Thematic progression matching the extension's visual metaphor
+Credits Section:
+Team attribution with role-based cards
+Special thanks to scanlation community and Kishimoto
+Open source license accordion (Tesseract.js, TensorFlow.js, Sharp, GPL-3.0)
+Resources:
+GitHub, Documentation, Discord, and Feedback links
+Modal-based feedback form with diagnostic log attachment option
+Technical Debug Panel:
+Collapsible system information (Extension ID, Chrome version, platform, Service Worker status, permissions)
+One-click copy for support requests
+Footer:
+Responsible use disclaimer supporting official releases
+Copyright and attribution
+The page maintains the Naruto visual theme throughout while providing practical functionality for update management and user support.

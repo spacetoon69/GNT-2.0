@@ -1,0 +1,25 @@
+This translation-settings.js module provides:
+Engine Management:
+Multi-engine support: Google Translate, DeepL, OpenAI GPT-4 Vision, Local LLM (Ollama)
+Smart fallback: Automatic failover on errors or quota limits
+Real-time API testing: Connection validation with visual status indicators
+API key management: Secure input with visibility toggle
+Advanced GPT-4 Configuration:
+Model selection (4o, 4o-mini, 4-turbo)
+Vision capabilities toggle for image context
+Temperature and token controls
+Custom system prompts for manga translation
+Context Preservation:
+Configurable context window (0-10 previous bubbles)
+Name preservation across pages
+Honorific handling (keep/translate/remove styles)
+Manga-Specific Features:
+SFX translation with adaptive/literal/ignore modes
+Vertical text handling options
+Confidence thresholding with low-confidence flagging
+Aggressive/conservative caching strategies
+Security & UX:
+Password-protected API key fields
+Visual highlighting of active APIs
+Comprehensive validation before save
+Pro/Beta feature badging
