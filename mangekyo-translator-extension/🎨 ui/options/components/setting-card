@@ -1,0 +1,27 @@
+This creates a comprehensive, reusable setting-card web component featuring:
+Input Types Supported:
+Toggle: Animated switch with keyboard accessibility
+Slider: Numeric range with live value display and unit suffixes
+Select: Dropdown with JSON-defined options
+Text/Number: Standard inputs with debounced change events
+Color: Native color picker
+Keybind: Interactive keyboard shortcut recorder (supports modifiers)
+File: File picker with filename display
+Button: Action trigger
+Visual Variants:
+default: Standard card with full description
+compact: Icon + label only, description hidden
+prominent: Elevated background for important settings
+danger: Red accent for destructive actions
+Special Features:
+Badges: Beta, Premium, and "Requires Restart" indicators
+Loading State: Overlay spinner for async operations
+Disabled State: Visual dimming with interaction blocking
+Sharingan Theme Integration: CSS custom properties for EMS visual effects
+Accessibility: ARIA labels, keyboard navigation, focus management
+Technical Highlights:
+Shadow DOM encapsulation with CSS custom properties for theming
+Debounced input handling for performance
+Programmatic API (get/set value, loading, disabled states)
+Custom events for parent component communication
+Responsive design with CSS Grid/Flexbox

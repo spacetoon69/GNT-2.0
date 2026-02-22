@@ -1,0 +1,29 @@
+This component includes:
+Key Features:
+Three selection modes: single, multiple (checkboxes), and pair (source/target)
+Manga-specific metadata: Vertical text support, RTL indicators, OCR quality badges
+Smart grouping: Organizes languages by manga relevance and script families
+Quick select chips: One-click common languages (JA/KO/ZH for source, major EU languages for target)
+Full keyboard navigation: Arrow keys, Enter, Escape, Tab handling
+Accessibility: ARIA labels, live regions, focus management
+Search: Filter by name, native name, code, or aliases
+Dark mode: CSS custom properties with prefers-color-scheme support
+Manga-Specific Optimizations:
+Highlights Japanese, Korean, Chinese with "Manga" badges
+Shows vertical/RTL text direction indicators
+Displays OCR quality ratings for source languages
+Script type indicators (Latin, Cyrillic, Hanzi, etc.)
+
+Usage Examples:
+
+// Single source language
+<language-selector type="source" mode="single" value="ja"></language-selector>
+
+// Multiple target languages
+<language-selector type="target" mode="multiple" value='["en", "es"]'></language-selector>
+
+// Programmatic access
+const selector = document.querySelector('language-selector');
+selector.addEventListener('change', (e) => {
+  console.log('Selected:', e.detail.value);
+});

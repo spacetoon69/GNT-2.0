@@ -1,0 +1,33 @@
+This creates a sophisticated color-picker web component with:
+Core Features:
+HSV Color Selection: Interactive saturation/value box with hue slider
+Multiple Input Modes: HEX, RGB, HSL with real-time conversion
+Opacity Control: Optional alpha channel with checkerboard background
+Native Eyedropper: Screen color picking using EyeDropper API (Chrome 95+)
+Theme Integration:
+Sharingan Presets: Tomoe Red, Sharingan Black, Iris Crimson, Chakra Blue
+Mangekyō Presets: Mangekyo Red, Amaterasu Black, Tsukuyomi Purple, Susanoo Blue
+EMS Presets: Eternal Crimson, Rinnegan Purple, Limbo Gray, God Tree
+Visual Effects: Pulsing animations for theme colors, glow effects
+User Experience:
+Color History: Automatically saves last 8 picked colors to localStorage
+Custom Presets: Save user-defined colors with custom names
+Keyboard Navigation: Full accessibility support
+Smart Positioning: Popup with collision detection
+Smooth Animations: Transitions on all interactive elements
+Technical Implementation:
+Color Math: Full HSL↔RGB↔HEX conversion utilities
+Drag Support: Smooth dragging on all sliders with pointer events
+Debounced Updates: Performance-optimized input handling
+Shadow DOM: Full encapsulation with CSS custom properties for theming
+
+Usage Example:
+
+<color-picker 
+  value="#ff4757" 
+  theme-preset="sharingan"
+  show-opacity
+  show-eyedropper
+  allow-custom-presets
+  label="Accent Color">
+</color-picker>
