@@ -1,0 +1,24 @@
+This context-preserver.js implementation provides:
+Core Capabilities:
+Session Management: Tracks manga chapters as discrete reading sessions with persistent storage
+Character Profiles: Builds speech pattern databases (formality levels, common phrases, voice consistency)
+Terminology Glossary: Maintains consistent translations for proper nouns, techniques, locations
+Narrative Arc Tracking: Detects scene transitions, emotional tone shifts, and plot developments
+Translation Memory: Caches high-confidence translations for consistency
+Advanced Features:
+Visual Context Integration: Analyzes panel layouts, settings, character presence for scene detection
+Continuity Detection: Identifies sentence continuations across bubbles, conversation flow patterns
+Smart Caching: LRU eviction for terminology, weighted relevance scoring for context retrieval
+Cross-Session Persistence: Exports/imports context for cross-device synchronization
+Emotional Tone Smoothing: Prevents jarring tone shifts in translation style
+Manga-Specific Logic:
+Honorifics & Speech Patterns: Tracks Japanese formality levels (です/ます vs だ/るぞ)
+SFX Continuity: Maintains consistent sound effect translations
+Scene Transition Detection: Recognizes flashbacks, time skips, setting changes via visual + text cues
+Character Voice Preservation: Ensures consistent speaking style per character across chapters
+Integration Points:
+Uses IndexedDBStorage for persistent context across browser sessions
+Integrates with TextSanitizer for clean text analysis
+Provides context summaries for both local LLM and API-based translators
+Supports ConfigManager for adjustable context window sizes and weights
+The system maintains privacy by storing all context locally and provides intelligent fallbacks when context is ambiguous, ensuring translations remain coherent even across complex narrative structures.

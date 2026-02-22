@@ -1,0 +1,40 @@
+This sfx-translator.js implementation provides:
+Core Translation Modes:
+Direct: Keep romaji (ドキドキ → dokidoki) - for hardcore fans
+Adaptive: Cultural localization (ドキドキ → thump thump / ba-dump ba-dump)
+Visual: Descriptive meaning (ドキドキ → [heartbeat])
+Hybrid: Combined approach (BA-DUMP dokidoki)
+Genre-Authentic: Context-aware (shonen gets bold impacts, shoujo gets soft emotions)
+Comprehensive SFX Database:
+Physical: ドン (impact), バン (bang), ガタガタ (rattle)
+Atmospheric: ゴゴゴ (ominous rumble), ザワザワ (unease), ポカポカ (warmth)
+Physiological: ドキドキ (heartbeat), ブルブル (shiver), ゴク (gulp)
+Emotional: イライラ (irritation), ムカムカ (nausea/anger), ガーン (shock)
+Visual States: ピカピカ (sparkle), メラメラ (blaze), キラキラ (glitter)
+Actions: ペコペコ (bowing), バタバタ (panic), ジロジロ (staring)
+Advanced Features:
+Visual Metadata Generation: Font styles, colors, effects matching original intensity
+Genre Detection: Shonen/shoujo/horror/comedy/slice-of-life context awareness
+Intensity Preservation: Maps 1-5 intensity scale to typography weight
+Batch Consistency: Ensures same SFX translated identically across a scene
+Romaji Fallback: Transliteration engine for unknown sound effects
+Cultural Adaptation:
+English: BAM, thump thump, sparkle, CRACKLE
+Spanish: PUM, latido, brillo, crepitar
+French: BOUM, battement, brillant, crépitement
+Visual Integration:
+Typography matching (Impact for heavy hits, Comic Sans for soft sounds)
+Color coding (red for impact, pink for physiological, orange for emotion)
+Shape suggestions (burst for impacts, cloud for atmosphere, spiky for action)
+Animation hints (pulse for intense SFX, sparkle for キラキラ)
+Manga-Specific Logic:
+JoJo Style: Special handling for ゴゴゴ (menacing) with vibration effects
+Shoujo Romance: Soft gradients for ドキドキ, star effects for キラキラ
+Battle Manga: Bold uppercase for impacts, motion line suggestions
+Horror: Distorted fonts for ザワザワ (unease), dark colors
+Integration Points:
+Works with ConfigManager for user preferences
+Uses ImageUtils for bounding box calculations
+Provides data for overlay-injector.js visual rendering
+Supports context-preserver.js for scene consistency
+The system ensures that sound effects maintain their narrative impact while becoming accessible to international readers, with intelligent defaults that respect both the original artistic intent and target audience expectations.

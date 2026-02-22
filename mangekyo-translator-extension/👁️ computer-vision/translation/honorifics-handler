@@ -1,0 +1,32 @@
+This honorifics-handler.js implementation provides:
+Core Modes:
+Preserve: Keep Japanese honorifics (Tanaka-san, Yuki-chan) - for authenticity
+Adapt: Convert to English equivalents (Mr. Tanaka, Li'l Yuki) - for accessibility
+Hybrid: Smart mix based on context (preserve formal, adapt casual)
+Remove: Strip entirely (Tanaka, Yuki) - minimalist approach
+Comprehensive Honorific Database:
+Standard: san, kun, chan, sama, dono
+Social: sensei, senpai, kouhai
+Professional: kyouju (professor), shachou (president)
+Familial: oniisan/oniichan, oneesan/oneechan variations
+Pronouns: watashi, boku, ore, atashi (with personality implications)
+Attitude markers: omae, temee, kisama (rough/hostile speech)
+Advanced Features:
+Context-Aware Adaptation: Detects setting (business/school/fantasy/historical) and adjusts strategy
+Relationship Tracking: Determines speaker-target relationship for appropriate adaptation
+Character Voice Preservation: Maintains consistent speech patterns per character
+Translator Notes: Optional annotations explaining honorific meanings
+First-Use Detection: Annotates only first occurrence to avoid clutter
+Formality Scoring: 0-5 scale for nuanced decision-making
+Manga-Specific Logic:
+Visual Context Integration: Uses bubble type, scene setting for decisions
+Historical Preservation: Keeps honorifics in samurai/historical settings
+Romance Handling: Special logic for -chan in intimate contexts
+Business Formality: Adapts casual honorifics in professional settings
+Sibling Dynamics: Distinguishes actual siblings from honorary usage
+Integration Points:
+Works with ConfigManager for user preferences
+Uses TextSanitizer for clean text processing
+Provides statistics for batch processing optimization
+Supports dynamic mode switching based on content analysis
+The system ensures that cultural nuance is preserved while maintaining readability for the target audience, with intelligent defaults that can be overridden per user preference.

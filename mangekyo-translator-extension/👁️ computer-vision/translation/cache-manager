@@ -1,0 +1,18 @@
+Key Features
+
+| Feature                    | Implementation                           |
+| -------------------------- | ---------------------------------------- |
+| **Multi-tier caching**     | Memory LRU → IndexedDB → Fuzzy matching  |
+| **Intelligent eviction**   | LRU policy with size enforcement         |
+| **Compression**            | Automatic compression for large entries  |
+| **Fuzzy matching**         | Bigram-based similarity for near-matches |
+| **Predictive preloading**  | Pre-translates next pages/common phrases |
+| **Privacy-first**          | Optional encryption for cache export     |
+| **Performance monitoring** | Built-in hit rate and compression stats  |
+
+Integration Points
+IndexedDB: Uses translationCacheDB for persistence
+Encryption: Leverages secureStorage for encrypted exports
+Background processing: Sends preload requests to service worker
+Performance: Integrates with performanceMonitor for metrics
+The cache manager optimizes for manga reading patterns—sequential page access and repetitive speech patterns—while maintaining strict privacy controls for user translation data.
