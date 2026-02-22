@@ -1,0 +1,17 @@
+Key Design Features
+
+| Component                | Purpose                                                     | Integration                                                      |
+| ------------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| **MobileNetV3 Backbone** | Lightweight feature extraction (~4MB)                       | Fast initialization in content scripts                           |
+| **RPN Heads**            | Region proposal for bubble locations                        | Feeds into `bounding-box-utils.js`                               |
+| **Mask Head**            | Instance segmentation for precise bubble boundaries         | Used by `bubble-detector.js` for clean extraction                |
+| **Type Classifier**      | Distinguishes speech/thought/narration/shout bubbles        | Consumed by `bubble-classifier.js` for context-aware translation |
+| **Multi-scale Anchors**  | Handles varying bubble sizes (small sfx to large narration) | Critical for vertical Japanese text layouts                      |
+
+
+Integration Notes
+Input preprocessing should happen in image-processor.js before feeding to model
+Post-processing (NMS, mask refinement) implemented in bubble-detector.js
+Type classification output routes to honorifics-handler.js for speech vs thought context
+Mask output enables text-extractor.js to perform background removal before OCR
+The model is designed for real-time performance (~30 FPS on mid-range GPUs) while maintaining accuracy for manga-specific visual characteristics.

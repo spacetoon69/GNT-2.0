@@ -1,0 +1,318 @@
+{
+  "format": "layers-model",
+  "generatedBy": "Mangekyo CV Pipeline v1.0.0",
+  "convertedBy": "tensorflowjs_converter 4.10.0",
+  "modelTopology": {
+    "class_name": "Functional",
+    "config": {
+      "name": "manga_bubble_detector",
+      "layers": [
+        {
+          "class_name": "InputLayer",
+          "config": {
+            "batch_input_shape": [null, 512, 512, 3],
+            "dtype": "float32",
+            "sparse": false,
+            "name": "input_image"
+          },
+          "name": "input_image",
+          "inbound_nodes": []
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "stem_conv",
+            "trainable": true,
+            "dtype": "float32",
+            "filters": 32,
+            "kernel_size": [3, 3],
+            "strides": [2, 2],
+            "padding": "same",
+            "data_format": "channels_last",
+            "dilation_rate": [1, 1],
+            "groups": 1,
+            "activation": "swish",
+            "use_bias": false,
+            "kernel_initializer": {
+              "class_name": "VarianceScaling",
+              "config": {"scale": 1.0, "mode": "fan_avg", "distribution": "uniform"}
+            }
+          },
+          "name": "stem_conv",
+          "inbound_nodes": [[["input_image", 0, 0, {}]]]
+        },
+        {
+          "class_name": "BatchNormalization",
+          "config": {
+            "name": "stem_bn",
+            "trainable": true,
+            "dtype": "float32",
+            "axis": [3],
+            "momentum": 0.997,
+            "epsilon": 0.001,
+            "center": true,
+            "scale": true
+          },
+          "name": "stem_bn",
+          "inbound_nodes": [[["stem_conv", 0, 0, {}]]]
+        },
+        {
+          "class_name": "DepthwiseConv2D",
+          "config": {
+            "name": "block1_dwconv",
+            "kernel_size": [3, 3],
+            "strides": [1, 1],
+            "padding": "same",
+            "depth_multiplier": 1,
+            "activation": "swish",
+            "use_bias": false
+          },
+          "name": "block1_dwconv",
+          "inbound_nodes": [[["stem_bn", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "block1_project",
+            "filters": 24,
+            "kernel_size": [1, 1],
+            "strides": [1, 1],
+            "padding": "same",
+            "activation": "linear",
+            "use_bias": false
+          },
+          "name": "block1_project",
+          "inbound_nodes": [[["block1_dwconv", 0, 0, {}]]]
+        },
+        {
+          "class_name": "BatchNormalization",
+          "config": {"name": "block1_bn", "axis": [3]},
+          "name": "block1_bn",
+          "inbound_nodes": [[["block1_project", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Add",
+          "config": {"name": "block1_add"},
+          "name": "block1_add",
+          "inbound_nodes": [[["stem_bn", 0, 0, {}], ["block1_bn", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "fpn_c3",
+            "filters": 128,
+            "kernel_size": [1, 1],
+            "activation": "swish"
+          },
+          "name": "fpn_c3",
+          "inbound_nodes": [[["block1_add", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "rpn_conv",
+            "filters": 256,
+            "kernel_size": [3, 3],
+            "padding": "same",
+            "activation": "relu"
+          },
+          "name": "rpn_conv",
+          "inbound_nodes": [[["fpn_c3", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "rpn_class",
+            "filters": 3,
+            "kernel_size": [1, 1],
+            "activation": "sigmoid"
+          },
+          "name": "rpn_class",
+          "inbound_nodes": [[["rpn_conv", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "rpn_bbox",
+            "filters": 12,
+            "kernel_size": [1, 1],
+            "activation": "linear"
+          },
+          "name": "rpn_bbox",
+          "inbound_nodes": [[["rpn_conv", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "mask_head",
+            "filters": 256,
+            "kernel_size": [3, 3],
+            "padding": "same",
+            "activation": "relu"
+          },
+          "name": "mask_head",
+          "inbound_nodes": [[["rpn_conv", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2DTranspose",
+          "config": {
+            "name": "mask_upsample",
+            "filters": 128,
+            "kernel_size": [2, 2],
+            "strides": [2, 2],
+            "padding": "same",
+            "activation": "relu"
+          },
+          "name": "mask_upsample",
+          "inbound_nodes": [[["mask_head", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Conv2D",
+          "config": {
+            "name": "mask_output",
+            "filters": 1,
+            "kernel_size": [1, 1],
+            "activation": "sigmoid"
+          },
+          "name": "mask_output",
+          "inbound_nodes": [[["mask_upsample", 0, 0, {}]]]
+        },
+        {
+          "class_name": "GlobalAveragePooling2D",
+          "config": {"name": "gap_features"},
+          "name": "gap_features",
+          "inbound_nodes": [[["fpn_c3", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Dense",
+          "config": {
+            "name": "bubble_type_dense",
+            "units": 64,
+            "activation": "relu"
+          },
+          "name": "bubble_type_dense",
+          "inbound_nodes": [[["gap_features", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Dropout",
+          "config": {"name": "dropout", "rate": 0.3},
+          "name": "dropout",
+          "inbound_nodes": [[["bubble_type_dense", 0, 0, {}]]]
+        },
+        {
+          "class_name": "Dense",
+          "config": {
+            "name": "bubble_type",
+            "units": 4,
+            "activation": "softmax"
+          },
+          "name": "bubble_type",
+          "inbound_nodes": [[["dropout", 0, 0, {}]]]
+        }
+      ],
+      "input_layers": [["input_image", 0, 0]],
+      "output_layers": [
+        ["rpn_class", 0, 0],
+        ["rpn_bbox", 0, 0],
+        ["mask_output", 0, 0],
+        ["bubble_type", 0, 0]
+      ]
+    },
+    "keras_version": "2.13.0",
+    "backend": "tensorflow"
+  },
+  "weightsManifest": [
+    {
+      "paths": ["weights.bin"],
+      "weights": [
+        {"name": "stem_conv/kernel", "shape": [3, 3, 3, 32], "dtype": "float32"},
+        {"name": "stem_bn/gamma", "shape": [32], "dtype": "float32"},
+        {"name": "stem_bn/beta", "shape": [32], "dtype": "float32"},
+        {"name": "stem_bn/moving_mean", "shape": [32], "dtype": "float32"},
+        {"name": "stem_bn/moving_variance", "shape": [32], "dtype": "float32"},
+        {"name": "block1_dwconv/depthwise_kernel", "shape": [3, 3, 32, 1], "dtype": "float32"},
+        {"name": "block1_project/kernel", "shape": [1, 1, 32, 24], "dtype": "float32"},
+        {"name": "block1_bn/gamma", "shape": [24], "dtype": "float32"},
+        {"name": "block1_bn/beta", "shape": [24], "dtype": "float32"},
+        {"name": "block1_bn/moving_mean", "shape": [24], "dtype": "float32"},
+        {"name": "block1_bn/moving_variance", "shape": [24], "dtype": "float32"},
+        {"name": "fpn_c3/kernel", "shape": [1, 1, 24, 128], "dtype": "float32"},
+        {"name": "fpn_c3/bias", "shape": [128], "dtype": "float32"},
+        {"name": "rpn_conv/kernel", "shape": [3, 3, 128, 256], "dtype": "float32"},
+        {"name": "rpn_conv/bias", "shape": [256], "dtype": "float32"},
+        {"name": "rpn_class/kernel", "shape": [1, 1, 256, 3], "dtype": "float32"},
+        {"name": "rpn_class/bias", "shape": [3], "dtype": "float32"},
+        {"name": "rpn_bbox/kernel", "shape": [1, 1, 256, 12], "dtype": "float32"},
+        {"name": "rpn_bbox/bias", "shape": [12], "dtype": "float32"},
+        {"name": "mask_head/kernel", "shape": [3, 3, 256, 256], "dtype": "float32"},
+        {"name": "mask_head/bias", "shape": [256], "dtype": "float32"},
+        {"name": "mask_upsample/kernel", "shape": [2, 2, 256, 128], "dtype": "float32"},
+        {"name": "mask_upsample/bias", "shape": [128], "dtype": "float32"},
+        {"name": "mask_output/kernel", "shape": [1, 1, 128, 1], "dtype": "float32"},
+        {"name": "mask_output/bias", "shape": [1], "dtype": "float32"},
+        {"name": "bubble_type_dense/kernel", "shape": [128, 64], "dtype": "float32"},
+        {"name": "bubble_type_dense/bias", "shape": [64], "dtype": "float32"},
+        {"name": "bubble_type/kernel", "shape": [64, 4], "dtype": "float32"},
+        {"name": "bubble_type/bias", "shape": [4], "dtype": "float32"}
+      ]
+    }
+  ],
+  "mangekyo_config": {
+    "model_version": "1.0.0",
+    "architecture": "MobileNetV3-SSD-MASK",
+    "description": "Lightweight bubble detector for manga/manhwa speech bubbles",
+    "input_spec": {
+      "shape": [512, 512, 3],
+      "dtype": "float32",
+      "normalization": {"mean": [0.485, 0.456, 0.406], "std": [0.229, 0.224, 0.225]},
+      "color_space": "RGB"
+    },
+    "outputs": {
+      "rpn_class": {
+        "description": "Objectness scores for anchor boxes",
+        "shape": [null, 48, 48, 3],
+        "classes": ["background", "speech_bubble", "thought_bubble"]
+      },
+      "rpn_bbox": {
+        "description": "Bounding box deltas (dx, dy, dw, dh) for 3 anchors",
+        "shape": [null, 48, 48, 12]
+      },
+      "mask_output": {
+        "description": "Instance segmentation masks for detected bubbles",
+        "shape": [null, 96, 96, 1]
+      },
+      "bubble_type": {
+        "description": "Bubble classification probabilities",
+        "shape": [null, 4],
+        "classes": ["round_speech", "rectangular_narration", "cloud_thought", "spiky_shout"]
+      }
+    },
+    "anchor_config": {
+      "scales": [0.5, 1.0, 2.0],
+      "ratios": [0.5, 1.0, 2.0],
+      "base_size": 16
+    },
+    "post_processing": {
+      "confidence_threshold": 0.7,
+      "nms_iou_threshold": 0.3,
+      "max_detections": 50,
+      "mask_threshold": 0.5
+    },
+    "optimization": {
+      "quantization": "uint8",
+      "pruning_sparsity": 0.5,
+      "supported_backends": ["webgl", "wasm", "cpu"],
+      "preferred_backend": "webgl"
+    },
+    "training_metadata": {
+      "dataset": "Manga109 + custom annotated dataset",
+      "total_images": 45000,
+      "augmentation": ["rotation", "scaling", "color_jitter", "elastic_deform"],
+      "manga_specific": {
+        "handles_tategaki": true,
+        "font_invariant": true,
+        "panel_aware": true
+      }
+    }
+  }
+}
